@@ -1,0 +1,70 @@
+%%
+%% This is file `physics2.sty'.
+%% 
+%% ******************************************************
+%% * This work may be distributed and/or modified under *
+%% * the conditions of the LaTeX Project Public License *
+%% *                                                    *
+%% *     http://www.latex-project.org/lppl.txt          *
+%% *                                                    *
+%% * either version 1.3c of this license or any later   *
+%% * version.                                           *
+%% ******************************************************
+%% 
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is Zhang Tingxuan.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2020/10/01]
+\ProvidesPackage{physics2}
+  [2023/04/02 v0.2.1 Tools for typesetting math for physics.]
+% Some common variables.
+\newcount\phy@tempcnta
+\newdimen\phy@tempdima
+\newdimen\phy@tempdimb
+\newskip\phy@tempskipa
+\newmuskip\phy@tempmuskipa
+\newbox\phy@tempboxa
+\newif\ifphy@tempswa
+\newtoks\phy@toksa
+% The package uses `keyval' to support key-value settings.
+\RequirePackage{keyval}
+\def\phy@true{true}
+\def\phy@false{false}
+% \phy@define@key{<module>}{<key>}[<default value>]{<code>}
+\long\def\phy@define@key#1{\define@key{phy-#1}}
+% \phy@setkeys{<module>}{<key-val list>}
+\long\def\phy@setkeys#1{\setkeys{phy-#1}}
+% \phy@processkeyopt{<module>}
+\def\phy@processkeyopt#1{\let\reserved@a\@empty%
+  \edef\reserved@a{\@ptionlist{\@currname.\@currext}}%
+  \edef\reserved@a{\noexpand\phy@setkeys{#1}{\reserved@a}}%
+  \reserved@a% the next line thanks to `geometry'
+  \AtEndOfPackage{\let\@unprocessedoptions\relax}}
+% Load the physics modules as 2e kernel does.
+\def\usephysicsmodule{\phy@FWoptions\@pkgextension}
+\let\phy@requiremodule\usephysicsmodule
+\@onlypreamble\usephysicsmodule
+\def\phy@FWoptions#1{\@ifnextchar[%]
+  {\phy@FW@ptions#1}{\phy@FW@ptions#1[]}}
+\@onlypreamble\phy@FWoptions
+\def\phy@FW@ptions#1[#2]#3{\@ifnextchar[%]
+  {\phy@FW@pti@ns#1[{#2}]#3}{\phy@FW@pti@ns#1[{#2}]#3[]}}
+\@onlypreamble\phy@FW@ptions
+\def\phy@FW@pti@ns#1[#2]#3[#4]{%
+  \def\reserved@b##1,{%
+    \ifx\@nnil##1\relax\else
+      \ifx\@nnil##1\@nnil\else
+       \noexpand\@onefilewithoptions{phy-##1}[{\unexpanded{#2}}][{#4}]%
+       \noexpand\@pkgextension
+      \fi
+      \expandafter\reserved@b
+    \fi}%
+    \edef\reserved@a{\zap@space#3 \@empty}%
+    \edef\reserved@a{\expandafter\reserved@b\reserved@a,\@nnil,}%
+  \reserved@a}
+\@onlypreamble\phy@FW@pti@ns
+% The `common' module of physics2, every module needs this.
+\phy@requiremodule{common}
+\endinput
+%% End of file `physics2.sty'.

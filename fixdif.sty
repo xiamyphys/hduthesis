@@ -1,0 +1,127 @@
+%%
+%% This is file `fixdif.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% fixdif.dtx  (with options: `package')
+%% 
+%%   Copyright (C) 2022-2023 by Zhang Tingxuan <alphaztx@163.com>
+%% 
+%%   This work may be distributed and/or modified under the
+%%   conditions of the LaTeX Project Public License, either
+%%   version 1.3c of this license or (at your option) any later
+%%   version. The latest version of this license is in:
+%% 
+%%     http://www.latex-project.org/lppl.txt
+%% 
+%%   and version 1.3 or later is part of all distributions of
+%%   LaTeX version 2005/12/01 or later.
+%% 
+%%   This work has the LPPL maintenance status `maintained'.
+%% 
+%%   The Current Maintainer of this work is Zhang Tingxuan.
+%% 
+%%   This work consists of the files fixdif.dtx,
+%%             and the derived files fixdif.ins,
+%%                                   fixdif.sty,
+%%                                   fixdif.pdf,
+%%                               and README.md.
+%% 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fixdif}[2023/03/20 Interface for defining differential operators.]
+\AtBeginDocument{%
+\ifcsname symbf\endcsname%
+  \csname bool_if:cF\endcsname{g__um_main_font_defined_bool}%
+    {\csname __um_load_lm:\endcsname}%
+  \def\fd@patchUmathcode#1{% 16777216 = 16^6
+    \@tempcnta=\numexpr(\the\Umathcodenum#1-#1)/16777216\relax
+    \Umathcode #1 = "4 \@tempcnta #1}%
+  \fd@patchUmathcode{"2F}%
+  \fd@patchUmathcode{"5C}%
+\else\ifcsname fontspec\endcsname
+  \csname bool_if:cT\endcsname{g__fontspec_math_bool}%
+    {%
+      \everymath{\mathcode`\/="413D\relax}%
+      \PackageWarning{fixdif}{Requires `no-math' option of fontspec!\MessageBreak}%
+    }% fontspec only influences "/"
+\fi\fi}
+\mathcode`\/="413D
+\mathcode`\\="426E% \backslash
+\protected\def\backslash{\delimiter"426E30F\relax}
+\def\fd@mu@p{\mathchoice{\mskip-\thinmuskip}{\mskip-\thinmuskip}{}{}{}}
+\def\s@fd@mu@p{\mathchoice{}{}{\hbox{}}{\hbox{}}}
+\DeclareOption{rm}{%
+  \AtBeginDocument{\ifcsname symbf\endcsname%
+    \gdef\@fd@dif{\symrm{d}}\fi}%
+  \gdef\@fd@dif{\mathrm{d}}}
+\DeclareOption{normal}{\gdef\@fd@dif{d}}
+\DeclareOption{partial}{\@tempswatrue}
+\DeclareOption{nopartial}{\@tempswafalse}
+\ExecuteOptions{rm,partial}
+\ProcessOptions\relax
+\if@tempswa
+  \AtEndOfPackage{\letdif{\partial}{partial}}
+\fi
+\gdef\resetdfont#1{\AtBeginDocument{\let\@fd@dif\relax\gdef\@fd@dif{#1{d}}}}
+\def\fd@dif{\mathinner{\@fd@dif}\fd@mu@p}
+\AtBeginDocument{\let\fd@d@acc\d
+  \DeclareRobustCommand\d{\ifmmode\fd@dif\else\expandafter\fd@d@acc\fi}}
+\def\@letdif#1#2{\AtBeginDocument{%
+  \ifcsname #2nondif\endcsname\else%
+  \expandafter\let\csname #2nondif\expandafter\endcsname
+    \csname #2\endcsname%
+  \fi%
+  \DeclareRobustCommand#1{\mathinner{\csname #2nondif\endcsname}\fd@mu@p}%
+}}
+\def\s@letdif#1#2{\AtBeginDocument{%
+  \ifcsname #2nondif\endcsname\else%
+  \expandafter\let\csname #2nondif\expandafter\endcsname
+    \csname #2\endcsname%
+  \fi%
+  \DeclareRobustCommand#1{\mathinner{\s@fd@mu@p\csname #2nondif\endcsname\hbox{}}\fd@mu@p}%
+}}
+\DeclareRobustCommand\letdif{\@ifstar\s@letdif\@letdif}
+\@onlypreamble\letdif
+\long\def\@newdif#1#2{\AtBeginDocument{%
+  \ifdefined#1
+    \PackageError{fixdif}{\string#1 is already defined}
+      {Try another command instead of \string#1.}%
+  \else
+    \DeclareRobustCommand#1{\mathinner{#2}\fd@mu@p}%
+  \fi%
+}}
+\long\def\s@newdif#1#2{\AtBeginDocument{%
+  \ifdefined#1
+  \PackageError{fixdif}{\string#1 is already defined}
+    {Try another command instead of \string#1.}%
+  \else
+    \DeclareRobustCommand#1{\s@fd@mu@p\mathinner{#2\hbox{}}\fd@mu@p}%
+  \fi%
+}}
+\DeclareRobustCommand\newdif{\@ifstar\s@newdif\@newdif}
+\@onlypreamble\newdif
+\long\def\@renewdif#1#2{\AtBeginDocument{%
+  \ifdefined#1
+    \DeclareRobustCommand#1{\mathinner{#2}\fd@mu@p}%
+  \else
+    \PackageError{fixdif}{\string#1 has not been defined yet}
+      {You should use \string\newdif instead of \string\renewdif.}%
+  \fi%
+}}
+\long\def\s@renewdif#1#2{\AtBeginDocument{%
+  \ifdefined#1
+    \DeclareRobustCommand#1{\s@fd@mu@p\mathinner{#2\hbox{}}\fd@mu@p}%
+  \else
+    \PackageError{fixdif}{\string#1 has not been defined yet}
+      {You should use \string\newdif instead of \string\renewdif.}%
+  \fi%
+}}
+\DeclareRobustCommand\renewdif{\@ifstar\s@renewdif\@renewdif}
+\@onlypreamble\renewdif
+\def\@mathdif#1{\mathinner{#1}\fd@mu@p}
+\def\s@mathdif#1{\s@fd@mu@p\mathinner{#1\mbox{}}\fd@mu@p}
+\DeclareRobustCommand\mathdif{\@ifstar\s@mathdif\@mathdif}
+\endinput
+%%
+%% End of file `fixdif.sty'.
