@@ -1,0 +1,69 @@
+\tl_new:N \l__abstract_name_tl
+\RenewDocumentEnvironment {abstract} { O{en} }
+  {
+    \str_if_eq:nnT {#1} {en}
+    {
+      \tl_set:Nn \l__keywords_name_tl {Key~words:~}
+      \tl_set:Nn \l__keywords_sep_tl {;~}
+    }
+    \str_if_eq:nnT {#1} {cn}
+    {
+      \tl_set:Nn \l__keywords_name_tl {\textsf{关键词：}}
+      \tl_set:Nn \l__keywords_sep_tl {；}
+    }
+    \vspace*{-.65\baselineskip}
+    \@beginparpenalty\@lowpenalty
+    \begin{center}%
+      \bfseries\large
+        \str_if_eq:nnT {#1} {en} {ABSTRACT}
+        \str_if_eq:nnT {#1} {cn} {\textsf{摘\qquad 要}}
+      \@endparpenalty\@M
+    \end{center}%
+    \vspace*{.75\baselineskip}
+    \group_begin:
+    \setstretch{1.38}
+  }
+  {
+    \par\null
+    \group_end:
+    \tl_clear:N \l__abstract_name_tl
+    \cfoot{}\clearpage
+  }
+
+\clist_new:N \l__abstract_keywords_clist
+\NewDocumentCommand \keywords { m }
+  {
+    \vspace*{1.1\baselineskip}
+    \noindent\textbf{\l__keywords_name_tl}
+    \clist_set:Nn \l__abstract_keywords_clist {#1}
+    \clist_use:Nn \l__abstract_keywords_clist {\l__keywords_sep_tl}
+  }
+
+\newcommand\frontmatter{%
+    \cleardoublepage
+  %\@mainmatterfalse
+  \pagestyle{fancy}
+  \pagenumbering{Roman}}
+
+\newcommand\mainmatter{%
+    \cleardoublepage
+ % \@mainmattertrue
+  \pagenumbering{arabic}}
+
+\newcommand\backmatter{%
+  \if@openright
+    \cleardoublepage
+  \else
+    \clearpage
+  \fi
+ % \@mainmatterfalse
+   }
+
+\RequirePackage{tocloft}
+\renewcommand{\contentsname}{\hfill 目\qquad 录\hfill}
+\renewcommand \cfttoctitlefont{\sffamily\large}
+\setlength{\cftbeforetoctitleskip}{1.5ex}
+\setlength{\cftaftertoctitleskip}{2.5ex}
+\renewcommand{\cftchapfont}{\normalfont}
+
+\endinput

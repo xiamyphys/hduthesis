@@ -1,11 +1,12 @@
 \documentclass{hduthesis}
 
-\setCJKmainfont{SimSong}[AutoFakeBold = 3.6]
-% \setCJKsansfont{Heiti SC}
+\setCJKmainfont{STSong}[AutoFakeBold = 4]
+\setCJKsansfont{Heiti SC}
 \setCJKfamilyfont{zhkai}{Kaiti SC}
+\usepackage{mtpro2,siunitx}
+\tikzset{ >= stealth }
 
 \CoverInfo{
-  grade      = 2025,
   title      = Research about Micromagnetic Skyrmion,
   school     = 理学院,
   major      = Physics,
@@ -21,9 +22,12 @@
 
 \input{cha/abstract.tex}
 
+\pagestyle{fancy}
 \frontmatter
 \tableofcontents
 \mainmatter
-% \thispagestyle{fancy}
+
+\input{cha/cha1.tex}
+\input{cha/cha2.tex}
 
 \end{document}

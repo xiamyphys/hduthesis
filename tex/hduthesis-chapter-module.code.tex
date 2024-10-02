@@ -1,0 +1,28 @@
+\def\@makechapterhead#1
+  {
+    \vspace*{-5\p@}%
+      {
+        \parindent \z@ \centering \sffamily
+          \large \thechapter \quad  #1
+          \par\nobreak
+          \vskip 26\p@ \par\nobreak
+      }
+    \thispagestyle{fancy}
+  }
+
+\renewcommand\section
+  {\vspace*{-2.3ex}
+    \@startsection {section}{1}{\z@}%
+      {0ex}%
+      {.1ex}%
+      {\sffamily\large}
+  }
+
+\RequirePackage{enumitem}
+\setlist[enumerate,1]
+{
+  label = （\arabic*）, itemindent = 4.5em, leftmargin = 0em,
+  labelsep = 0em, topsep = 0pt, itemsep = 0pt, partopsep = 0em,
+  parsep = 0em
+}
+\endinput

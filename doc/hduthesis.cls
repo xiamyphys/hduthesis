@@ -45,9 +45,7 @@
     }
   }
 
-\RequirePackage[zihao = -4]{ctex}
-\linespread{1.4}
-\setlength{\parindent}{2\ccwd}
+
 \RequirePackage{geometry, fancyhdr, tikz, setspace}
 \geometry
   {
@@ -55,91 +53,22 @@
     headheight = 15pt, headsep = .5cm
   }
 \chead{\small 杭州电子科技大学本科毕业设计（论文）}
+\lhead{}\rhead{}
 \pagestyle{fancy}
 \graphicspath
   {
     {./figure/}{./figures/}{./image/}{./images/}
     {./graphics/}{./graphic/}{./pictures/}{./picture/}
   }
-\setmainfont{texgyretermes}
-  [
-    UprightFont = *-regular,
-    BoldFont = *-bold,
-    ItalicFont = *-italic,
-    BoldItalicFont = *-bolditalic,
-    Extension = .otf,
-    Scale = 1.0
-  ]
-\setsansfont{texgyreheros}
-  [
-    UprightFont = *-regular,
-    BoldFont = *-bold,
-    ItalicFont = *-italic,
-    BoldItalicFont = *-bolditalic,
-    Extension = .otf,
-    Scale = 0.9
-  ]
+\RequirePackage[labelsep = quad, font = small]{caption}
+\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
+\AddToHook{env/figure/after}{\vspace*{-2.5ex}}
 
+\hduthesis_load_module:n {font}
 \hduthesis_load_module:n {cover}
+\hduthesis_load_module:n {matter}
+\hduthesis_load_module:n {chapter}
 
-\tl_new:N \l__abstract_name_tl
-\RenewDocumentEnvironment {abstract} { O{en} }
-  {
-    \str_if_eq:nnT {#1} {en}
-    {
-      \tl_set:Nn \l__keywords_name_tl {Key~words:~}
-      \tl_set:Nn \l__keywords_sep_tl {;~}
-    }
-    \str_if_eq:nnT {#1} {cn}
-    {
-      \tl_set:Nn \l__keywords_name_tl {\textsf{关键词：}}
-      \tl_set:Nn \l__keywords_sep_tl {；}
-    }
-    \vspace*{-.65\baselineskip}
-    \@beginparpenalty\@lowpenalty
-    \begin{center}%
-      \bfseries\large
-        \str_if_eq:nnT {#1} {en} {ABSTRACT}
-        \str_if_eq:nnT {#1} {cn} {\textsf{摘\qquad 要}}
-      \@endparpenalty\@M
-    \end{center}%
-    \vspace*{.75\baselineskip}
-    \group_begin:
-    \setstretch{1.38}
-  }
-  {
-    \par\null
-    \group_end:
-    \tl_clear:N \l__abstract_name_tl
-    \clearpage
-  }
+\endinput
 
-\clist_new:N \l__abstract_keywords_clist
-\NewDocumentCommand \keywords { m }
-  {
-    \vspace*{1.1\baselineskip}
-    \noindent\textbf{\l__keywords_name_tl}
-    \clist_set:Nn \l__abstract_keywords_clist {#1}
-    \clist_use:Nn \l__abstract_keywords_clist {\l__keywords_sep_tl}
-  }
-
-\newcommand\frontmatter{%
-    \cleardoublepage
-  %\@mainmatterfalse
-  \pagenumbering{roman}}
-
-\newcommand\mainmatter{%
-    \cleardoublepage
- % \@mainmattertrue
-  \pagenumbering{arabic}}
-
-\newcommand\backmatter{%
-  \if@openright
-    \cleardoublepage
-  \else
-    \clearpage
-  \fi
- % \@mainmatterfalse
-   }
-
-\renewcommand \contentsname{\large\hfill 目\qquad 录\hfill}
+% End of file hduthesis.cls

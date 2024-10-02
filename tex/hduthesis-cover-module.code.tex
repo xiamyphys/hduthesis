@@ -1,6 +1,5 @@
 \keys_define:nn { hduthesis / coverinfo }
   {
-    grade.tl_set:N = \l__cover_grade_tl,
     title.tl_set:N = \l__cover_title_tl,
     school.tl_set:N = \l__cover_school_tl,
     major.tl_set:N = \l__cover_major_tl,
@@ -41,7 +40,11 @@
     }
     \par\vspace*{1.3\baselineskip}
     {
-      \LARGE（\l__cover_grade_tl\bfseries 届）
+      \LARGE（
+        \int_compare:nNnTF {\c_sys_month_int} < 9
+          {\c_sys_year_int} {\int_eval:n {\c_sys_year_int+1}}
+        \bfseries 届
+      ）
     }
     \par\vspace*{4\baselineskip}
     \begin{tabular}
@@ -103,8 +106,7 @@
     \end{center}
     \vspace*{.6\baselineskip}\par
     \linespread{1.9}
-      {
-        \large
+      {\large
         我谨在此承诺：本人所写的毕业论文《\l__cover_title_tl》
         均系本人独立完成，没有抄袭行为，凡涉及其他作者的观点和材料，均作了注释，
         若有不实，后果由本人承担。\par\vspace*{1.1\baselineskip}
