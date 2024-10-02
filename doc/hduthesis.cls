@@ -91,17 +91,19 @@
     \includegraphics{hdubrand}
     \par\vspace*{3\baselineskip}
     \scalebox{4}
-    {
-      \l_spread_box:nn {.2\linewidth} {本科毕业设计}
+    {\textbf
+      {
+        \l_spread_box:nn {.2\linewidth} {本科毕业设计}
+      }
     }
     \par\vspace*{1.5\baselineskip}
     {
-      \huge（\l__cover_grade_tl 届）
+      \huge\bfseries（\l__cover_grade_tl 届）
     }
     \par\vspace*{6.2\baselineskip}
     \begin{tabular}
       {
-        >{\Large}p{6\ccwd}@{}
+        >{\Large\bfseries}p{6\ccwd}@{}
         >{\Large\centering\arraybackslash\kaishu}p{.6\linewidth}
       }
       题\qquad 目 & 
