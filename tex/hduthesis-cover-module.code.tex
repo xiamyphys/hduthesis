@@ -1,0 +1,128 @@
+\keys_define:nn { hduthesis / coverinfo }
+  {
+    grade.tl_set:N = \l__cover_grade_tl,
+    title.tl_set:N = \l__cover_title_tl,
+    school.tl_set:N = \l__cover_school_tl,
+    major.tl_set:N = \l__cover_major_tl,
+    class.tl_set:N = \l__cover_class_tl,
+    stdntid.tl_set:N = \l__cover_stdntid_tl,
+    author.tl_set:N = \l__cover_author_tl,
+    supervisor.tl_set:N = \l__cover_supervisor_tl,
+  }
+\NewDocumentCommand \CoverInfo { m }
+{ \keys_set:nn { hduthesis / coverinfo } { #1 } }
+
+\RequirePackage{array}
+\cs_new_protected:Npn \l_spread_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \hbox_to_wd:nn {#1}
+    { \tl_map_inline:Nn {#2} { ##1 \hfil } \unskip }
+  }
+\cs_new_protected:Npn \l_center_box:nn #1#2
+  {
+    \mode_leave_vertical:
+    \dim_set:Nn \l_tmpa_dim {#1}
+    \dim_add:Nn \l_tmpa_dim {0.6em}
+    \makebox[0cm][l]{\rule[-.8ex]{\l_tmpa_dim}{.5 pt}}
+    {\hbox_to_wd:nn {\l_tmpa_dim} { \hfil #2 \hfil }}
+  }
+\cs_new_protected_nopar:Nn \__hduthesis_cover_page_aux:
+{
+  \begin{center}
+    \vspace*{1.8\baselineskip}
+    \includegraphics{hdubrand}
+    \par\vspace*{2\baselineskip}
+    \scalebox{3.2}
+    {\textbf
+      {
+        \l_spread_box:nn {\fp_eval:n{1/4.1}\linewidth} {本科毕业设计}
+      }
+    }
+    \par\vspace*{1.3\baselineskip}
+    {
+      \LARGE（\l__cover_grade_tl\bfseries 届）
+    }
+    \par\vspace*{4\baselineskip}
+    \begin{tabular}
+      {
+        >{\large\bfseries}p{5.5\ccwd}@{}
+        >{\large\centering\arraybackslash\kaishu}p{.65\linewidth}
+      }
+      题\qquad 目 & 
+      \l_center_box:nn{.93\linewidth}
+      {
+        \l__cover_title_tl
+      }\\[5.8ex]
+      学\qquad 院 & 
+      \l_center_box:nn{.93\linewidth}
+      {
+        \l__cover_school_tl
+      }\\[5.8ex]
+      专\qquad 业 & 
+      \l_center_box:nn{.93\linewidth}
+      {
+        \l__cover_major_tl
+      }\\[5.8ex]
+      班\qquad 级 & 
+      \l_center_box:nn{.93\linewidth}
+      {
+        \l__cover_class_tl
+      }\\[5.8ex]
+      学\qquad 号 & 
+      \l_center_box:nn{.93\linewidth}
+      {
+        \l__cover_stdntid_tl
+      }\\[5.8ex]
+      学生姓名 & 
+      \l_center_box:nn{.93\linewidth}
+      {
+        \l__cover_author_tl
+      }\\[5.8ex]
+      指导教师 & 
+      \l_center_box:nn{.93\linewidth}
+      {
+        \l__cover_supervisor_tl
+      }\\[5.8ex]
+      完成日期 &
+      \l_center_box:nn{.93\linewidth}{
+        \textsf{\int_use:N \c_sys_year_int} 年
+        \textsf{\int_use:N \c_sys_month_int} 月
+      }
+    \end{tabular}
+  \end{center}
+}
+
+\cs_new_protected_nopar:Nn \__hduthesis_cover_promise_aux:
+  {
+    \vspace*{3.75\baselineskip}
+    \begin{center}
+      \@beginparpenalty\@lowpenalty
+      \Large\textsf{\bfseries \l_spread_box:nn {6\ccwd}{诚信承诺}}
+      \@endparpenalty\@M
+    \end{center}
+    \vspace*{.6\baselineskip}\par
+    \linespread{1.9}
+      {
+        \large
+        我谨在此承诺：本人所写的毕业论文《\l__cover_title_tl》
+        均系本人独立完成，没有抄袭行为，凡涉及其他作者的观点和材料，均作了注释，
+        若有不实，后果由本人承担。\par\vspace*{1.1\baselineskip}
+        \l_spread_box:nn {.48\linewidth}{}
+          \textsf{\bfseries 承诺人（签名）：}
+        \vspace*{.4\baselineskip}\par
+        \l_spread_box:nn {.48\linewidth+2em}{}
+          \textsf{\bfseries 年\qquad 月\qquad 日}
+      }
+  }
+
+\RenewDocumentCommand \maketitle {}
+  {
+    \begin{titlepage}
+      \__hduthesis_cover_page_aux:
+    \end{titlepage}
+    \titlepage
+      \__hduthesis_cover_promise_aux:
+    \endtitlepage
+  }
+\endinput

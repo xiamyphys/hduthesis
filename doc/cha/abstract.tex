@@ -1,0 +1,25 @@
+\begin{abstract}[cn]
+
+  本毕业设计主要设计自主研发的激光打靶系统的信号处理过程，继而实现整个打靶系统。激光打靶系统主要包括半导体激光枪、光电探测器和信号处理电路，信号处理过程是整个系统的关键。激光打靶的打靶过程，由激光枪发射激光脉冲信号，光电靶接收激光脉冲信号，经过系列信号处理过程最终得到打靶的结果。光电靶由许多块的光电探测器组成，每块不同位置的光电探测器对应不同编号，从打靶的实际情况出发，确定了相应的编号规则。打靶的成绩由激光所击中的光电探测器的编号来判定。
+
+  激光打靶系统的主要信号处理过程包括：信号的放大、编码和数据传输。信号由光电探测器检测后传送到相应的放大电路，放大电路采用集成运算放大器。按原先对光电探测器的编码规则采用多路优先编码器对信号进行编码。最后把编码值以串口的形式传送到计算机，利用计算机的强大功能对打靶结果进行各种处理。与计算机之间的串行数据传输由89C2051单片机实现。89C2051单片机的程序，使用keil编译器进行设计和调试完成，其主要功能是控制数据的串行传送，实现与计算机的串口通信。
+
+  该信号处理系统实现了对信号的良好检测。与计算机之间的串口通信可以实现数据在计算机上的显示、统计、储存等功能，为打靶者提供非常直接、准确的打靶结果，有利于提高打靶效果。
+
+  \keywords{激光打靶, 信号处理, 信号编码, 串行传输}
+\end{abstract}
+
+\begin{abstract}[en]
+
+  The main aim of this thesis is to design and realize signal processing of a self-developed laser target shooting system and then realize the whole laser target shooting system. The laser target shooting system consists of semiconductor laser gun, photoelectric detector, and signal processing circuit, which is the key part of the whole system. Laser target shooting process go though following steps: laser gun emitted a pulse of laser, which would be received by the laser target and the results of shooting will be shown on screen of computer by series signal processing. The laser target consists of some silicon photoelectric units that were encoded with different numbers according to certain rule. The result of the shooting will be got when detecting the number of the photoelectric unit that receives the laser pulse.
+
+  The signal processing of the laser target shooting system mainly consists of signal amplification, signal encoding and data transmission. The inspected photoelectric signal was then amplified by operator amplifiers, coded by multiplex priority encoder according to the prearranged rule, and then transferred to computer by 89C2051 MCU through its serial port. And then computer can process the signal. The program of 89C2051 MCU is designed in keil and debugged using keil compiler. It is designed to control the data transmission with computer.
+  
+  The designed signal processing system can detect signal effectively. Through the serial data transmission, computer can process the shooting result, such as display, statistics and storage etc. It provide direct and exact shooting result for trainer, so it can increase the efficiency of the shooting training.
+
+\keywords
+{
+  laser target shooting, signal amplification,
+  signal encode, serial data transmission
+}
+\end{abstract}
