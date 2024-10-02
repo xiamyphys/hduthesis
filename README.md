@@ -10,4 +10,4 @@ This work may be distributed and/or modified under the conditions of the [LaTeX 
 
 This work has the LPPL maintenance status `maintained`.
 
-The Current Maintainers of this work is [Mingyu Xia](https://www.ctan.org/author/xia-my).
+The Current Maintainer of this work is [Mingyu Xia](https://www.ctan.org/author/xia-my).
