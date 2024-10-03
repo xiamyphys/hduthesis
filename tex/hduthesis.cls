@@ -60,7 +60,7 @@
 \ProcessOptions\relax
 \LoadClass[a4paper]{report}
 
-\RequirePackage{siunitx, circuitikz, pgfplots, lipsum, zhlipsum}
+\RequirePackage{siunitx, circuitikz, pgfplots, listings, lipsum, zhlipsum}
 \pgfplotsset{compat = newest}
 
 \keys_define:nn { hduthesis / docinfo }
@@ -72,25 +72,34 @@
     stdntid.tl_set:N = \l__docinfo_stdntid_tl,
     author.tl_set:N = \l__docinfo_author_tl,
     supervisor.tl_set:N = \l__docinfo_supervisor_tl,
-    reference.tl_set:N = \l__docinfo_reference_tl,
   }
 \NewDocumentCommand \DocInfo { m }
-{ \keys_set:nn { hduthesis / docinfo } { #1 } }
-
-\tl_if_empty:NTF \l__docinfo_reference_tl {
-  \def\printbibliography{}
-}{
-  \RequirePackage[
-    backend = biber,
-    citestyle = gb7714-2015,
-    bibstyle = gb7714-2015,
-  ]{biblatex}
+{
+  \keys_set:nn { hduthesis / docinfo } { #1 }
 }
 
 \hduthesis_load_module:n {font}
 \hduthesis_load_module:n {cover}
 \hduthesis_load_module:n {matter}
 \hduthesis_load_module:n {layout}
+
+\RequirePackage[
+  backend = biber,
+  citestyle = gb7714-2015,
+  bibstyle = gb7714-2015,
+]{biblatex}
+\AddToHook{cmd/printbibliography/before}
+{
+  \group_begin:
+  \AddToHook{cmd/@makeschapterhead/after}
+  {
+    \linespread{1.3}
+  }
+}
+\AddToHook{cmd/printbibliography/after}
+{
+  \group_end:
+}
 
 \endinput
 

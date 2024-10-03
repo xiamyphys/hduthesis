@@ -1,0 +1,140 @@
+\chapter{软件设计}
+
+\section{总体方案}
+
+该系统的信号检测与数据传送部分，涉及的软件部分较少。主要是 2051 单片机数据串行通
+信及通信协议的程序设计。
+
+对于 2051 的程序设计\cite{cn12}，由于所需实现的功能较简单，采用汇编的形式。编
+译器采用 Keil 7.02b。该编译器是 51 系列单片机程序设计的常用工具，既可用汇编，
+也支持 C 语言编译。同时具有完善的调试功能。
+
+\section{程序流图}
+
+\begin{figure}[htbp]
+  \centering
+  \begin{tikzpicture}
+  [
+    every node/.style = { font = {\small}, minimum height = 2.5em}
+  ]
+    \node [draw, rectangle, minimum width = 12em, minimum height = 2em] (a) at (0,0) {初始参数设置};
+    \node [draw, rectangle, minimum width = 10em, rounded corners = 1.2em, below = of a] (b) {等待中断};
+    \node [draw, rectangle, minimum width = 11em, diamond, aspect=3, below = of b] (c) {中断服务程};
+    \node [draw, rectangle, minimum width = 11em, diamond, aspect=3, below = of c, yshift = 2ex] (d) {读取 P1 口值};
+    \node [draw, rectangle, minimum width = 8em, rectangle, below = of d, minimum height = 2em] (e) {发送数据帧};
+    \node [draw, rectangle, minimum width = 11em, diamond, aspect=3, below = of e] (f) {延时$\qty{200}\ms$};
+    \node [draw, rectangle, minimum width = 8em, rectangle, below = of f, minimum height = 2em, yshift = 2ex] (g) {清中断标志};
+    \node [draw, rectangle, minimum width = 10em, rounded corners = 1.2em, below = of g] (h) {中断返回};
+    \draw [->] (a.south) -- (b.north);
+    \draw [->] (b.south) -- (c.north);
+    \draw [->] (c.south) -- (d.north);
+    \draw [->] (d.south) -- (e.north);
+    \draw [->] (e.south) -- (f.north);
+    \draw [->] (f.south) -- (g.north);
+    \draw [->] (g.south) -- (h.north);
+    \draw [->] (h.east) --++ (1,0) |- (b.east);
+  \end{tikzpicture}
+  \caption{串行发送流程图}
+  \label{5-1}
+\end{figure}
+
+\section{模块说明}
+\newpage
+
+\begin{enumerate}
+  \item 主程序：
+  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+      MAIN:
+      MOV SP,#0X60  ；堆栈初始化
+      CALL INIT     ；各寄存器参数设置
+      MOV 40H,#0x01 ；打靶次数置 1
+      AJMP $        ；等待中断
+  \end{lstlisting}
+  \item 初始化程序：
+  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+      INIT:
+      MOV TMOD,#0X21；波特率发生器
+      MOV TL1,#0XFD ；波特率 9600bps
+      MOV TH1,#0XFD
+      CLR ET1       ；禁止 timer1
+      SETB PT1      ；时钟 1 优先级:高
+      MOV SCON,#0x40；串口工作模式 1,SM2=0,REN=0
+      MOV PCON,#0   ；波特率 9600bps
+      SETB EA       ；中断允许
+      CLR PS        ；关闭串口中断
+      CLR ES        ；串口优先级:低
+      SETB EX0      ；开外部中断 INT0 SETB IT0 ；下降沿有效
+      CLR PX0       ；INT0 优先级:低
+      SETB TR1      ；时钟 1 开始计数
+      RET
+  \end{lstlisting}
+  \item 中断服务程序：
+  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+      _INT0:        ；ISR 中断服务程序
+      NOP
+      CALL DELAY_2MS；同步延时
+      MOV P1,#0xff  ；读 P1 口前先置 1
+      MOV A,P1      ；读 P1 口
+      CALL INT0_SEND
+      RET
+  \end{lstlisting}
+  \item 数据帧传送子程序：
+  \begin{figure}[htbp]
+    \centering\small
+    \renewcommand{\arraystretch}{.6}
+    \caption{数据帧格式}
+    \begin{tabular}{|*{4}{>{\centering\arraybackslash}p{.22\linewidth}|}}
+      \hline
+      标志位SYNC & 打靶次数 & 打靶成绩 & 校验位CHECKSUM\\
+      \hline
+      \#0x30 & TIMES & RESULT & TIMES\ensuremath+RES\\
+      \hline
+    \end{tabular}
+  \end{figure}
+
+  例：30 02 15 17（十六进制）
+
+  表示第二次打靶，击中第 21 号（对应环数：7 环 偏移方向：右上）。
+  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+      INT0_SEND:      ；数据帧传送子程序
+      PUSH ACC        ；保护 ACC
+      CLR A
+      ADD A,#0X30
+      CALL UART_SEND  ；发送标志位
+      MOV A,40H
+      CALL UART_SEND  ；发送打靶次数
+      POP ACC
+      CALL UART_SEND  ；发送打靶成绩
+      ADD A,#0X30
+      ADD A,0040H
+      CALL UART_SEND  ；发送校验位
+      INC 0040H       ；打靶次数累加 1
+      CALL DELAY_200MS；延时 200ms
+      CLR EX0         ；关外部中断
+      CLR IE0         ；清 INT0 外部中断请求标志位――防止外部中断寄存而引起多次中断。
+      SETB EX0        ；开中断
+      RETI
+  \end{lstlisting}
+  \item 串行发送字节
+  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+      UART_SEND:     ；串行发送一个字节
+      MOV SBUF,A
+      JNB TI,$       ；等待发送完毕
+      CLR TI         ；
+      RET
+  \end{lstlisting}
+  \item 定时程序：
+  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+      DELAY_2MS:     ；用定时器延时 2ms
+      MOV R7,#21;21
+      DLY1:MOV R6,#42
+      DLY2:DJNZ R6,DLY2
+      DJNZ R7,DLY1
+      RET
+      DELAY_10MS:   ；调用 DELAY_2MS，实现延时 10ms
+      MOV R5,#5
+      DLY: CALL DELAY_2MS
+      DJNZ R5,DLY
+      RET
+\end{lstlisting}
+\end{enumerate}

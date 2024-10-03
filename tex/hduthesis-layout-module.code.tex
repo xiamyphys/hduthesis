@@ -21,6 +21,8 @@
           \large \bfseries #1\par\nobreak
           \vskip 25\p@
       }
+      \tl_set:Nn \l__toc_schapter_tl {#1}
+      \addcontentsline{toc}{chapter}{\l__toc_schapter_tl}
     \thispagestyle{fancy}
   }
 \renewcommand\section
@@ -45,7 +47,7 @@
     top = 3.25cm, bottom = 2cm, left = 4cm, right = 2cm,
     headheight = 15pt, headsep = .72cm
   }
-\chead{\raisebox{.32ex}{\small 杭州电子科技大学本科毕业设计（论文）}}
+\chead{\raisebox{.12ex}{\small 杭州电子科技大学本科毕业设计（论文）}}
 \lhead{}\rhead{}
 \pagestyle{fancy}
 \RequirePackage{multicol, cleveref}

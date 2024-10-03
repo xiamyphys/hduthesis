@@ -200,7 +200,7 @@ $R_3$和$R_7$为输入匹配电阻。
   \newpage
   \begin{table}
     \centering\scriptsize
-    \renewcommand\arraystretch{.425}
+    \renewcommand\arraystretch{.51}
     \begin{tabular}{|>{\centering\arraybackslash\sffamily}p{.04\linewidth}|*{8}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{3}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{2}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|}
       \hline
       \multicolumn{9}{|>{\sffamily\bfseries}c|}{INPUTS} & \multicolumn{5}{>{\sffamily\bfseries}c|}{OUTPUTS}\\
@@ -222,4 +222,88 @@ $R_3$和$R_7$为输入匹配电阻。
     \label{4-7}
   \end{table}
   \item 8-3 线优先编码器扩展为 40-6 线优先编码器（\cref{4-6}）
+  
+  5 片 74HC148 并排用作输入，其输入从低位片到高位片排列为
+  $I_0\sim I_{39}$ 。每一个高位片的输出允许端 Eo 接其相对低位片的使能端 EI。这样，当总使能$\text{EI}=0$时，允许电路进行编码工作，若高位片的诸输入中有一
+  个为$0$时，该片的 $\text{Eo}=1$，$\text{Gs}=0$，这样就禁止了低位片的编
+  码，以此类推，5 片 74HC148 的输入端编码便具有了优先性。
+
+  5 片 74HC148 的允许扩展端 Gs 按低位片至高位片的顺序分别接到第六片74HC148
+  的$I_0$、$I_1$、$I_2$、$I_3$、$I_4$输入端，而$I_5$、$I_6$、$I_7$端则接
+  高电平（表示无输入）。这样第六片 74HC148 的三位输出便表示整个 40-6 线优先编
+  码器的高三位$A_5$、$A_4$、$A_3$。而 40-6 线优先编码器的低三位输出$A_2$、$A_1$、$A_0$与前 5 片 74HC148 的输出端一致。
+
+  由于 74HC148 的输出端不是三态门，不能直接连接在一起。而把 5 片 74HC148的同
+  名输出端接到 74LS30（8 输入的与非门）取与非便可以解决这个问题。同时输出取反，
+  输出为逻辑 1 有效。为使高三位输出与低三位输出一致，用 CD4049反相器对高三位取
+  反。
+  
+  40-6 线优先编码器的六个输出均为逻辑 1 有效，可以接到后续的 2051 单片机进行串
+  行传输。
 \end{enumerate}
+
+\section{串行传送}
+
+为实现将编码器输出的 6 位并行信号串行传送，同时实现数据发送和打靶射击的同步性。采
+用 89C2051 单片机便可实现要求。
+
+\subsection{单片机及外围电路图}
+
+\newpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = .86\linewidth]{image-0419}
+  \caption{2051 单片机及其外围电路图}\label{4-8}
+\end{figure}
+
+\subsection{电路原理}
+
+\begin{enumerate}
+  \item 编码器的输出通过 2051 P1 口的低 6 位（高 2 位接地为逻辑 0）输入。
+  \item 选用 $\qty{11.0592}\MHz$ 的晶振构成单片机的时钟，这样在串口工作方式 1 下可得到准确的 $\qty{9600}{bps}$ 的串行波特率，方便计算机的接收。
+  \item 单片机接有复位开关按钮。
+  \item 实现打靶和信号采集传送的同步化。
+\end{enumerate}
+
+由于采用单片机的外部中断 0（$\overline{INTO}$）作为数据串行传送的使能端，且
+$\overline{INTO}$设为下降的跳变沿有效。使能开关（激光枪的开关）一端接地，另一
+端接$\overline{INTO}$，又经上拉电阻接到电源，这样当开关按下时，便有下降沿的跳变信号输入$\overline{INTO}$，产生中断。
+
+同时，开关又要同步控制激光枪的发射。因此开关又接激光头的负端，从而控制激光头负端
+的接地，只有当开关按下时，激光头两端才有工作电压。
+
+这样，同一个开关既控制单片机的中断，又同时控制激光枪的发射，从而达到打靶和信号采
+集传送这两个“动作”的同步化。
+
+\subsection{AT89C2051 单片机\cite{cn12}}
+
+AT89C2051 单片机是 AT89C51 的简化型号，其指令系统和内部 RAM 均与 AT89C51相
+同。不同的是它的内部 ROM 为 2k，而 89C51 为 4k，而且 2051 比 89C51 少了 P0
+和 P2 输入/输出口以及外部 ROM、RAM 的扩展端，因此在引脚上 2051 只有 20 个脚。
+AT89C2051 单片机主要适用于较为简单的微控制系统。在本系统中，用到 AT89C2051的 
+6 个外部 I/O 口，一个外部中断和串行输出口。
+
+\newpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = .53\linewidth]{image-0439}
+  \caption{2051 信号引脚图}
+  \label{4-9}
+\end{figure}
+
+\section{电平转换}
+
+在不同的数字系统中，其电平标准是不同的。该系统中就包括了 TTL 电平标准和 RS-232 
+电平标准，要实现两个标准的正常通信，必须进行电平转换。该系统采用使用简单的 
+MAX232CPE 芯片。
+
+一片MAX232CPE芯片可完成2路TTL/CMOS～RS-23 的电平转换和2路RS-232～TTL/CMOS
+的电平转换。实际电路中只有一路单片机的 TXD 串口输出，不进行RXD串口输入。因此，选
+用引脚 11 接 2051 TXD 串口输出；而对应的 14 脚则接到计算机的串口输入端。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = .51\linewidth]{image-0440}
+  \caption{MAX232CPE 芯片内部结构}
+  \label{4-10}
+\end{figure}

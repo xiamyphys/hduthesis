@@ -5,7 +5,7 @@
   {
     \str_if_eq:nnT {#1} {en}
     {
-      \tl_set:Nn \l__keywords_name_tl {Key~words:~}
+      \tl_set:Nn \l__keywords_name_tl {Keywords:~}
       \tl_set:Nn \l__keywords_sep_tl {;~}
     }
     \str_if_eq:nnT {#1} {cn}
@@ -38,31 +38,31 @@
     \clist_use:Nn \l__abstract_keywords_clist {\l__keywords_sep_tl}
   }
 
-\newcommand\frontmatter{%
-    \cleardoublepage
-  %\@mainmatterfalse
-  \pagestyle{fancy}
-  \pagenumbering{Roman}}
-
-\newcommand\mainmatter{%
-    \cleardoublepage
- % \@mainmattertrue
-  \pagenumbering{arabic}}
-
-\newcommand\backmatter{%
-  \if@openright
-    \cleardoublepage
-  \else
-    \clearpage
-  \fi
- % \@mainmatterfalse
-   }
+\newcommand\frontmatter
+{
+  \clearpage
+  \pagenumbering{Roman}
+  \cfoot{}
+}
+\newcommand\mainmatter
+{
+  \clearpage
+  \pagenumbering{arabic}
+  \cfoot \thepage
+}
+\AddToHook{cmd/tableofcontents/after}{\thispagestyle{fancy}}
 
 \RequirePackage{tocloft}
 \renewcommand{\contentsname}{\hfill 目\qquad 录\hfill}
 \renewcommand \cfttoctitlefont{\sffamily\large}
-\setlength{\cftbeforetoctitleskip}{1.5ex}
-\setlength{\cftaftertoctitleskip}{2.5ex}
+\dim_set:Nn \cftbeforetoctitleskip {3pt}
+\dim_set:Nn \cftaftertoctitleskip {24pt}
+\dim_set:Nn \cftbeforechapskip {1pt}
+\dim_set:Nn \cftbeforesecskip {-.2pt}
+\renewcommand*\l@chapter{\@dottedtocline{1}{0em}{1.6em}}
+\renewcommand*\l@section{\@dottedtocline{1}{2.3em}{2.1em}}
+\renewcommand*{\@dotsep}{1.7}
+\renewcommand*{\@pnumwidth}{2ex}
 \renewcommand{\cftchapfont}{\normalfont}
 \setcounter{tocdepth}{1}
 

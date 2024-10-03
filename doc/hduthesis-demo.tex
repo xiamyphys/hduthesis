@@ -3,10 +3,7 @@
 \setCJKmainfont{SimSong}
 \setCJKsansfont{STHeiti}
 \tikzset{ >= stealth }
-\let\Bbbk\relax
-\let\heavymath\relax
-
-% \addbibresource{reference.bib}
+\usetikzlibrary{positioning,shapes.geometric}
 
 \DocInfo
 {
@@ -17,9 +14,8 @@
   % stdntid    = ,
   % author     = ,
   % supervisor = ,
-  % reference  = reference.bib,
 }
-\def\cite#1{}
+\addbibresource{reference.bib}
 
 \begin{document}
 
@@ -36,8 +32,12 @@
 \input{cha/cha2.tex}
 \input{cha/cha3.tex}
 \input{cha/cha4.tex}
-
+\input{cha/cha5.tex}
+\input{cha/cha6.tex}
+\input{cha/cha7.tex}
 \input{cha/thanks.tex}
 \printbibliography
+\appendix
+\chapter*{附录}
 
 \end{document}
