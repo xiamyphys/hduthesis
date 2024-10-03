@@ -57,6 +57,12 @@
 \hduthesis_load_module:n {matter}
 \hduthesis_load_module:n {layout}
 
+\RequirePackage[
+  backend = biber,
+  citestyle = gb7714-2015,
+  bibstyle = gb7714-2015,
+  ]{biblatex}
+
 \endinput
 
 % End of file hduthesis.cls
