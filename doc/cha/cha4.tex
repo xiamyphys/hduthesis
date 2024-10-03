@@ -1,0 +1,225 @@
+\chapter{硬件设计}
+
+\section{信号放大电路}
+
+在光电探测系统中，探测器输出的电信号非常微弱，一般为毫伏级。为记录每一次打靶的结
+果，信号放大与处理电路是打靶系统中不可或缺的。在探测器上直接进行信号处理十分困
+难，一种常用的解决办法是在探测器后接前置放大器，用来放大探测器的输出信号，然后成
+功地传输到信号处理系统的有关电路部分。前置放大器的设计要求是低噪声，高增益，低输
+出阻抗，大的动态范围，和较好的抗噪声能力。
+
+在激光打靶系统中，对光电池产生的脉冲信号的具体大小值要求不高，只需检测出有效的脉
+冲信号，因此可选用集成运放来组成运算放大电路。
+
+通过测试，得到光电探测器对的激光脉冲的响应幅度典型值约为$\qty5\mV$，若激光击中
+在两块或多块探测器边界处，则任何一块光电探测器的响应幅度会减少，因此所检测的脉冲
+幅度范围大约是$\num3\sim\qty5\mV$.为使每块光电探测器均能检测出信号，使之达到
+TTL 电平要求，实现信号检测，必须对信号放大约 1000 倍。单级运放难以达到这么高的
+放大倍数，因此采用二级运放进行放大，第一级为前置放大器。为减少前级放大器的偏移对
+后级放大器的影响，设计其放大倍数$A_1=100$；从而次级放大器的放大倍数$A_2=10$。
+
+\subsection{集成运算放大器（LM324）}
+
+集成运算放大器是实现高增益放大功能的一种集成器件\cite{cn9}，早期主要用来实现对模拟量进行
+数学运算的功能，目前随着器件性能的改进，它已成为通用的增益器件，应用范围非常广泛。
+
+从电特性来看，集成运放接近理想的电压放大器件，它不仅有很大的输入电阻和很小的输出
+电阻，而且还有很高的电压增益，此外，静态工作时，它的输入和输出电位均为零，这样，
+在与其它集成运放连接时，就不需要考虑它们之间的电平配置问题。
+
+LM324 是四通道的低功耗运算放大器，它的内部包含四组形式完全相同的运算放大器，除电
+源共用外，四组运放相互独立，其性能参数有以下几个方面：
+
+\begin{enumerate}
+  \item 单电源工作方式，工作电平$\qty3\V\sim\qty{30}\V$
+  \item 低消耗电流：约$\qty{0.8}\mA$
+  \item 低输入偏移：输入电压偏移：$\qty3\mV$（Typ）；输入电流偏移：$\qty2\nA$（Typ）
+  \item 开环增益：$\qty{100}\V/\unit\mV=\qty{100}\dB$（Typ）
+  \item 宽响应频带
+\end{enumerate}
+
+\newpage
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = .6\linewidth]{image-0162}
+  \caption{LM324内部结构}
+  \label{4-1}
+\end{figure}
+
+\subsection{放大电路图}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = .93\linewidth]{image-0163}
+  \caption{运算放大器电路图}
+  \label{4-2}
+\end{figure}
+
+放大器电路如\cref{4-2} 所示。它由两级结构相同的同相放大器组成，集成放大器选用
+LM324（\cref{4-1}）。信号经隔直流电容C1从第一级放大器的正端
+``\ensuremath+''输入，经过放大后输出，再经过级间耦合电容C2输入第二级放大器
+的正端。前级的放大倍数$A_1=R_2/R_1=100$，后级的放大倍数$A_2=R_6/R_5=10$，
+$R_3$和$R_7$为输入匹配电阻。
+
+\subsection{电路原理}
+
+\begin{enumerate}
+  \item 同相放大器\cite{cn10}（\cref{4-3}）
+  
+  集成运放是一种十分理想的增益器件，性能好，使用方便。该电路采用 2 级放大器级
+  联，每级的放大器均采用同相放大。
+
+  由集成运放构成的同相放大器，其特点是输入信号加在同相输入端，而反馈信号加在反相端。根据理想化条件，由于$v_+=v_s$，因而$v_-\approx v_s$。更具$i\to0$（虚断），$v_-$又是$v_o$在$R_1$上的分压值，即：
+  \begin{equation}
+    v_-=v_o\frac{R_1}{R_1+R_f}
+  \end{equation}
+  因而，放大器的增益：
+  
+  \begin{equation}
+    A_{Vf}=\frac{v_o}{v_s}=\frac{R_1+R_f}{R_1}=1+\frac{R_f}{R_1}
+  \end{equation}
+  $\because A_{Vf}>0$，所以$v_o$与$v_s$同相。
+  
+  \begin{figure}[htbp]
+    \centering
+    \includegraphics[width = .42\linewidth]{image-0236}
+    \caption{同相放大器}
+    \label{4-3}
+  \end{figure}
+  \item 外围电路
+  
+  光电传感器对外部光线也有响应，因此必须滤除这种干扰。由于背景光线是持续信号，其
+  响应主要是直流量，在第一级放大器输入端的前面设计接入一个$\qty1\uF$电容C1起到
+  隔离直流作用，能起到很好的效果。第二级的$\qty1\uF$电容C2用于两级放大器的耦合。
+
+  第一级放大器输入端和地之间接 R3；第二级放大器输入端和地之间接 R7。使得：
+
+  \begin{equation}
+    \begin{cases}
+      R_3\approx R_1//R_2\\
+      R_7\approx R_5//R_6
+    \end{cases}
+  \end{equation}
+
+  这样，运放的正、负输入端对地的等效电阻相等，从而降低运放的电压偏移。
+\end{enumerate}
+
+\subsection{电路参数}
+
+\begin{enumerate}
+  \item \makebox[9em][l]{输入脉冲幅度：} $U_i\approx\num3\sim\qty5\mV$
+  \item \makebox[9em][l]{输入电阻：} $R_i\approx\qty{10}\kohm$
+  \item \makebox[9em][l]{输出电阻：} $R_o\approx\qty1\kohm$
+  \item \makebox[9em][l]{放大倍数：} $A=A_1\cdot A_2\approx10\times100=1000$
+  \item \makebox[9em][l]{放大器级数：} 两级，前级$A_1\approx100$；后级$A_2\approx10$
+  \item \makebox[9em][l]{耦合方法：} 电容耦合
+\end{enumerate}
+
+\section{整形电路\cite{cn11}}
+
+光电池的输出脉冲并不是规则的矩形脉冲信号，而是类似升余弦信号。再经放大后也会产生
+失真，因此必须对信号进行整形。采用常用的 CD4093 施密特触发器便可实现整形功能，改
+善脉冲波形，确保后续编码器的正常编码。
+
+施密特触发器不仅可以进行波形整形，它的迟滞特性还可以有效地克服噪声和干扰的影响，只要噪声和干扰的大小处在迟滞宽度内，就不会有错误的输出。施密特触发器属于电平触
+发，对于缓慢变化的信号仍然适用，当输入信号达到阈值电压时，电路状态发生转换，通过
+电路内部的正反馈过程使得输出电压的波形的边沿变得很陡峭。利用施密特触发器可以实现
+有效脉冲的识别见\cref{4-5}。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = .65\linewidth]{image-0284}
+  \caption{施密特触发器的电压传输特性 (a) 同相输出；(b) 反相输出}
+  \label{4-4}
+\end{figure}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = .95\linewidth]{image-0285}
+  \caption{利用施密特触发器实现有效脉冲的识别}
+  \label{4-5}
+\end{figure}
+
+\section{编码电路\cite{cn11}}
+
+对于 38 路信号通道，必须对其进行编码以便于信号识别和传输。38 路信号按照设计方案
+编码为 1--38 号，脱靶无信号记为 0 号。对多个探测器同时接收到信号的情况，对应于
+探测器的码号就是取码号大的探测器为有效，采用优先编码器便可实现编码的优先选择。
+
+商用的单个优先编码器的编码输入最多只有 8 路，要构成更多路的优先编码
+器，可以采用 6 片 8-3 优先编码器进行扩展为 40-6 优先编码器。
+
+\subsection{编码电路图}
+
+\newpage
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width = \linewidth]{image-0289}
+  \caption{40-6 优先编码器电路图}
+  \label{4-6}
+\end{figure}
+
+\subsection{电路原理}
+
+\begin{enumerate}
+  \item 优先编码器（74HC148）
+  
+  8-3 线优先编码器的功能表如\cref{4-7}。待编码的 8 条输入线 采用 8 中取 1 
+  码，逻辑 0 有效，编码后的输出 用反码表示。可以看出，编码器是以输入为 0 的最高
+  优先编码的，而低位若同时输入 0，则是无意义的。此外，电路还设有选通输入，即使能
+  端 EI，它也是逻辑 0 有效；输出还设有允许输出端 Eo 及允许扩展端 Gs，利用它们
+  可判断出 是否有效，以及是否允许扩展编码。根据真值表，写出编码器的逻辑表达式如下：
+
+  \begin{equation}
+    \begin{aligned}
+      \overline{A_2}&=\overline{EI}\cdot I_7+\overline{EI}\cdot I_7\cdot I_6\cdot\overline{I_5}+\overline{EI}\cdot I_7\cdot I_6\cdot I_5\cdot\overline{I_4}\\
+      &=\overline{EI}(\overline{I_7}+I_7\overline{I_6}+I_7I_6I_5\overline{I_4})=\overline{EI}(\overline{I_7}+\overline{I_6}+\overline{I_5}+\overline{I_4})
+    \end{aligned}
+  \end{equation}
+  故
+  \begin{equation}
+    A_2=\overline{\overline{EI}(\overline{I_7}+\overline{I_6}+\overline{I_5}+\overline{I_4})}
+  \end{equation}
+  同理：
+  \begin{equation}
+    A_1=\overline{\overline{EI}(\overline{I_7}+\overline{I_6}+I_5I_4\overline{I_3}+I_5I_4I_2)}
+  \end{equation}
+
+  \begin{equation}
+    A_0=\overline{\overline{EI}(\overline{I_7}+I_6\overline{I_5}+I_6I_4\overline{I_3}+I_6I_4I_2\overline{I_1})}
+  \end{equation}
+  而允许输出为：
+  \begin{equation}
+    E_OE_0=\overline{\overline{EI}\cdot I_7I_6I_5I_4I_3I_2I_1I_0}
+  \end{equation}
+  允许扩展端是：
+  \begin{equation}
+    Gs=EI+\overline{EI}\cdot I_7\;I_6\;I_5\;I_4\;I_3\;I_2\;I_1\;I_0=\overline{\overline{EI}\cdot E_O}
+  \end{equation}
+  \newpage
+  \begin{table}
+    \centering\scriptsize
+    \renewcommand\arraystretch{.425}
+    \begin{tabular}{|>{\centering\arraybackslash\sffamily}p{.04\linewidth}|*{8}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{3}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{2}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|}
+      \hline
+      \multicolumn{9}{|>{\sffamily\bfseries}c|}{INPUTS} & \multicolumn{5}{>{\sffamily\bfseries}c|}{OUTPUTS}\\
+      \hline
+      EI & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & A2 & A1 & A0 & GS & EO\\
+      H & X & X & X & X & X & X & X & X & H & H & H & H & H\\
+      L & H & H & H & H & H & H & H & H & H & H & H & H & L\\
+      L & X & X & X & X & X & X & X & L & L & L & L & L & H\\
+      L & X & X & X & X & X & X & L & H & L & L & H & L & H\\
+      L & X & X & X & X & X & L & H & H & L & H & L & L & H\\
+      L & X & X & X & X & L & H & H & H & L & H & H & L & H\\
+      L & X & X & X & L & H & H & H & H & X & L & L & L & H\\
+      L & X & X & L & H & H & H & H & H & X & L & H & L & H\\
+      L & X & L & H & H & H & H & H & H & X & H & L & L & H\\
+      L & L & H & H & H & H & H & H & H & X & H & H & L & H\\
+      \hline
+    \end{tabular}
+    \caption{8-3 线优先编码器真值表（74HC148）}
+    \label{4-7}
+  \end{table}
+  \item 8-3 线优先编码器扩展为 40-6 线优先编码器（\cref{4-6}）
+\end{enumerate}

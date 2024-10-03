@@ -1,3 +1,5 @@
+\hduthesis_provide_module:n {font}
+
 \RequirePackage[zihao = -4]{ctex}
 \linespread{1.39}
 \setlength{\parindent}{2\ccwd}
@@ -30,4 +32,13 @@
   bm, cancel, physics2, fixdif, derivative
 }
 \usephysicsmodule{ab, braket, ab.legacy, op.legacy}
+
+\renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
+\AtBeginDocument{
+  \setlength{\abovedisplayshortskip}{-18pt}
+  \setlength{\abovedisplayskip}{6pt}
+  \setlength{\belowdisplayshortskip}{6pt}
+  \setlength{\belowdisplayskip}{6pt}
+}
+
 \endinput

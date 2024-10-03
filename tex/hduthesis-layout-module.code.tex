@@ -1,3 +1,5 @@
+\hduthesis_provide_module:n {layout}
+
 \def\@makechapterhead#1
   {
     \vspace*{-13\p@}%
@@ -9,22 +11,41 @@
       }
     \thispagestyle{fancy}
   }
-
+\def\@makeschapterhead#1
+  {
+    \vspace*{-13\p@}%
+      {
+        \parindent \z@ \raggedright
+          \centering \sffamily
+          \interlinepenalty\@M
+          \large \bfseries #1\par\nobreak
+          \vskip 25\p@
+      }
+    \thispagestyle{fancy}
+  }
 \renewcommand\section
-  {\vspace*{-2.8ex}
+  {
+    \vspace*{-2.9ex}
     \@startsection {section}{1}{\z@}%
       {0ex}%
       {.1pt}%
       {\sffamily\semilarge}
+  }
+\renewcommand\subsection
+  {\vspace*{-1.9ex}
+    \@startsection {subsection}{1}{\z@}%
+      {0ex}%
+      {.1pt}%
+      {\sffamily}
   }
 
 \RequirePackage{geometry, enumitem, booktabs, fancyhdr}
 \geometry
   {
     top = 3.25cm, bottom = 2cm, left = 4cm, right = 2cm,
-    headheight = 15pt, headsep = .65cm
+    headheight = 15pt, headsep = .72cm
   }
-\chead{\small 杭州电子科技大学本科毕业设计（论文）}
+\chead{\raisebox{.32ex}{\small 杭州电子科技大学本科毕业设计（论文）}}
 \lhead{}\rhead{}
 \pagestyle{fancy}
 \RequirePackage{multicol, cleveref}
@@ -38,13 +59,15 @@
 \RequirePackage[skip = .5ex, labelsep = quad, font = small]{caption}
 \renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
 \renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
-\AddToHook{env/figure/after}{\vspace*{-1.5em}}
-\AddToHook{env/table/before}{\vspace*{-1em}}
-\AddToHook{env/table/after}{\vspace*{-2ex}}
+\AddToHook{env/figure/after}{\vskip-1.5em}
+\AddToHook{env/table/before}{\vskip-1em}
+\AddToHook{env/table/after}{\vskip-2ex}
 \setlist[enumerate,1]
 {
   label = （\arabic*）, itemindent = 4.5em, leftmargin = 0em,
   labelsep = 0em, topsep = 0pt, itemsep = 0pt, partopsep = 0em,
-  parsep = 0em
+  parsep = 0em, listparindent = 2\ccwd
 }
+\AddToHook{env/enumerate/after}{\vspace*{.1ex}}
+
 \endinput

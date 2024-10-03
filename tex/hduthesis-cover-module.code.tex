@@ -1,15 +1,4 @@
-\keys_define:nn { hduthesis / coverinfo }
-  {
-    title.tl_set:N = \l__cover_title_tl,
-    school.tl_set:N = \l__cover_school_tl,
-    major.tl_set:N = \l__cover_major_tl,
-    class.tl_set:N = \l__cover_class_tl,
-    stdntid.tl_set:N = \l__cover_stdntid_tl,
-    author.tl_set:N = \l__cover_author_tl,
-    supervisor.tl_set:N = \l__cover_supervisor_tl,
-  }
-\NewDocumentCommand \CoverInfo { m }
-{ \keys_set:nn { hduthesis / coverinfo } { #1 } }
+\hduthesis_provide_module:n {cover}
 
 \RequirePackage{array}
 \cs_new_protected:Npn \l_spread_box:nn #1#2
@@ -57,37 +46,37 @@
       题\qquad 目 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__cover_title_tl
+        \l__docinfo_title_tl
       }\\[5.8ex]
       学\qquad 院 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__cover_school_tl
+        \l__docinfo_school_tl
       }\\[5.8ex]
       专\qquad 业 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__cover_major_tl
+        \l__docinfo_major_tl
       }\\[5.8ex]
       班\qquad 级 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__cover_class_tl
+        \l__docinfo_class_tl
       }\\[5.8ex]
       学\qquad 号 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__cover_stdntid_tl
+        \l__docinfo_stdntid_tl
       }\\[5.8ex]
       学生姓名 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__cover_author_tl
+        \l__docinfo_author_tl
       }\\[5.8ex]
       指导教师 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__cover_supervisor_tl
+        \l__docinfo_supervisor_tl
       }\\[5.8ex]
       完成日期 &
       \l_center_box:nn{.93\linewidth}{
@@ -109,7 +98,7 @@
     \vspace*{.6\baselineskip}\par
     \linespread{2.1}
       {\semilarge
-        我谨在此承诺：本人所写的毕业论文《\l__cover_title_tl》
+        我谨在此承诺：本人所写的毕业论文《\l__docinfo_title_tl》
         均系本人独立完成，没有抄袭行为，凡涉及其他作者的观点和材料，均作了注释，
         若有不实，后果由本人承担。\par\vspace*{\baselineskip}
         \l_spread_box:nn {.48\linewidth}{}

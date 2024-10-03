@@ -1,23 +1,25 @@
 \documentclass{hduthesis}
 
-\setCJKmainfont{STSong}[AutoFakeBold = 4]
-\setCJKsansfont{STHeiti}[AutoFakeBold]
-\setCJKfamilyfont{zhkai}{Kaiti SC}
-\usepackage{siunitx}
+\setCJKmainfont{SimSong}
+\setCJKsansfont{STHeiti}
 \tikzset{ >= stealth }
+\let\Bbbk\relax
+\let\heavymath\relax
 
-\addbibresource{reference.bib}
+% \addbibresource{reference.bib}
 
-\CoverInfo
+\DocInfo
 {
-  title      = Research about Micromagnetic Skyrmion,
+  title      = XXXXXX,
   school     = 理学院,
-  major      = Physics,
+  % major      = ,
   % class      = ,
-  stdntid    = 9192631770,
+  % stdntid    = ,
   % author     = ,
   % supervisor = ,
+  % reference  = reference.bib,
 }
+\def\cite#1{}
 
 \begin{document}
 
@@ -33,5 +35,9 @@
 \input{cha/cha1.tex}
 \input{cha/cha2.tex}
 \input{cha/cha3.tex}
+\input{cha/cha4.tex}
+
+\input{cha/thanks.tex}
+\printbibliography
 
 \end{document}
