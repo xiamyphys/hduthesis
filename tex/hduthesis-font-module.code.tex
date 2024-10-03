@@ -1,5 +1,5 @@
 \RequirePackage[zihao = -4]{ctex}
-\linespread{1.4}
+\linespread{1.39}
 \setlength{\parindent}{2\ccwd}
 \setmainfont{texgyretermes}
   [
@@ -18,4 +18,16 @@
     Extension = .otf,
     scale = .9
   ]
+
+\newcommand\semilarge
+  {
+    \@setfontsize\semilarge{14}{16.5}
+  }
+
+\RequirePackage
+{
+  amsmath, amssymb, mathtools, extarrows,
+  bm, cancel, physics2, fixdif, derivative
+}
+\usephysicsmodule{ab, braket, ab.legacy, op.legacy}
 \endinput
