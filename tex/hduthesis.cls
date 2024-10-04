@@ -34,7 +34,7 @@
 \RequirePackage{xparse}% For TeX Live 2019 - 2020 Compatibility
 \PassOptionsToPackage{quiet}{xeCJK}
 \PassOptionsToPackage{no-math}{fontspec}
-\ProvidesExplClass{hduthesis}{2024/10/02}{0.2A}{HDU Thesis Class}
+\ProvidesExplClass{hduthesis}{2024/10/04}{0.2A}{HDU Thesis Class}
 
 \cs_new_protected:Npn \hduthesis_msg_new:nn #1#2 
   { \msg_new:nnn { hduthesis } { #1 } { #2 } }
