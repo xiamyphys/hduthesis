@@ -25,7 +25,7 @@
 {
   \begin{center}
     \vspace*{1.8\baselineskip}
-    \includegraphics{hdubrand}
+    \includegraphics{hdubadge}
     \par\vspace*{2\baselineskip}
     \scalebox{3.2}
     {\textbf
@@ -35,7 +35,7 @@
     }
     \par\vspace*{1.3\baselineskip}
     {
-      \LARGE（\int_use:N \l__hduthesis_grade_int\bfseries 届）
+      \LARGE（\int_if_exist_use:N \l__hduthesis_grade_int\bfseries 届）
     }
     \par\vspace*{4\baselineskip}
     \begin{tabular}
@@ -66,7 +66,7 @@
       学\qquad 号 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \l__docinfo_stdntid_tl
+        \int_if_exist_use:N \l__docinfo_stdntid_int
       }\\[5.8ex]
       学生姓名 & 
       \l_center_box:nn{.93\linewidth}

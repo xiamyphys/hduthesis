@@ -111,7 +111,7 @@
       INC 0040H       ；打靶次数累加 1
       CALL DELAY_200MS；延时 200ms
       CLR EX0         ；关外部中断
-      CLR IE0         ；清 INT0 外部中断请求标志位――防止外部中断寄存而引起多次中断。
+      CLR IE0         ；清 INT0 外部中断请求标志位—防止外部中断寄存而引起多次中断。
       SETB EX0        ；开中断
       RETI
   \end{lstlisting}

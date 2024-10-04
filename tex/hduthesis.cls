@@ -20,8 +20,8 @@
 %%                               and README.md.                   *
 %%   available at https://github.com/xiamyphys/hduthesis          *
 %% ****************************************************************
-\def\hduthesis@date{2024/10/07}
-\def\hduthesis@version{0.1A}
+\def\hduthesis@date{2024/10/04}
+\def\hduthesis@version{0.1.0}
 
 \ExplSyntaxOn
 \cs_new_protected_nopar:Npn \hduthesis_provide_module:n #1
@@ -31,10 +31,9 @@
   }
 \ExplSyntaxOff
 
-\RequirePackage{xparse}% For TeX Live 2019 - 2020 Compatibility
 \PassOptionsToPackage{quiet}{xeCJK}
 \PassOptionsToPackage{no-math}{fontspec}
-\ProvidesExplClass{hduthesis}{2024/10/04}{0.2A}{HDU Thesis Class}
+\ProvidesExplClass{hduthesis}{\hduthesis@date}{\hduthesis@version}{HDU Thesis Class}
 
 \cs_new_protected:Npn \hduthesis_msg_new:nn #1#2 
   { \msg_new:nnn { hduthesis } { #1 } { #2 } }
@@ -63,13 +62,21 @@
 \RequirePackage{siunitx, circuitikz, pgfplots, listings, lipsum, zhlipsum}
 \pgfplotsset{compat = newest}
 
+\cs_new_protected_nopar:Npn \int_if_exist_use:N #1
+  {
+    \int_compare:nNnT #1 > 0
+    {
+      \int_use:N #1
+    }
+  }
+
 \keys_define:nn { hduthesis / docinfo }
   {
     title.tl_set:N = \l__docinfo_title_tl,
     school.tl_set:N = \l__docinfo_school_tl,
     major.tl_set:N = \l__docinfo_major_tl,
     class.tl_set:N = \l__docinfo_class_tl,
-    stdntid.tl_set:N = \l__docinfo_stdntid_tl,
+    stdntid.int_set:N = \l__docinfo_stdntid_int,
     author.tl_set:N = \l__docinfo_author_tl,
     supervisor.tl_set:N = \l__docinfo_supervisor_tl,
   }
