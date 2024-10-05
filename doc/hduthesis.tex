@@ -27,7 +27,7 @@
     School of Sciences, Physics Department, Graduate in 06/2025 (expected)
   }
 }
-\date{v0.1.0\footnote{\url{https://github.com/xiamyphys/litetable}} ~(\today)}
+\date{v0.1.1\footnote{\url{https://github.com/xiamyphys/hduthesis}} ~(\today)}
 
 \begin{document}
 
@@ -38,9 +38,9 @@
     \tikz
     {
       \node [opacity = .8] 
-      {\includegraphics[width = .2\paperwidth]{./figures/hdumotto.pdf}};
+      {\includegraphics[width = .2\paperwidth]{hdumotto.pdf}};
       \node [opacity = .3]
-      {\includegraphics[width = .3\paperwidth]{./figures/hdulogo.pdf}};
+      {\includegraphics[width = .3\paperwidth]{hdulogo.pdf}};
     }
   \end{center}
   \begin{abstract}
@@ -52,14 +52,13 @@
     \end{center}
     \begin{enumerate}[leftmargin = 2.5ex]
       \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件.
-      \item 截止本文档编译时，杭州电子科技大学教务处只提供Word模板
-      \footnote
-      {
-        \url{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}
-      }. 作者不对使用本模板产生的格式审查问题负责.
-      \emph{如果您所在的学院要求提交 \cmd{.docx} 格式的论文稿件，请勿执意使用本模板，
-      避免因格式转换带来不必要的麻烦.} 欢迎前往 GitHub 提交反馈意见，为推动学校认证与规范化
-      \textsc{\cls{HduThesis}} 贡献力量.
+      \item 本模板根据杭州电子科技大学教务处颁发的
+      \href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}
+      {杭电理工类毕业论文写作规范} 编写而成. 作者不对使用本模板产生的格式审查问题负责.
+      \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，
+      不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.}
+      \item 欢迎前往 GitHub 提交反馈意见，
+      为推动学校认证与规范化\textsc{\cls{HduThesis}} 贡献力量.
     \end{enumerate}
   \end{abstract}
   \thispagestyle{empty}
@@ -77,7 +76,8 @@
   此命令接收键值，用于设置文档信息. 键 \keys{\cmdmac~title} 用于设置论文标题，
   键 \keys{\cmdmac~school} 用于设置学院，键 \keys{\cmdmac~major} 用于设置专业，
   键 \keys{\cmdmac~class} 用于设置班级，键 \keys{\cmdmac~stdntid} 用于设置学号，
-  键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师.
+  键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师，
+  键 \keys{\cmdmac~reference} 用于设置插入参考文献文件源.
 
   \begin{framed}
     \begin{verbatim}
@@ -85,7 +85,7 @@
     \DocInfo
     {
       title      = XXXXXX ,  school     = 理学院,  major      = ,  class      = ,
-      stdntid    = ,         author     = ,        supervisor = ,
+      stdntid    = 31415926, author     = ,        supervisor = ,  reference  =
     }
     \begin{document}  \maketitle    ...    \end{document}
     \end{verbatim}
@@ -147,24 +147,22 @@
   \fbox{\includegraphics[page = 12, width = .3\linewidth]{hduthesis-demo}}
 \end{center}
 
-同时，模板额外预制了如下宏包
+同时，模板额外预置了以下宏包
 
 \begin{table}[htbp]
   \centering
-  \begin{tabular}{*{6}{p{.13\linewidth}}}
+  \begin{tabular}{*{8}{p{.096\linewidth}}}
     \toprule
-    \pkg{amsmath}    & \pkg{amssymb}   & \pkg{bm} &
-    \pkg{booktabs}   & \pkg{cancel}    & \pkg{cleveref}\\
+    \pkg{amsmath}    & \pkg{amssymb}   & \pkg{bm}         & \pkg{booktabs} &
+    \pkg{cancel}     & \pkg{circuitikz}& \pkg{cleveref}   & \pkg{derivative} \\
     \midrule
-    \pkg{derivative} & \pkg{extarrows} & \pkg{fixdif} &
-    \pkg{mathtools}  & \pkg{multicol}  & \pkg{physics2}\\
+    \pkg{extarrows}  & \pkg{fixdif}    & \pkg{listings}   & \pkg{mathtools}  & \pkg{multicol}   & \pkg{pgfplots}  & \pkg{physics2}   & \pkg{siunitx}\\
     \bottomrule
   \end{tabular}
 \end{table}
 
-如需插入参考文献，在导言区使用命令 \cs{addbibsource}\marg{.bib file name}导入
-\file{.bib} 文件，并在文章末尾输入 \cs{printbiblography} 即可.
-文档已将参考文献格式设置为 \cmd{gb7714-2015}.
+如需插入参考文献，通过命令 \cs{DocInfo} 导入 \file{.bib} 文件后在文章末尾输入
+\cs{printbiblography} 即可输出参考文献列表. 文档已将参考文献格式设置为 \cmd{gb7714-2015}. 若未指定参考文献\file{.bib} 文件，则 \pkg{biblatex} 宏包将不会加载.
 
 \appendix\clearpage
 
@@ -186,28 +184,26 @@
 
 \begin{framed}
   \begin{verbatim}
-    % 预留学号接口，用于后续判断学位.
-    \cs_new_protected_nopar:Npn \int_if_exist_use:N #1
-      {
-        \int_compare:nNnT #1 > 0
-          {
-            \int_use:N #1
-          }
-      }
     \keys_define:nn { hduthesis / docinfo }% 声明相应键
       {
-      title.tl_set:N = \l__docinfo_title_tl,
-      school.tl_set:N = \l__docinfo_school_tl,
-      major.tl_set:N = \l__docinfo_major_tl,
-      class.tl_set:N = \l__docinfo_class_tl,
-      stdntid.int_set:N = \l__docinfo_stdntid_int,
-      author.tl_set:N = \l__docinfo_author_tl,
-      supervisor.tl_set:N = \l__docinfo_supervisor_tl,
-    }
+        title.tl_set:N = \l__docinfo_title_tl,
+        school.tl_set:N = \l__docinfo_school_tl,
+        major.tl_set:N = \l__docinfo_major_tl,
+        class.tl_set:N = \l__docinfo_class_tl,
+        stdntid.tl_set:N = \l__docinfo_stdntid_tl,
+        author.tl_set:N = \l__docinfo_author_tl,
+        supervisor.tl_set:N = \l__docinfo_supervisor_tl,
+        reference.tl_set:N = \l__docinfo_reference_tl,
+      }
+
     \NewDocumentCommand \DocInfo { m }
       {
         \keys_set:nn { hduthesis / docinfo } { #1 }
       }
+
+    % 预留学号接口，用于后续判断学位.
+    % \int_compare:nNnT {\tl_count:N \l__docinfo_stdntid_tl} = {8} { }
+    % \int_compare:nNnTF {\tl_count:N \l__docinfo_stdntid_tl} = {10} { }
   \end{verbatim}    
 \end{framed}
 

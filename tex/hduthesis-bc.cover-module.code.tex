@@ -1,4 +1,4 @@
-\hduthesis_provide_module:n {cover}
+\hduthesis_provide_module:n {bc.cover}
 
 \RequirePackage{array}
 \cs_new_protected:Npn \l_spread_box:nn #1#2
@@ -66,7 +66,7 @@
       学\qquad 号 & 
       \l_center_box:nn{.93\linewidth}
       {
-        \int_if_exist_use:N \l__docinfo_stdntid_int
+        \l__docinfo_stdntid_tl
       }\\[5.8ex]
       学生姓名 & 
       \l_center_box:nn{.93\linewidth}
@@ -118,4 +118,5 @@
       \__hduthesis_cover_promise_aux:
     \endtitlepage
   }
+
 \endinput

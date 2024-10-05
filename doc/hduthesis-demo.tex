@@ -1,7 +1,7 @@
 \documentclass{hduthesis}
 
 \setCJKmainfont{SimSong}
-\setCJKsansfont{STHeiti}[AutoFakeBold]
+\setCJKsansfont{STHeiti}[AutoFakeBold = 2]
 \tikzset{ > = stealth }
 \usetikzlibrary{positioning,shapes.geometric}
 
@@ -11,11 +11,11 @@
   school     = 理学院,
   % major      = ,
   % class      = ,
-  % stdntid    = ,
+  stdntid    = 31415926,
   % author     = ,
   % supervisor = ,
+  reference  = reference.bib
 }
-\addbibresource{reference.bib}
 
 \begin{document}
 
@@ -36,8 +36,9 @@
 \input{cha/cha6.tex}
 \input{cha/cha7.tex}
 \input{cha/thanks.tex}
-\nocite{*}
+
 \printbibliography
+
 \appendix
 \chapter*{附录}
 
