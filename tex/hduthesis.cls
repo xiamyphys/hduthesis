@@ -71,14 +71,14 @@
 
 \keys_define:nn { hduthesis / docinfo }
   {
-    title.clist_set:N = \l__docinfo_title_clist,
-    school.tl_set:N = \l__docinfo_school_tl,
-    major.tl_set:N = \l__docinfo_major_tl,
-    class.tl_set:N = \l__docinfo_class_tl,
-    stdntid.tl_set:N = \l__docinfo_stdntid_tl,
-    author.clist_set:N = \l__docinfo_author_clist,
+    title.clist_set:N      = \l__docinfo_title_clist,
+    school.tl_set:N        = \l__docinfo_school_tl,
+    major.tl_set:N         = \l__docinfo_major_tl,
+    class.tl_set:N         = \l__docinfo_class_tl,
+    stdntid.tl_set:N       = \l__docinfo_stdntid_tl,
+    author.clist_set:N     = \l__docinfo_author_clist,
     supervisor.clist_set:N = \l__docinfo_supervisor_clist,
-    reference.tl_set:N = \l__docinfo_reference_tl,
+    reference.tl_set:N     = \l__docinfo_reference_tl,
   }
 \clist_set:Nn \g_system_month_clist
 {
