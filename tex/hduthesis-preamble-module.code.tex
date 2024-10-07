@@ -1,6 +1,5 @@
-\hduthesis_provide_module:n {matter}
+\hduthesis_provide_module:n {preamble}
 
-\tl_new:N \l__abstract_name_tl
 \RenewDocumentEnvironment {abstract} { O{en} }
   {
     \str_if_eq:nnT {#1} {en}
@@ -13,7 +12,7 @@
       \tl_set:Nn \l__keywords_name_tl {\textsf{关键词：}}
       \tl_set:Nn \l__keywords_sep_tl {；}
     }
-    \vspace*{-\baselineskip}
+    \vspace*{-27\p@}
     \@beginparpenalty\@lowpenalty
     \begin{center}%
       \bfseries\large

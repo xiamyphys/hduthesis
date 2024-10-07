@@ -1,0 +1,134 @@
+\hduthesis_provide_module:n {bc.layout}
+\makeatletter
+
+\geometry { top = 3.25cm, bottom = 2.4cm, left = 4cm, right = 2cm,
+            headheight = 15pt, headsep = .72cm }
+\chead{\raisebox{.12ex}{\small 杭州电子科技大学本科毕业设计（论文）}}\lhead{}\rhead{}
+
+\int_new:N \l__hduthesis_grade_int
+\int_set:Nn \l__hduthesis_grade_int
+  {
+    \int_compare:nNnTF {\c_sys_month_int} < 9
+    {\c_sys_year_int} {\int_eval:n {\c_sys_year_int+1}}
+  }
+\cs_new_protected_nopar:Nn \__hduthesis_cover_bc_aux:
+  {
+    \begin{center}
+      \vspace*{1.8\baselineskip}
+      \includegraphics{hdubadge}
+      \par\vspace*{2\baselineskip}
+      \scalebox{3.2}
+      {
+        \textbf { \l_spread_box:nn {.191\paperwidth} {本科毕业设计} }
+      }
+      \par\vspace*{1.3\baselineskip}
+      {
+        \LARGE（\int_use:N \l__hduthesis_grade_int\bfseries 届）
+      }
+      \par\vspace*{4\baselineskip}
+      \begin{tabular}
+        {
+          >{\large\bfseries}p{5.5\ccwd}@{}
+          >{\large\centering\arraybackslash\kaishu}p{.65\linewidth}
+        }
+        题\qquad 目 & 
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_cntitle_tl }\\[5.4ex]
+        学\qquad 院 & 
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_school_tl }\\[5.4ex]
+        专\qquad 业 & 
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_major_tl }\\[5.4ex]
+        班\qquad 级 & 
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_class_tl }\\[5.4ex]
+        学\qquad 号 & 
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_stdntid_tl }\\[5.4ex]
+        学生姓名 & 
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_cnauthor_tl }\\[5.4ex]
+        指导教师 & 
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_cnsupervisor_tl }\\[5.4ex]
+        完成日期 &
+        \l_center_box:nn { .95\linewidth }
+                         {
+                           \textsf{\int_use:N \c_sys_year_int} 年
+                           \textsf{\int_use:N \c_sys_month_int} 月
+                         }
+      \end{tabular}
+    \end{center}
+  }
+
+\cs_new_protected_nopar:Nn \__hduthesis_promise_bc_aux:
+  {
+    \vspace*{3.5\baselineskip}
+    \begin{center}
+      \@beginparpenalty\@lowpenalty
+      \Large\textsf{\bfseries \l_spread_box:nn {6\ccwd}{诚信承诺}}
+      \@endparpenalty\@M
+    \end{center}
+    \vspace*{.6\baselineskip}\par
+    \linespread{2.1}
+      {\semilarge
+        我谨在此承诺：本人所写的毕业论文《\l__docinfo_cntitle_tl》均系本人独立完成，
+        没有抄袭行为，凡涉及其他作者的观点和材料，均作了注释，若有不实，后果由本人承担。
+        \par\vspace*{\baselineskip} \bfseries\sffamily
+        \hskip.48\linewidth 承诺人（签名）：
+        \vspace*{.5\baselineskip}\par
+        \hskip \dim_eval:n{.48\linewidth+2em} 年\qquad 月\qquad 日
+      }
+  }
+
+\RenewDocumentCommand \maketitle {}
+  {
+    \newgeometry{left = 4cm, right = 2cm, top = 1cm, bottom = 1cm}
+    \begin{titlepage}
+      \__hduthesis_cover_bc_aux:
+    \end{titlepage}
+    \titlepage
+      \__hduthesis_promise_bc_aux:
+    \endtitlepage
+    \restoregeometry
+  }
+
+\def\@makechapterhead#1
+  {
+    \vspace*{-21\p@}%
+      {\parindent \z@ \centering \sffamily
+          \large \thechapter \quad  #1
+          \par\nobreak
+          \vskip 25\p@ \par\nobreak
+      }
+    \thispagestyle{fancy}
+  }
+\def\@makeschapterhead#1
+  {
+    \vspace*{-16\p@}%
+      {\parindent \z@ \raggedright
+          \centering \sffamily
+          \interlinepenalty\@M
+          \large \bfseries #1\par\nobreak
+          \vskip 25\p@
+      }
+      \tl_set:Nn \l__toc_schapter_tl {#1}
+      \addcontentsline{toc}{chapter}{\l__toc_schapter_tl}
+    \thispagestyle{fancy}
+  }
+\renewcommand\section
+  {
+    \vspace*{-3ex}
+    \@startsection {section}{1}{\z@}%
+      {0ex}{.1pt}{\sffamily\semilarge}
+  }
+\renewcommand\subsection
+  {
+    \vspace*{-1.9ex}
+    \@startsection {subsection}{1}{\z@}%
+      {0ex}{.1pt}{\sffamily}
+  }
+
+\makeatother
+\endinput

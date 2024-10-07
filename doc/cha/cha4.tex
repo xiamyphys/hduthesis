@@ -82,7 +82,7 @@ $R_3$和$R_7$为输入匹配电阻。
   
   \begin{figure}[htbp]
     \centering
-    \includegraphics[width = .42\linewidth]{image-0236}
+    \includegraphics[width = .54\linewidth]{image-0236}
     \caption{同相放大器}
     \label{4-3}
   \end{figure}
@@ -93,14 +93,12 @@ $R_3$和$R_7$为输入匹配电阻。
   隔离直流作用，能起到很好的效果。第二级的$\qty1\uF$电容C2用于两级放大器的耦合。
 
   第一级放大器输入端和地之间接 R3；第二级放大器输入端和地之间接 R7。使得：
-
   \begin{equation}
     \begin{cases}
       R_3\approx R_1//R_2\\
       R_7\approx R_5//R_6
     \end{cases}
   \end{equation}
-
   这样，运放的正、负输入端对地的等效电阻相等，从而降低运放的电压偏移。
 \end{enumerate}
 
@@ -115,6 +113,8 @@ $R_3$和$R_7$为输入匹配电阻。
   \item \makebox[9em][l]{耦合方法：} 电容耦合
 \end{enumerate}
 
+\clearpage
+\vspace*{-1.5em}
 \section{整形电路\cite{cn11}}
 
 光电池的输出脉冲并不是规则的矩形脉冲信号，而是类似升余弦信号。再经放大后也会产生
@@ -151,11 +151,9 @@ $R_3$和$R_7$为输入匹配电阻。
 
 \subsection{编码电路图}
 
-\newpage
-
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width = \linewidth]{image-0289}
+  \includegraphics[width = .96\linewidth]{image-0289}
   \caption{40-6 优先编码器电路图}
   \label{4-6}
 \end{figure}
@@ -170,25 +168,21 @@ $R_3$和$R_7$为输入匹配电阻。
   优先编码的，而低位若同时输入 0，则是无意义的。此外，电路还设有选通输入，即使能
   端 EI，它也是逻辑 0 有效；输出还设有允许输出端 Eo 及允许扩展端 Gs，利用它们
   可判断出 是否有效，以及是否允许扩展编码。根据真值表，写出编码器的逻辑表达式如下：
-
   \begin{equation}
     \begin{aligned}
       \overline{A_2}&=\overline{EI}\cdot I_7+\overline{EI}\cdot I_7\cdot I_6\cdot\overline{I_5}+\overline{EI}\cdot I_7\cdot I_6\cdot I_5\cdot\overline{I_4}\\
       &=\overline{EI}(\overline{I_7}+I_7\overline{I_6}+I_7I_6I_5\overline{I_4})=\overline{EI}(\overline{I_7}+\overline{I_6}+\overline{I_5}+\overline{I_4})
     \end{aligned}
   \end{equation}
-  故
+  故：
   \begin{equation}
     A_2=\overline{\overline{EI}(\overline{I_7}+\overline{I_6}+\overline{I_5}+\overline{I_4})}
   \end{equation}
   同理：
-  \begin{equation}
-    A_1=\overline{\overline{EI}(\overline{I_7}+\overline{I_6}+I_5I_4\overline{I_3}+I_5I_4I_2)}
-  \end{equation}
-
-  \begin{equation}
+  \begin{gather}
+    A_1=\overline{\overline{EI}(\overline{I_7}+\overline{I_6}+I_5I_4\overline{I_3}+I_5I_4I_2)}\\
     A_0=\overline{\overline{EI}(\overline{I_7}+I_6\overline{I_5}+I_6I_4\overline{I_3}+I_6I_4I_2\overline{I_1})}
-  \end{equation}
+  \end{gather}
   而允许输出为：
   \begin{equation}
     E_OE_0=\overline{\overline{EI}\cdot I_7I_6I_5I_4I_3I_2I_1I_0}
@@ -197,15 +191,16 @@ $R_3$和$R_7$为输入匹配电阻。
   \begin{equation}
     Gs=EI+\overline{EI}\cdot I_7\;I_6\;I_5\;I_4\;I_3\;I_2\;I_1\;I_0=\overline{\overline{EI}\cdot E_O}
   \end{equation}
-  \newpage
+
   \begin{table}
     \centering\scriptsize
-    \renewcommand\arraystretch{.51}
+    \renewcommand\arraystretch{1.12}
     \begin{tabular}{|>{\centering\arraybackslash\sffamily}p{.04\linewidth}|*{8}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{3}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{2}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|}
       \hline
       \multicolumn{9}{|>{\sffamily\bfseries}c|}{INPUTS} & \multicolumn{5}{>{\sffamily\bfseries}c|}{OUTPUTS}\\
       \hline
       EI & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & A2 & A1 & A0 & GS & EO\\
+      \hline
       H & X & X & X & X & X & X & X & X & H & H & H & H & H\\
       L & H & H & H & H & H & H & H & H & H & H & H & H & L\\
       L & X & X & X & X & X & X & X & L & L & L & L & L & H\\
@@ -249,7 +244,6 @@ $R_3$和$R_7$为输入匹配电阻。
 
 \subsection{单片机及外围电路图}
 
-\newpage
 \begin{figure}[htbp]
   \centering
   \includegraphics[width = .86\linewidth]{image-0419}

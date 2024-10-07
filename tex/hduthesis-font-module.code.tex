@@ -1,44 +1,28 @@
 \hduthesis_provide_module:n {font}
 
+\PassOptionsToPackage{quiet,no-math}{xeCJK}
 \RequirePackage[zihao = -4]{ctex}
 \linespread{1.39}
-\setlength{\parindent}{2\ccwd}
+\dim_set:Nn \parindent {2\ccwd}
+\newcommand\semilarge{\@setfontsize\semilarge{14}{16.5}}
+\newcommand\semiLarge{\@setfontsize\semiLarge{16.5}{18}}
 \setmainfont{texgyretermes}
   [
-    UprightFont = *-regular,
-    BoldFont = *-bold,
-    ItalicFont = *-italic,
-    BoldItalicFont = *-bolditalic,
-    Extension = .otf
+    Extension = .otf, UprightFont = *-regular, BoldFont = *-bold,
+    ItalicFont = *-italic, BoldItalicFont = *-bolditalic
   ]
 \setsansfont{texgyreheros}
   [
-    UprightFont = *-regular,
-    BoldFont = *-bold,
-    ItalicFont = *-italic,
-    BoldItalicFont = *-bolditalic,
-    Extension = .otf,
-    scale = .9
+    Extension = .otf, scale = .9, UprightFont = *-regular, BoldFont = *-bold,
+    ItalicFont = *-italic, BoldItalicFont = *-bolditalic,
   ]
 
-\newcommand\semilarge
-  {
-    \@setfontsize\semilarge{14}{16.5}
-  }
-
-\RequirePackage
-{
-  amsmath, amssymb, mathtools, extarrows,
-  bm, cancel, physics2, fixdif, derivative
-}
+\RequirePackage { amsmath, amssymb, mathtools, extarrows,
+                  bm, cancel, physics2, fixdif, derivative }
 \usephysicsmodule{ab, braket, ab.legacy, op.legacy}
-
-\renewcommand\theequation{\arabic{chapter}-\arabic{equation}}
 \AtBeginDocument{
-  \setlength{\abovedisplayshortskip}{-18pt}
-  \setlength{\abovedisplayskip}{6pt}
-  \setlength{\belowdisplayshortskip}{6pt}
-  \setlength{\belowdisplayskip}{6pt}
+  \dim_set:Nn \abovedisplayskip {3pt}
+  \dim_set:Nn \belowdisplayskip {3pt}
 }
 
 \endinput

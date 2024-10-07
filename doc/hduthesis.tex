@@ -3,7 +3,7 @@
 \hypersetup{urlcolor = teal, filecolor = violet}
 \hologoFontSetup{general = \sffamily}
 \usepackage[mono = false]{libertine}
-\usepackage{geometry,framed,xeCJKfntef,enumitem}
+\usepackage{geometry,framed,xeCJKfntef,enumitem,pdfpages,dirtree}
 \setlength{\oddsidemargin}{63pt}\setlength{\evensidemargin}{63pt}
 \FrameSep = 0pt 
 \usepackage[os = mac]{menukeys}
@@ -12,10 +12,10 @@
 \usepackage{datetime}
 \yyyymmdddate
 \usepackage[fontset = none, scheme = plain]{ctex}
-\linespread{1.3}
+\linespread{1.5}
 \setCJKmainfont[AutoFakeSlant]{Songti SC}
 \setCJKsansfont[BoldFont = Hei, AutoFakeSlant]{Heiti SC}
-\setCJKmonofont[AutoFakeSlant]{LXGW WenKai}
+\setCJKmonofont[AutoFakeSlant]{LXGW WenKai Mono}
 \renewcommand{\emph}[1]{\CJKsout*[thickness=2.5ex, format=\color{blue!15}]{#1}}
 
 \title{\bfseries The \textsc{\cls{HduThesis}} Class\\
@@ -27,12 +27,12 @@
     School of Sciences, Physics Department, Graduate in 06/2025 (expected)
   }
 }
-\date{v0.1.1\footnote{\url{https://github.com/xiamyphys/hduthesis}} ~(\today)}
+\date{v0.2.0\footnote{\url{https://github.com/xiamyphys/hduthesis}} ~(\today)}
 
 \begin{document}
 
-\newgeometry{margin = 1in}
 \begin{titlepage}
+  \newgeometry{margin = 1in}
   \maketitle
   \begin{center}
     \tikz
@@ -45,7 +45,7 @@
   \end{center}
   \begin{abstract}
     \textsc{\pkg{HDUThesis}} 是杭州电子科技大学毕业论文 \hologo{LaTeX}模板，
-    支持学士论文排版. 后续会扩展到硕士、博士论文.
+    支持学士和硕士学位论文排版.
     \vspace*{1em}
     \begin{center}
       \footnotesize\bfseries User Agreement
@@ -58,12 +58,11 @@
       \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，
       不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.}
       \item 欢迎前往 GitHub 提交反馈意见，
-      为推动学校认证与规范化\textsc{\cls{HduThesis}} 贡献力量.
+      为推动学校认证与规范化 \textsc{\cls{HduThesis}} 贡献力量.
     \end{enumerate}
   \end{abstract}
   \thispagestyle{empty}
 \end{titlepage}
-
 \restoregeometry
 
 \section{Generate the Cover}
@@ -81,37 +80,60 @@
 
   \begin{framed}
     \begin{verbatim}
-    \documentclass{hduthesis}
+    \documentclass { hduthesis }
     \DocInfo
     {
-      title      = XXXXXX ,  school     = 理学院,  major      = ,  class      = ,
-      stdntid    = 31415926, author     = ,        supervisor = ,  reference  =
+      title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/
+                   \hologo{LaTeX} Template for Thesis at Hangzhou Dianzi University,
+      school     = 理学院,               major     = 物理学,
+      stdntid    = C668668E00,           author    = 尖沙咀/TSIM Sha Tsui,
+      supervisor = 荃灣/TSUEN Wan,       reference = reference
     }
-    \begin{document}  \maketitle    ...    \end{document}
+    \begin{document}  \maketitle  ...  \end{document}
     \end{verbatim}
   \end{framed}
 
-  \begin{center}
-    \fbox{\includegraphics[page = 1, width = .432\linewidth]{hduthesis-demo}}
-    \hfill
-    \fbox{\includegraphics[page = 2, width = .432\linewidth]{hduthesis-demo}}
-  \end{center}
+  命令会根据输入的学号自动判断使用者为本科生/研究生
+  \footnote{杭州电子科技大学本科生学号为8位，研究生学号为10位.}.
+  依学校要求，硕士学位论文扉页需同时有英文版. 因此需要在键 \keys{\cmdmac~title}
+  \keys{\cmdmac~author} \keys{\cmdmac~supervisor} 中输入中文和英文信息.
+  如作者中文姓名为 \cmd{尖沙咀}，英文姓名为 \cmd{TSIM Sha Tsui}，
+  则键值输入格式为 \cmd{author = 尖沙咀/TSIM Sha Tsui}.
 
-  命令 \cs{DocInfo} 需在导言区中执行. 通过此命令完成文档信息输入后，
-  在 \verb|\begin{document}| 后执行命令 \cs{maketitle} 会调用所设置的键值并自动生成\emph{论文封面}和\emph{诚信承诺书}.
+  命令 \cs{DocInfo} 需在导言区中执行. 通过此命令完成文档信息输入后，在
+  \verb|\begin{document}| 后执行命令 \cs{maketitle} 会调用所设置的键值并自动生成
+  \emph{论文封面}和\emph{诚信承诺书}.
 \end{function}
 
-论文完成日期和学生毕业年份会根据当前系统时间自动生成.
-如果当前月份在8月及以前，毕业年份会显示当前年；如果当前月份在9月及以后，毕业年份会显示次年. 
-如果执意要更改毕业年份，则需在导言区中命令 \cs{DocInfo} 后输入
+\begin{function}{\l__hduthesis_grade_int}
+  \begin{syntax}
+    \cs{ExplSyntaxOn}  \cs{int_set:Nn} \cs{l__hduthesis_grade_int} \marg{Year}  \cs{ExplSyntaxOff}
+  \end{syntax}
 
-\begin{framed}
-  \begin{verbatim}
-    \ExplSyntaxOn
-      \int_set:Nn \l__hduthesis_grade_int {<Graduate Year>}
-    \ExplSyntaxOff
-  \end{verbatim}
-\end{framed}
+  论文完成日期和学生毕业年份会根据当前系统时间自动生成. 如果当前月份在8月及以前，
+  毕业年份会显示当前年；如果当前月份在9月及以后，毕业年份会显示次年. 
+
+  在导言区 \cs{DocInfo} 命令后对整型 \cs{l__hduthesis_grade_int}
+  重新赋值可强制更改毕业年份.
+
+  \vspace*{1ex}
+  \noindent\fbox
+  {
+    \parbox[c][2.5ex]{.96\linewidth}
+    {\centering
+      下页包含所生成的本科毕业设计与硕士学位论文封面、扉页和承诺书缩略图.
+    }
+  }
+\end{function}
+
+\includepdfmerge
+  [
+    angle = -90, nup = 2x3, frame, linktodoc, scale=0.94,
+    delta = \fpeval{(11-1.5*8.5*210/297)/8}1in
+            \fpeval{(11-1.5*8.5*210/297)/4}1in
+  ]{ hduthesis-pg, 2, hduthesis-bc, 1, hduthesis-pg, 3,
+     hduthesis-bc, 2, hduthesis-pg, 4, hduthesis-pg, 1
+   }
 
 \section{Enter Abstract in EN / CN}
 
@@ -129,24 +151,22 @@
   输出时会根据所处 \env{abstract} 环境选择的语言不同，自动以半 / 全角分号分隔.
   
   \begin{center}
-    \fbox{\includegraphics[page = 3, width = .432\linewidth]{hduthesis-demo}}
+    \fbox{\includegraphics[page = 3, width = .45\linewidth]{hduthesis-bc}}
     \hfill
-    \fbox{\includegraphics[page = 4, width = .432\linewidth]{hduthesis-demo}}
+    \fbox{\includegraphics[page = 4, width = .45\linewidth]{hduthesis-bc}}
   \end{center}
 \end{function}
 
 \section{Input Text}
 
-\textsc{\cls{HduThesis}} 的 {chapter}、\cs{section}、\cs{subsection}、\cs{enumerate} 等段落级次均已按``\href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范}''定制，可直接使用.
+\textsc{\cls{HduThesis}} 的 {chapter}、\cs{section}、\cs{subsection}、
+\cs{enumerate} 等段落级次均已按
+``\href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}
+{杭电理工类毕业论文写作规范}''定制，可直接使用.
 
-\begin{center}
-  \fbox{\includegraphics[page = 5, width = .3\linewidth]{hduthesis-demo}}
-  \hfill
-  \fbox{\includegraphics[page = 11, width = .3\linewidth]{hduthesis-demo}}
-  \hfill
-  \fbox{\includegraphics[page = 12, width = .3\linewidth]{hduthesis-demo}}
-\end{center}
-
+如需插入参考文献，通过命令 \cs{DocInfo} 导入 \file{.bib} 文件后在文章末尾输入
+\cs{printbiblography} 即可输出参考文献列表. 文档已将参考文献格式设置为
+\cmd{gb7714-2015}. 若未指定参考文献 \file{.bib} 文件，则 \pkg{gbt7714} 宏包将不会加载.
 同时，模板额外预置了以下宏包
 
 \begin{table}[htbp]
@@ -161,50 +181,29 @@
   \end{tabular}
 \end{table}
 
-如需插入参考文献，通过命令 \cs{DocInfo} 导入 \file{.bib} 文件后在文章末尾输入
-\cs{printbiblography} 即可输出参考文献列表. 文档已将参考文献格式设置为 \cmd{gb7714-2015}. 若未指定参考文献\file{.bib} 文件，则 \pkg{biblatex} 宏包将不会加载.
+\begin{center}
+  \fbox{\includegraphics[page = 5, width = .3\linewidth]{hduthesis-bc}}
+  \hfill
+  \fbox{\includegraphics[page = 11, width = .3\linewidth]{hduthesis-bc}}
+  \hfill
+  \fbox{\includegraphics[page = 12, width = .3\linewidth]{hduthesis-bc}}
+\end{center}
 
-\appendix\clearpage
+\appendix
+\section{模块化设计架构}
 
-\section{The Code}
-
-\textsc{\cls{HduThesis}} 文档类采用模块化设计，根文件 \file{hduthesis.cls} 中
-\cs{key_define:} 用于声明文档信息的键，并调用其他模块.
-
-\begin{enumerate}
-  \item 字体配置模块存放于 \file{hduthesis-font-module.code.tex} 中.
-  \item 封面信息模块存放于 \file{hduthesis-cover-module.code.tex} 中，
-  分别使用 \cs{l_spread_box} 和 \cs{l_center_box} 实现分散对齐和居中划线.
-  \item 中英摘要模块存放于 \file{hduthesis-matter-module.code.tex} 中，
-  使用 \cs{str_if_eq:nnT} 对摘要语言进行判断.
-  \item 章节段落模块存放于 \file{hduthesis-layout-module.code.tex} 中，
-  参照\emph{标准文档类}说明文档 (\cmd{texdoc classes})，对相应的宏进行重新定义.
-  后期维护者可考虑使用 \pkg{titlesec} 包.
-\end{enumerate}
-
-\begin{framed}
-  \begin{verbatim}
-    \keys_define:nn { hduthesis / docinfo }% 声明相应键
-      {
-        title.tl_set:N = \l__docinfo_title_tl,
-        school.tl_set:N = \l__docinfo_school_tl,
-        major.tl_set:N = \l__docinfo_major_tl,
-        class.tl_set:N = \l__docinfo_class_tl,
-        stdntid.tl_set:N = \l__docinfo_stdntid_tl,
-        author.tl_set:N = \l__docinfo_author_tl,
-        supervisor.tl_set:N = \l__docinfo_supervisor_tl,
-        reference.tl_set:N = \l__docinfo_reference_tl,
-      }
-
-    \NewDocumentCommand \DocInfo { m }
-      {
-        \keys_set:nn { hduthesis / docinfo } { #1 }
-      }
-
-    % 预留学号接口，用于后续判断学位.
-    % \int_compare:nNnT {\tl_count:N \l__docinfo_stdntid_tl} = {8} { }
-    % \int_compare:nNnTF {\tl_count:N \l__docinfo_stdntid_tl} = {10} { }
-  \end{verbatim}    
-\end{framed}
+\linespread{1.5}
+\dirtree{%
+.1 ./tex/.
+.2 hduthesis.cls.
+.3 hduthesis-font-module.code.tex: \footnotesize 字体模块.
+.3 hduthesis-unv.layout-module.code.tex: \footnotesize 共用布局模块.
+.3 hduthesis-bc.layout-module.code.tex: \footnotesize 本科模块.
+.3 hduthesis-pg.layout-module.code.tex: \footnotesize 硕士布局模块.
+.3 hduthesis-preamble-module.code.tex: \footnotesize 中英摘要模块.
+.2 hdulogo.pdf: \footnotesize 校徽.
+.2 hdubadge.pdf: \footnotesize 校牌.
+.2 hdumotto.pdf: \footnotesize 校训.
+}
 
 \end{document}

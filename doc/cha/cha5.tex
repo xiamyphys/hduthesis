@@ -15,7 +15,7 @@
   \centering
   \begin{tikzpicture}
   [
-    every node/.style = { font = {\small}, minimum height = 2.5em}
+    every node/.style = { font = {\small}, minimum height = 3em}
   ]
     \node [draw, rectangle, minimum width = 12em, minimum height = 2em] (a) at (0,0) {初始参数设置};
     \node [draw, rectangle, minimum width = 10em, rounded corners = 1.2em, below = of a] (b) {等待中断};
@@ -38,12 +38,12 @@
   \label{5-1}
 \end{figure}
 
+\vspace*{-1.5em}
 \section{模块说明}
-\newpage
 
 \begin{enumerate}
   \item 主程序：
-  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+  \begin{lstlisting}[basicstyle=\linespread{1.32}\small\ttfamily\selectfont, breaklines=true]
       MAIN:
       MOV SP,#0X60  ；堆栈初始化
       CALL INIT     ；各寄存器参数设置
@@ -51,7 +51,7 @@
       AJMP $        ；等待中断
   \end{lstlisting}
   \item 初始化程序：
-  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+  \begin{lstlisting}[basicstyle=\linespread{1.32}\small\ttfamily\selectfont, breaklines=true]
       INIT:
       MOV TMOD,#0X21；波特率发生器
       MOV TL1,#0XFD ；波特率 9600bps
@@ -69,7 +69,7 @@
       RET
   \end{lstlisting}
   \item 中断服务程序：
-  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+  \begin{lstlisting}[basicstyle=\linespread{1.32}\small\ttfamily\selectfont, breaklines=true]
       _INT0:        ；ISR 中断服务程序
       NOP
       CALL DELAY_2MS；同步延时
@@ -81,7 +81,7 @@
   \item 数据帧传送子程序：
   \begin{figure}[htbp]
     \centering\small
-    \renewcommand{\arraystretch}{.6}
+    \setstretch{1.4}
     \caption{数据帧格式}
     \begin{tabular}{|*{4}{>{\centering\arraybackslash}p{.22\linewidth}|}}
       \hline
@@ -91,11 +91,11 @@
       \hline
     \end{tabular}
   \end{figure}
-
+  \clearpage
   例：30 02 15 17（十六进制）
-
+  
   表示第二次打靶，击中第 21 号（对应环数：7 环 偏移方向：右上）。
-  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
+  \begin{lstlisting}[basicstyle=\linespread{1.32}\small\ttfamily\selectfont, breaklines=true]
       INT0_SEND:      ；数据帧传送子程序
       PUSH ACC        ；保护 ACC
       CLR A
@@ -111,27 +111,28 @@
       INC 0040H       ；打靶次数累加 1
       CALL DELAY_200MS；延时 200ms
       CLR EX0         ；关外部中断
-      CLR IE0         ；清 INT0 外部中断请求标志位—防止外部中断寄存而引起多次中断。
+      CLR IE0         ；清INT0外部中断请求标志位—防止外部中断寄存
+                        而引起多次中断。
       SETB EX0        ；开中断
       RETI
   \end{lstlisting}
   \item 串行发送字节
-  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
-      UART_SEND:     ；串行发送一个字节
+  \begin{lstlisting}[basicstyle=\linespread{1.32}\small\ttfamily\selectfont, breaklines=true]
+      UART_SEND:      ；串行发送一个字节
       MOV SBUF,A
-      JNB TI,$       ；等待发送完毕
-      CLR TI         ；
+      JNB TI,$        ；等待发送完毕
+      CLR TI          ；
       RET
   \end{lstlisting}
   \item 定时程序：
-  \begin{lstlisting}[basicstyle=\linespread{1.3}\selectfont, breaklines=true]
-      DELAY_2MS:     ；用定时器延时 2ms
+  \begin{lstlisting}[basicstyle=\linespread{1.32}\small\ttfamily\selectfont, breaklines=true]
+      DELAY_2MS:      ；用定时器延时 2ms
       MOV R7,#21;21
       DLY1:MOV R6,#42
       DLY2:DJNZ R6,DLY2
       DJNZ R7,DLY1
       RET
-      DELAY_10MS:   ；调用 DELAY_2MS，实现延时 10ms
+      DELAY_10MS:     ；调用 DELAY_2MS，实现延时 10ms
       MOV R5,#5
       DLY: CALL DELAY_2MS
       DJNZ R5,DLY
