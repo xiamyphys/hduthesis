@@ -37,14 +37,14 @@
 \renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
 \renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
 \renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
-\AddToHook{env/figure/after}{\vskip-2.5ex}
-\AddToHook{env/table/after}{\vskip-2ex}
+\AddToHook{env/figure/after}{\vspace*{-2.3ex}}
+\AddToHook{env/table/after}{\vskip-1.9ex}
 
 \RequirePackage{enumitem, cleveref}
 \setlist[enumerate,1]
 {
   label = （\arabic*）, itemindent = 4.5em, leftmargin = 0em,
-  labelsep = 0em, topsep = 0pt, itemsep = 0pt, partopsep = 0em,
+  labelsep = 0em, topsep = .15ex, itemsep = 0em, partopsep = 0em,
   parsep = 0em, listparindent = 2\ccwd
 }
 \AddToHook{env/enumerate/after}{\vspace*{.1ex}}

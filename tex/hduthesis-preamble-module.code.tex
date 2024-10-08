@@ -25,7 +25,8 @@
   {
     \par\null
     \tl_clear:N \l__abstract_name_tl
-    \cfoot{}\clearpage
+    \cfoot{}
+    \clearpage
   }
 
 \clist_new:N \l__abstract_keywords_clist
@@ -49,8 +50,8 @@
   \pagenumbering{arabic}
   \cfoot \thepage
 }
-\AddToHook{cmd/tableofcontents/after}{\thispagestyle{fancy}}
 
+\AddToHook{cmd/tableofcontents/after}{\thispagestyle{fancy}}
 \RequirePackage{tocloft}
 \renewcommand{\contentsname}{\hfill 目\qquad 录\hfill}
 \renewcommand \cfttoctitlefont{\sffamily\large}

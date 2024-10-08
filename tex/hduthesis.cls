@@ -21,7 +21,7 @@
 %%                                and README.md.                         *
 %%    available at https://github.com/xiamyphys/hduthesis                *
 %% ***********************************************************************
-\def\hduthesis@date{2024/10/10}
+\def\hduthesis@date{2024/10/08}
 \def\hduthesis@version{0.2.0}
 
 \ProvidesExplClass{hduthesis} {\hduthesis@date} {\hduthesis@version}
@@ -112,7 +112,7 @@
     \renewcommand*\cite[1]{\textsuperscript{[##1]}}
   }
   {
-    \RequirePackage{gbt7714}
+    \RequirePackage[sort&compress]{gbt7714}
     \bibliographystyle{gbt7714-numerical}
     \newcommand*\printbibliography
     {

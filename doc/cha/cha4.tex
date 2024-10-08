@@ -2,8 +2,7 @@
 
 \section{信号放大电路}
 
-在光电探测系统中，探测器输出的电信号非常微弱，一般为毫伏级。为记录每一次打靶的结
-果，信号放大与处理电路是打靶系统中不可或缺的。在探测器上直接进行信号处理十分困
+在光电探测系统中，探测器输出的电信号非常微弱，一般为毫伏级。为记录每一次打靶的结果，信号放大与处理电路是打靶系统中不可或缺的。在探测器上直接进行信号处理十分困
 难，一种常用的解决办法是在探测器后接前置放大器，用来放大探测器的输出信号，然后成
 功地传输到信号处理系统的有关电路部分。前置放大器的设计要求是低噪声，高增益，低输
 出阻抗，大的动态范围，和较好的抗噪声能力。
@@ -41,7 +40,7 @@ LM324 是四通道的低功耗运算放大器，它的内部包含四组形式�
 \newpage
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width = .6\linewidth]{image-0162}
+  \includegraphics[width = .595\linewidth]{image-0162}
   \caption{LM324内部结构}
   \label{4-1}
 \end{figure}
@@ -192,7 +191,7 @@ $R_3$和$R_7$为输入匹配电阻。
     Gs=EI+\overline{EI}\cdot I_7\;I_6\;I_5\;I_4\;I_3\;I_2\;I_1\;I_0=\overline{\overline{EI}\cdot E_O}
   \end{equation}
 
-  \begin{table}
+  \begin{table}[htbp]
     \centering\scriptsize
     \renewcommand\arraystretch{1.12}
     \begin{tabular}{|>{\centering\arraybackslash\sffamily}p{.04\linewidth}|*{8}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{3}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|*{2}{>{\centering\arraybackslash\sffamily}p{.04\linewidth}}|}
@@ -297,7 +296,7 @@ MAX232CPE 芯片。
 
 \begin{figure}[htbp]
   \centering
-  \includegraphics[width = .51\linewidth]{image-0440}
+  \includegraphics[width = .52\linewidth]{image-0440}
   \caption{MAX232CPE 芯片内部结构}
   \label{4-10}
 \end{figure}
