@@ -9,23 +9,19 @@
 \usepackage[os = mac]{menukeys}
 \AddToHook{env/function/before}{\vspace{-.3\baselineskip}}
 \AddToHook{env/syntax/after}{\vspace{-.2\baselineskip}}
-\usepackage{datetime}
-\yyyymmdddate
-\usepackage[fontset = none, scheme = plain]{ctex}
-\linespread{1.5}
+\usepackage{datetime}\yyyymmdddate
+\usepackage[fontset = none, scheme = plain]{ctex}\linespread{1.5}
 \setCJKmainfont[AutoFakeSlant]{Songti SC}
 \setCJKsansfont[BoldFont = Hei, AutoFakeSlant]{Heiti SC}
 \setCJKmonofont[AutoFakeSlant]{LXGW WenKai Mono}
 \renewcommand{\emph}[1]{\CJKsout*[thickness=2.5ex, format=\color{blue!15}]{#1}}
 
-\title{\bfseries The \textsc{\cls{HduThesis}} Class\\
-\hologo{LaTeX} Thesis Template for Hangzhou Dianzi University}
+\title{\bfseries The \textsc{\cls{HduThesis}} Class\\\hologo{LaTeX} Thesis Template for Hangzhou Dianzi University}
 \author
 {
   Mingyu Xia \texttt{<\href{mailto:xiamyphys@gmail.com}{xiamyphys@hdu.edu.cn}>}
-  \footnote{
-    School of Sciences, Physics Department, Graduate in 06/2025 (expected)
-  }
+  \footnote
+  { School of Sciences, Physics Department, Graduate in 06/2025 (expected) }
 }
 \date{v0.2.0\footnote{\url{https://github.com/xiamyphys/hduthesis}} ~(\today)}
 
@@ -117,9 +113,13 @@
   通过命令 \cs{keywords} 以半角逗号 (,) 为分隔输入关键词列表，输出时会根据所处 \env{abstract} 环境选择的语言不同，自动以半 / 全角分号分隔.
   
   \begin{center}
-    \fbox{\includegraphics[page = 3, width = .47\linewidth]{hduthesis-bc}}
+    \fbox
+    { \includegraphics[page = 3, width = .46\linewidth]
+      {/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf} }
     \hfill
-    \fbox{\includegraphics[page = 4, width = .47\linewidth]{hduthesis-bc}}
+    \fbox
+    { \includegraphics[page = 4, width = .46\linewidth]
+      {/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-pg.pdf} }
   \end{center}
 \end{function}
 
@@ -129,8 +129,12 @@
     delta = \fpeval{(11-1.5*8.5*210/297)/8}1in
             \fpeval{(11-1.5*8.5*210/297)/3}1in
   ]
-  { hduthesis-pg, 2, hduthesis-bc, 1, hduthesis-pg, 3,
-    hduthesis-bc, 2, hduthesis-pg, 4, hduthesis-pg, 1
+  { /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-pg.pdf, 2,
+    /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf, 1,
+    /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-pg.pdf, 3,
+    /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf, 2,
+    /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-pg.pdf, 4,
+    /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-pg.pdf, 1
   }
 
 \section{Input Text}
@@ -152,17 +156,25 @@
 \end{table}
 
 \begin{center}
-  \fbox{\includegraphics[page = 5, width = .3\linewidth]{hduthesis-bc}}
+  \fbox
+  { \includegraphics[page = 5, width = .3\linewidth]
+    {/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf}
+  }
   \hfill
-  \fbox{\includegraphics[page = 11, width = .3\linewidth]{hduthesis-bc}}
+  \fbox
+  { \includegraphics[page = 11, width = .3\linewidth]
+    {/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf}
+  }
   \hfill
-  \fbox{\includegraphics[page = 12, width = .3\linewidth]{hduthesis-bc}}
+  \fbox
+  { \includegraphics[page = 12, width = .3\linewidth]
+    {/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf}
+  }
 \end{center}
 
-\appendix
-\section{模块化设计架构}
+\appendix\section{模块化设计架构}
 
-\linespread{1.02}
+\linespread{1.04}
 \dirtree{%
 .1 ./tex/.
 .2 hduthesis.cls.
