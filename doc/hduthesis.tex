@@ -62,7 +62,7 @@
     \cs{DocInfo}\marg{keyvals}
   \end{syntax}
 
-  此命令接收键值，用于设置文档信息. 键 \keys{\cmdmac~title} 用于设置论文标题，键 \keys{\cmdmac~school} 用于设置学院，键 \keys{\cmdmac~major} 用于设置专业，键 \keys{\cmdmac~class} 用于设置班级，键 \keys{\cmdmac~stdntid} 用于设置学号，键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师，键 \keys{\cmdmac~reference} 用于设置插入参考文献文件源. 命令会根据输入的学号自动判断使用者为本科生/研究生 \footnote{杭州电子科技大学本科生学号为8位，研究生学号为10位.}.
+  此命令接收键值，用于设置文档信息. 键 \keys{\cmdmac~title} 用于设置论文标题，键 \keys{\cmdmac~department} 用于设置学院，键 \keys{\cmdmac~major} 用于设置专业，键 \keys{\cmdmac~class} 用于设置班级，键 \keys{\cmdmac~stdntid} 用于设置学号，键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师，键 \keys{\cmdmac~bibsource} 用于设置插入参考文献文件源. 命令会根据输入的学号自动判断使用者为本科生/研究生 \footnote{杭州电子科技大学本科生学号为8位，研究生学号为10位.}.
 
   命令 \cs{DocInfo} 需在导言区中执行. 完成文档信息输入后，在 \verb|\begin{document}| 后执行命令 \cs{maketitle} 会调用所设置的键值自动生成 \emph{论文封面} 和 \emph{诚信承诺书}.
 \end{function}
@@ -75,9 +75,9 @@
     \DocInfo
     {
       title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
-      school     = 理学院,                   major     = 物理学,
+      department = 理学院,                   major     = 物理学,
       stdntid    = 21668668,                 author    = 申智能,
-      supervisor = 李智能,                   reference = reference
+      supervisor = 李智能,                   bibsource = reference
     }
     \begin{document}  \maketitle  ...  \end{document}
   \end{verbatim}
@@ -99,9 +99,9 @@
       title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/
                    \hologo{LaTeX} Template for Thesis at
                    Hangzhou Dianzi University,
-      school     = 理学院,                   major     = 物理学,
-      stdntid    = 2166866800,               author    = 申智能/SAN Chi Nan,
-      supervisor = 李智能/LEE Chi Nan,       reference = reference
+      major     = 物理学,             stdntid    = 2166866800,
+      author    = 申智能/SAN Chi Nan, supervisor = 李智能/LEE Chi Nan,
+      bibsource = reference
     }
     \begin{document}  \maketitle  ...  \end{document}
   \end{verbatim}

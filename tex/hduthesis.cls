@@ -14,10 +14,10 @@
 %%                                                                       *
 %%    This work consists of the files hduthesis.cls,                     *
 %%                                    hduthesis-font-module.code,        *
-%%                                    hduthesis-bc.layout-module.code,   *
-%%                                    hduthesis-pg.layout-module.code,   *
 %%                                    hduthesis-preamble-module.code,    *
 %%                                    hduthesis-unv.layout-module.code,  *
+%%                                    hduthesis-bc.layout-module.code,   *
+%%                                    hduthesis-pg.layout-module.code,   *
 %%                                and README.md.                         *
 %%    available at https://github.com/xiamyphys/hduthesis                *
 %% ***********************************************************************
@@ -70,13 +70,13 @@
 \keys_define:nn { hduthesis / docinfo }
   {
     title.clist_set:N      = \l__docinfo_title_clist,
-    school.tl_set:N        = \l__docinfo_school_tl,
+    department.tl_set:N    = \l__docinfo_department_tl,
     major.tl_set:N         = \l__docinfo_major_tl,
     class.tl_set:N         = \l__docinfo_class_tl,
     stdntid.tl_set:N       = \l__docinfo_stdntid_tl,
     author.clist_set:N     = \l__docinfo_author_clist,
     supervisor.clist_set:N = \l__docinfo_supervisor_clist,
-    reference.tl_set:N     = \l__docinfo_reference_tl,
+    bibsource.tl_set:N     = \l__docinfo_bibsource_tl,
   }
 \clist_set:Nn \g_system_month_clist
   {
@@ -104,7 +104,7 @@
       \l__docinfo_cnsupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {1} }
     \exp_args:NNe \tl_set:Nn
       \l__docinfo_ensupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {2} }
-    \tl_if_empty:NTF \l__docinfo_reference_tl
+    \tl_if_empty:NTF \l__docinfo_bibsource_tl
       {
         \newcommand*\printbibliography{\chapter*{参考文献}}
         \renewcommand*\cite[1]{\textsuperscript{[##1]}}
@@ -115,7 +115,7 @@
         \newcommand*\printbibliography
           {
             \begin{spacing}{1.11}
-              \nocite{*}\bibliography{ \l__docinfo_reference_tl }
+              \nocite{*}\bibliography{ \l__docinfo_bibsource_tl }
             \end{spacing}
           }
         \AddToHook{cmd/printbibliography/before}
