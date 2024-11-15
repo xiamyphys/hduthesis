@@ -3,7 +3,7 @@
 \hypersetup{urlcolor = teal, filecolor = violet}
 \hologoFontSetup{general = \sffamily}
 \usepackage[mono = false]{libertine}
-\usepackage{geometry,framed,xeCJKfntef,pdfpages,subcaption,enumitem}
+\usepackage{geometry,framed,xeCJKfntef,tikz,pdfpages,subcaption,fadingimage}
 \setlength{\oddsidemargin}{63pt}\setlength{\evensidemargin}{63pt}
 \FrameSep = 0pt 
 \usepackage[os = mac]{menukeys}
@@ -15,15 +15,36 @@
 \setCJKsansfont[BoldFont = Hei, AutoFakeSlant]{Heiti SC}
 \setCJKmonofont[AutoFakeSlant]{LXGW WenKai Mono}
 \renewcommand{\emph}[1]{\CJKsout*[thickness=2.5ex, format=\color{blue!15}]{#1}}
+\makeatletter
+\def\HoLogo@hduthesis#1{%
+  \kern -1.3ex\raisebox{-.5pt}
+    {
+      \HOLOGO@mbox
+        {
+          \tikz[baseline = (hduthesis.base)]
+          {
+              \node [ inner sep = 0pt ] (hduthesis)
+                {\textsc{\cls{hduThesi\scalebox{1.2}[1.2]{S}}}};
+              \draw
+               let \p1 = (hduthesis.west), \p2 = (hduthesis.east)
+               in (\x1,\y1) (\x2,\y2)
+              [line width = {.028pt*(\x2 - \x1)}]
+              ([yshift = -.5ex]hduthesis.north west) to[bend right = 5]
+              ([yshift = .25ex]hduthesis.north east);
+          }
+        }
+    }\kern -1.3ex
+ }
+\makeatother
 
-\title{\bfseries The \textsc{\cls{HduThesis}} Class\\\hologo{LaTeX} Thesis Template for Hangzhou Dianzi University}
+\title{\bfseries The \hologo{hduthesis} Class\\\hologo{LaTeX} Thesis Template for Hangzhou Dianzi University}
 \author
 {
   Mingyu Xia \texttt{<\href{mailto:xiamyphys@gmail.com}{xiamyphys@hdu.edu.cn}>}
   \footnote
   { School of Sciences, Physics Department, Graduate in 06/2025 (expected) }
 }
-\date{v0.2.1\footnote{\url{https://github.com/xiamyphys/hduthesis}} ~(\today)}
+\date{v0.3.1\footnote{\url{https://github.com/xiamyphys/hduthesis}} ~(\today)}
 
 \begin{document}
 
@@ -40,20 +61,24 @@
     }
   \end{center}
     \begin{abstract}
-      \textsc{\pkg{HDUThesis}} 是杭州电子科技大学毕业论文 \hologo{LaTeX}模板，支持学士和硕士学位论文排版.
+      \hologo{hduthesis} 是杭州电子科技大学毕业论文 \hologo{LaTeX}模板，支持学士和硕士学位论文排版.
       \vspace*{1em}
       \begin{center}
         \small\bfseries User Agreement
       \end{center}
       \begin{enumerate}
         \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件.
-        \item 本模板根据杭州电子科技大学教务处颁发的 \href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范} 编写而成. 作者不对使用本模板产生的格式审查问题负责. \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.}
-        \item 欢迎前往 GitHub 提交反馈意见，为推动学校认证与规范化 \textsc{\cls{HduThesis}} 贡献力量.
+        \item 本模板根据杭州电子科技大学教务处颁发的 \href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范} 编写而成. 作者不对使用本模板产生的格式审查问题负责. \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.} 使用本模板时，请按编译错误提示操作来勾选同意用户协议.
+        \item 欢迎前往 GitHub 提交反馈意见，为推动学校认证与规范化 \hologo{hduthesis} 贡献力量.
       \end{enumerate}
     \end{abstract}
   \thispagestyle{empty}
 \end{titlepage}
 \restoregeometry
+
+\section{Introduction: Why ``\hologo{hduthesis}''?}
+
+本模板被命名为\hologo{hduthesis}，奇怪的大小写方式诠释了HDU校门——亚洲第二大门！
 
 \section{Generate the Cover}
 
@@ -62,7 +87,7 @@
     \cs{DocInfo}\marg{keyvals}
   \end{syntax}
 
-  此命令接收键值，用于设置文档信息. 键 \keys{\cmdmac~title} 用于设置论文标题，键 \keys{\cmdmac~department} 用于设置学院，键 \keys{\cmdmac~major} 用于设置专业，键 \keys{\cmdmac~class} 用于设置班级，键 \keys{\cmdmac~stdntid} 用于设置学号，键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师，键 \keys{\cmdmac~bibsource} 用于设置插入参考文献文件源. 命令会根据输入的学号自动判断使用者为本科生/研究生 \footnote{杭州电子科技大学本科生学号为8位，研究生学号为10位.}.
+  此命令接收键值，用于设置文档信息. 键 \keys{\cmdmac~title} 用于设置论文标题，键 \keys{\cmdmac~department} 用于设置学院，键 \keys{\cmdmac~major} 用于设置专业，键 \keys{\cmdmac~class} 用于设置班级，键 \keys{\cmdmac~stdntid} 用于设置学号，键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师，键 \keys{\cmdmac~bibsource} 用于设置插入参考文献文件源. 命令会根据输入的学号自动判断使用者为本科生/研究生 \footnote{杭州电子科技大学本科生学号为8位，研究生学号为9位.}.
 
   命令 \cs{DocInfo} 需在导言区中执行. 完成文档信息输入后，在 \verb|\begin{document}| 后执行命令 \cs{maketitle} 会调用所设置的键值自动生成 \emph{论文封面} 和 \emph{诚信承诺书}.
 \end{function}
@@ -73,17 +98,16 @@
   \begin{verbatim}
     \documentclass { hduthesis }
     \DocInfo
-    {
-      title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
-      department = 理学院,                   major     = 物理学,
-      stdntid    = 21668668,                 author    = 申智能,
-      supervisor = 李智能,                   bibsource = reference
-    }
+      {
+        title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
+        department = 理学院, major      = 物理学, stdntid   = 21668668,
+        author     = 申智能, supervisor = 李智能, bibsource = reference
+      }
     \begin{document}  \maketitle  ...  \end{document}
   \end{verbatim}
 \end{framed}
 
-下页包含所生成的本科毕业论文的封面、扉页和承诺书缩略图. 此文档样例可在终端执行 \cmd{texdoc hduthesis-bc} 获取.
+下页的缩略图为本科毕业论文文档样例 \cmd{hduthesis-bc} 中的封面、扉页和承诺书.
 
 \includepdfmerge
   [ angle = -90, nup = 1x2, frame, linktodoc, scale = 0.96, delta = 0 .25in ]
@@ -95,14 +119,14 @@
   \begin{verbatim}
     \documentclass { hduthesis }
     \DocInfo
-    {
-      title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/
-                   \hologo{LaTeX} Template for Thesis at
-                   Hangzhou Dianzi University,
-      major     = 物理学,             stdntid    = 2166866800,
-      author    = 申智能/SAN Chi Nan, supervisor = 李智能/LEE Chi Nan,
-      bibsource = reference
-    }
+      {
+        title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/
+                     \hologo{LaTeX} Template for Thesis at
+                     Hangzhou Dianzi University,
+        major     = 物理学,             stdntid    = 216686680,
+        author    = 申智能/SAN Chi Nan, supervisor = 李智能/LEE Chi Nan,
+        bibsource = reference
+      }
     \begin{document}  \maketitle  ...  \end{document}
   \end{verbatim}
 \end{framed}
@@ -121,7 +145,7 @@
 
 \includepdfmerge
   [ nup = 2x2, frame, linktodoc, scale = 0.96, delta = .25in .25in ]
-  { /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-pg.pdf, 1-4 }
+  { /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-pg.pdf, 1-8 }
 
 \section{Enter Abstract in EN / CN}
 
@@ -154,7 +178,7 @@
 
 \section{Input Text}
 
-\textsc{\cls{HduThesis}} 的 {chapter}、\cs{section}、\cs{subsection}、\cs{enumerate} 等段落级次均已按``\href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范}''定制，可直接使用.
+\hologo{hduthesis} 的 {chapter}、\cs{section}、\cs{subsection}、\cs{enumerate} 等段落级次均已按``\href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范}''定制，可直接使用.
 
 如需插入参考文献，通过命令 \cs{DocInfo} 指定 \file{.bib} 文件后在要插入参考文献等地方输入 \cs{printbiblography} 即可输出参考文献列表. 参考文献格式已设置为 \cmd{gb7714-2015}. 若未指定参考文献 \file{.bib} 文件，为加速编译，\pkg{gbt7714} 宏包将不会加载. 同时，模板额外预置了以下宏包
 
@@ -207,22 +231,14 @@
 \begin{center}
   \fbox
     { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-bc.layout-module}} }
-  \qquad\fbox
+  \quad\fbox
     {
       \parbox[c][1.5em]{16em}{\centering\file{hduthesis-pg.layout-module}}
     }\\[2ex]
-  \fbox
-    { \parbox[c][1.5em]{5em}{\centering\file{hdulogo}} }
   \quad\fbox
-    { \parbox[c][1.5em]{5em}{\centering\file{hdubrand}} }
-  \quad\fbox
-    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-unv.layout-module}} }
-  \quad\fbox
-    { \parbox[c][1.5em]{5em}{\centering\file{hdumotto}} }\\[2ex]
-  \fbox
-    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-font-module}} }
+    { \parbox[c][1.5em]{14em}{\centering\file{hduthesis-font-module}} }
   \qquad\fbox
-    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-preamble-module}} }
+    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-unv.layout-module}} }
 \end{center}
 
 \hrule

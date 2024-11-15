@@ -1,21 +1,22 @@
-\documentclass{hduthesis}
+\documentclass[I-agree]{hduthesis}
 
+\setmathfont{STIX Two Math}
 \setCJKmainfont{Songti SC}[AutoFakeSlant]
 \setCJKsansfont{STHeiti}[AutoFakeBold = 2]
 \tikzset{ > = stealth }
 \usetikzlibrary{positioning,shapes.geometric}
 
 \DocInfo
-{
-  title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
-  department = 理学院,
-  major      = 物理学,
-  class      = 英才班,
-  stdntid    = C668668E,
-  author     = 申智能,
-  supervisor = 李智能,
-  bibsource  = reference
-}
+  {
+    title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
+    department = 理学院,
+    major      = 物理学,
+    class      = 英才班,
+    stdntid    = C668668E,
+    author     = 申智能,
+    supervisor = 李智能,
+    bibsource  = reference
+  }
 
 \begin{document}
 
@@ -40,5 +41,6 @@
 
 \appendix
 \chapter*{附录}
+\addcontentsline{toc}{chapter}{附录}
 
 \end{document}

@@ -24,6 +24,7 @@
 \def\hduthesis@date{2024/10/10}
 \def\hduthesis@version{0.2.1}
 
+\RequirePackage{etoolbox}
 \ProvidesExplClass{hduthesis} {\hduthesis@date} {\hduthesis@version}
 {HDU Thesis Class}
 
@@ -31,10 +32,23 @@
   { \msg_new:nnn { hduthesis } {#1} {#2} }
 \cs_new_protected:Npn \hduthesis_msg_error:nn #1#2
   { \msg_error:nnn { hduthesis } {#1} {#2} }
+
+\hduthesis_msg_new:nn { 用户协议 }
+  { \exp_not:n
+    {
+      ⚠️⚠️⚠️⚠️⚠️⚠️~「HduThesis」编译受阻~⚠️⚠️⚠️⚠️⚠️⚠️~
+      使用模板前请认真阅读模板说明文档封面上的「用户协议」~
+      😡👊模板作者不对使用本模板产生的格式审查问题负责👊😡~
+      导言区添加全局选项 `I-agree'：
+      `\documentclass[I-agree]{hduthesis}`~
+      即可顺利编译✌️并代表您已同意本协议🥰~
+      可反馈Issues至📮xiamyphys@gmail.com.~ 祝君科研顺利！
+    }
+  }
+
 \cs_generate_variant:Nn \hduthesis_msg_error:nn { nx }
 \hduthesis_msg_new:nn { not found module }
   { The~hduthesis~module~`#1'~not~found. }
-
 \cs_new_protected_nopar:Npn \hduthesis_load_module:n #1 
   {
     \clist_map_inline:nn {#1}
@@ -50,9 +64,40 @@
       {HDUThesis~ \text_titlecase:n {#1} ~Module}
   }
 
-\DeclareOption*{\PassOptionsToClass{\CurrentOption}{report}}
-\ProcessOptions\relax
-\LoadClass[a4paper]{report}
+% global options
+\clist_new:N \g__hdu_base_class_options_clist
+\keys_define:nn { hduthesis / classoption }
+  {
+    I-agree .bool_set:N  = \g__hduthesis_agreement_bool,
+      I-agree .initial:n = false,
+      I-agree .default:n = true,
+    math-font .tl_set:N     = \g__hduthesis_math_font,
+    main-font .tl_set:N     = \g__hduthesis_main_font,
+    sans-font .tl_set:N     = \g__hduthesis_sans_font,
+    mono-font .tl_set:N     = \g__hduthesis_mono_font,
+    CJKmain-font .tl_set:N  = \g__hduthesis_main_CJK_font,
+    CJKsans-font .tl_set:N  = \g__hduthesis_sans_CJK_font,
+    CJKmono-font .tl_set:N  = \g__hduthesis_mono_CJK_font,
+    unknown .code:n         = \__hduthesis_unknown_option:n { #1 },
+  }
+\cs_new_protected_nopar:Npn \__hduthesis_unknown_option:n #1
+  {
+    \tl_if_empty:nTF { #1 }
+      {
+        \clist_gput_right:NV \g__hdu_base_class_options_clist \l_keys_key_str
+      }
+      {
+        \exp_args:NNx \clist_gput_right:Nn \g__hdu_base_class_options_clist
+          { \l_keys_key_str = \exp_not:n {#1} }
+      }
+  }
+
+\ProcessKeyOptions[ hduthesis / classoption ]
+\PassOptionsToClass{a4paper,zihao = -4}{ctexrep}
+\PassOptionsToPackage{quiet,no-math}{xeCJK}
+\exp_args:NNV \LoadClass[\g__hdu_base_class_options_clist]{ctexrep}
+\bool_if:NF \g__hduthesis_agreement_bool
+  { \hduthesis_msg_error:nn { 用户协议 } { 未确认 } }
 
 \RequirePackage { siunitx, circuitikz, pgfplots, listings, hologo,
                   lipsum, zhlipsum, booktabs, multicol, hyperref }
@@ -64,7 +109,6 @@
   }
 
 \hduthesis_load_module:n { font }
-\hduthesis_load_module:n { preamble }
 \hduthesis_load_module:n { unv.layout }
 
 \keys_define:nn { hduthesis / docinfo }
@@ -104,6 +148,8 @@
       \l__docinfo_cnsupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {1} }
     \exp_args:NNe \tl_set:Nn
       \l__docinfo_ensupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {2} }
+    \bool_if:NF \g__hduthesis_agreement_bool
+      { \tl_clear:N \l__docinfo_bibsource_tl }
     \tl_if_empty:NTF \l__docinfo_bibsource_tl
       {
         \newcommand*\printbibliography{\chapter*{参考文献}}
@@ -112,18 +158,19 @@
       {
         \RequirePackage[sort&compress]{gbt7714}
         \bibliographystyle{gbt7714-numerical}
+        \dim_set:Nn \bibsep {.35ex}
         \newcommand*\printbibliography
-          {
-            \begin{spacing}{1.11}
-              \nocite{*}\bibliography{ \l__docinfo_bibsource_tl }
-            \end{spacing}
-          }
-        \AddToHook{cmd/printbibliography/before}
+          { \nocite{*}\bibliography{ \l__docinfo_bibsource_tl } }
+        \hook_gput_code:nnn { cmd/printbibliography/before } { . }
           {
             \group_begin:
-            \AddToHook{cmd/@makeschapterhead/before} { \linespread{2.1} }
+            \hook_gput_code:nnn { cmd/@makeschapterhead/before } { . } { \null }
           }
-        \AddToHook{cmd/printbibliography/after} { \group_end: }
+        \hook_gput_code:nnn { cmd/printbibliography/after } { . }
+          {
+            \group_end:
+            \addcontentsline{toc}{chapter}{参考文献}
+          }
       }
     \hypersetup
       {
@@ -132,15 +179,9 @@
         pdfproducer = hduTeX~bundle~by~Mingyu~Xia,
       }
     \ExplSyntaxOn
-      \int_compare:nNnT {\tl_count:N \l__docinfo_stdntid_tl} = {8}
+      \int_compare:nNnTF { \tl_count:N \l__docinfo_stdntid_tl } = { 8 }
         { \hduthesis_load_module:n { bc.layout } }
-      \int_compare:nNnT {\tl_count:N \l__docinfo_stdntid_tl} = {10}
         { \hduthesis_load_module:n { pg.layout } }
-      \bool_if:nT
-        {
-          !\int_compare_p:nNn {\tl_count:N \l__docinfo_stdntid_tl} = {8} &&
-          !\int_compare_p:nNn {\tl_count:N \l__docinfo_stdntid_tl} = {10}
-        } { \hduthesis_load_module:n { bc.layout } }
     \ExplSyntaxOff
   }
 

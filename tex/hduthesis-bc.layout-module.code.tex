@@ -109,39 +109,75 @@
     \restoregeometry
   }
 
-\def\@makechapterhead#1
+\RenewDocumentEnvironment {abstract} { O{en} }
   {
-    \vspace*{-15\p@}%
-      {\parindent \z@ \centering \sffamily
-          \large \thechapter \quad  #1
-          \par\nobreak
-          \vskip 24\p@ \par\nobreak
-      }
-    \thispagestyle{fancy}
+    \str_if_eq:nnT {#1} {en}
+    {
+      \tl_set:Nn \l__keywords_name_tl {Keywords:~}
+      \tl_set:Nn \l__keywords_sep_tl {;~}
+    }
+    \str_if_eq:nnT {#1} {cn}
+    {
+      \tl_set:Nn \l__keywords_name_tl {\textsf{关键词：}}
+      \tl_set:Nn \l__keywords_sep_tl {；}
+    }
+    \@beginparpenalty\@lowpenalty
+    \str_if_eq:nnT {#1} {en} {\chapter*{\normalfont\bfseries ABSTRACT}}
+    \str_if_eq:nnT {#1} {cn} {\chapter*{摘\qquad 要}}
   }
-\def\@makeschapterhead#1
   {
-    \vspace*{-15\p@}%
-      {\parindent \z@ \raggedright
-          \centering \sffamily
-          \interlinepenalty\@M
-          \large \bfseries #1\par\nobreak
-          \vskip 24\p@
-      }
-      \tl_set:Nn \l__toc_schapter_tl {#1}
-      \addcontentsline{toc}{chapter}{\l__toc_schapter_tl}
-    \thispagestyle{fancy}
+    \par\null
+    \tl_clear:N \l__abstract_name_tl
+    \cfoot{}
+    \clearpage
+  }
+\clist_new:N \l__abstract_keywords_clist
+\NewDocumentCommand \keywords { m }
+  {
+    \par \vspace*{\baselineskip}
+    \noindent\textbf{\l__keywords_name_tl}
+    \clist_set:Nn \l__abstract_keywords_clist {#1}
+    \clist_use:Nn \l__abstract_keywords_clist {\l__keywords_sep_tl}
+  }
+
+\hook_gput_code:nnn { cmd/tableofcontents/after } { . }
+  { \thispagestyle{fancy} }
+\RequirePackage{tocloft}
+\renewcommand{\contentsname}{\hfill 目 \qquad 录 \hfill}
+\renewcommand \cfttoctitlefont{\sffamily\large}
+\dim_set:Nn \cftbeforetoctitleskip {3pt}
+\dim_set:Nn \cftaftertoctitleskip {24pt}
+\dim_set:Nn \cftbeforechapskip {1pt}
+\dim_set:Nn \cftbeforesecskip {-.2pt}
+\renewcommand*\l@chapter{\@dottedtocline{1}{0em}{1.6em}}
+\renewcommand*\l@section{\@dottedtocline{1}{2.3em}{2.1em}}
+\renewcommand*{\@dotsep}{1.7}
+\renewcommand*{\@pnumwidth}{2.5ex}
+\renewcommand{\cftchapfont}{\normalfont}
+\setcounter{tocdepth}{1}
+
+\ctexset
+  {
+    chapter =
+      {
+        name       = {},
+        number     = \arabic{chapter},
+        format     = { \sffamily\centering\large },
+        beforeskip = { -18\p@ },
+        afterskip  = { 24\p@ },
+        pagestyle  = { fancy }
+      },
   }
 \renewcommand\section
   {
-    \vspace*{-2.5ex}
+    \vspace*{-2.4ex}
     \@startsection {section}{1}{\z@}%
       {0ex}{.1pt}{\sffamily\semilarge}
   }
 \renewcommand\subsection
   {
     \vspace*{-1.8ex}
-    \@startsection {subsection}{1}{\z@}%
+    \@startsection {subsection}{2}{\z@}%
       {0ex}{.1pt}{\sffamily}
   }
 

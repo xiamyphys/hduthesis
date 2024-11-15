@@ -1,7 +1,5 @@
 \hduthesis_provide_module:n {font}
 
-\PassOptionsToPackage{quiet,no-math}{xeCJK}
-\RequirePackage[zihao = -4]{ctex}
 \linespread{1.39}
 \dim_set:Nn \parindent {2\ccwd}
 \newcommand\semilarge{\@setfontsize\semilarge{14}{16.5}}
@@ -21,6 +19,9 @@
 \RequirePackage { amsmath, amssymb, mathtools, extarrows,
                   bm, cancel, physics2, fixdif, derivative }
 \usephysicsmodule{ab, braket, ab.legacy, op.legacy}
+\RequirePackage
+  [ warnings-off = { mathtools-colon, mathtools-overbracket } ]
+  {unicode-math}
 \AtBeginDocument{
   \dim_set:Nn \abovedisplayskip {3pt}
   \dim_set:Nn \belowdisplayskip {3pt}
