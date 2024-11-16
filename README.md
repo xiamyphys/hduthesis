@@ -1,4 +1,4 @@
-# The `hduthesis` class
+# The `hduThesiS` class
 
 This class provides the thesis template for Hangzhou Dianzi University.
 
