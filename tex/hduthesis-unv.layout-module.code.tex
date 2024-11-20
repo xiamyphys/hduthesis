@@ -1,7 +1,6 @@
 \hduthesis_provide_module:n {unv.layout}
 
-\RequirePackage{geometry, fancyhdr, array, setspace}
-\pagestyle{fancy}
+\RequirePackage{geometry, array, setspace}
 
 \newcommand\frontmatter
   {
@@ -51,21 +50,20 @@
     \box1
   }
 
-\RequirePackage[skip = 1em, labelsep = quad, font = small]{caption}
-\renewcommand{\thefigure}{\arabic{chapter}-\arabic{figure}}
-\renewcommand{\thetable}{\arabic{chapter}-\arabic{table}}
-\renewcommand{\theequation}{\arabic{chapter}-\arabic{equation}}
+\RequirePackage[skip = 1.75ex, labelsep = quad, font = small]{caption}
+\renewcommand*\thefigure {\arabic{chapter}-\arabic{figure}}
+\renewcommand*\thetable {\arabic{chapter}-\arabic{table}}
+\renewcommand*\theequation {\arabic{chapter}-\arabic{equation}}
 \AddToHook{env/figure/after}{\vspace*{-2.3ex}}
 \AddToHook{env/table/after}{\vskip-1.9ex}
 
 \RequirePackage{enumitem, cleveref}
 \setlist[enumerate,1]
   {
-    label = （\arabic*）, itemindent = 4.5em, leftmargin = 0em,
-    labelsep = 0em, topsep = -1pt, itemsep = 0pt, partopsep = 0pt,
+    label = (\,\arabic*\,), itemindent = 4em, leftmargin = 0em,
+    labelsep = 1ex, topsep = 0pt, itemsep = 0pt, partopsep = 0pt,
     parsep = 0em, listparindent = 2\ccwd
   }
-\AddToHook{env/enumerate/after}{\vspace*{.1ex}}
 \crefformat{figure}{图#2#1#3}
 \crefformat{table}{表#2#1#3}
 \graphicspath

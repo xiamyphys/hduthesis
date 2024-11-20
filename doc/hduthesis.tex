@@ -1,84 +1,48 @@
-\documentclass[11pt,letterpaper]{l3doc}
+\documentclass[11pt]{hduthesisdoc}
 
-\hypersetup{urlcolor = teal, filecolor = violet}
-\hologoFontSetup{general = \sffamily}
-\usepackage[mono = false]{libertine}
-\usepackage{geometry,framed,xeCJKfntef,tikz,pdfpages,subcaption,fadingimage}
-\setlength{\oddsidemargin}{63pt}\setlength{\evensidemargin}{63pt}
-\FrameSep = 0pt 
-\usepackage[os = mac]{menukeys}
-\AddToHook{env/function/before}{\vspace{-.3\baselineskip}}
-\AddToHook{env/syntax/after}{\vspace{-.2\baselineskip}}
-\usepackage{datetime}\yyyymmdddate
-\usepackage[fontset = none, scheme = plain]{ctex}\linespread{1.5}
-\setCJKmainfont[AutoFakeSlant]{Songti SC}
-\setCJKsansfont[BoldFont = Hei, AutoFakeSlant]{Heiti SC}
-\setCJKmonofont[AutoFakeSlant]{LXGW WenKai Mono}
-\renewcommand{\emph}[1]{\CJKsout*[thickness=2.5ex, format=\color{blue!15}]{#1}}
-\makeatletter
-\def\HoLogo@hduthesis#1{%
-  \kern -1.3ex\raisebox{-.5pt}
-    {
-      \HOLOGO@mbox
-        {
-          \tikz[baseline = (hduthesis.base)]
-          {
-              \node [ inner sep = 0pt ] (hduthesis)
-                {\textsc{\cls{hduThesi\scalebox{1.2}[1.2]{S}}}};
-              \draw
-               let \p1 = (hduthesis.west), \p2 = (hduthesis.east)
-               in (\x1,\y1) (\x2,\y2)
-              [line width = {.028pt*(\x2 - \x1)}]
-              ([yshift = -.5ex]hduthesis.north west) to[bend right = 5]
-              ([yshift = .25ex]hduthesis.north east);
-          }
-        }
-    }\kern -1.3ex
- }
-\makeatother
-
-\title{\bfseries The \hologo{hduthesis} Class\\\hologo{LaTeX} Thesis Template for Hangzhou Dianzi University}
-\author
-{
-  Mingyu Xia \texttt{<\href{mailto:xiamyphys@gmail.com}{xiamyphys@hdu.edu.cn}>}
-  \footnote
-  { School of Sciences, Physics Department, Graduate in 06/2025 (expected) }
-}
-\date{v0.3.1\footnote{\url{https://github.com/xiamyphys/hduthesis}} ~(\today)}
+\DocInfo
+  {
+    title   = The \hologo{hduthesis} Class\\
+              \hologo{LaTeX} Thesis Template for Hangzhou Dianzi University,
+    author  = Mingyu Xia \mailto{xiamyphys@hdu.edu.cn}
+              \footnote{Physics Department, Graduate in 06/2025 (expected)},
+    version = v0.3.2,
+    CJKmain-font = {[AutoFakeSlant]{Songti SC}},
+    CJKsans-font = {[BoldFont = Hei, AutoFakeSlant]{Heiti SC}},
+    CJKmono-font = {[AutoFakeSlant]{LXGW WenKai Mono}}
+  }
 
 \begin{document}
 
-\begin{titlepage}
-  \newgeometry{margin = 1in}
-  \maketitle
-  \begin{center}
-    \tikz
-    {
-      \node [ opacity = .8 ] 
-        { \includegraphics[width = .15\paperwidth]{hdumotto.pdf} };
-      \node [ opacity = .3 ]
-        { \includegraphics[width = .2\paperwidth]{hdulogo.pdf} };
-    }
-  \end{center}
-    \begin{abstract}
-      \hologo{hduthesis} 是杭州电子科技大学毕业论文 \hologo{LaTeX}模板，支持学士和硕士学位论文排版.
-      \vspace*{1em}
-      \begin{center}
-        \small\bfseries User Agreement
-      \end{center}
-      \begin{enumerate}
-        \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件.
-        \item 本模板根据杭州电子科技大学教务处颁发的 \href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范} 编写而成. 作者不对使用本模板产生的格式审查问题负责. \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.} 使用本模板时，请按编译错误提示操作来勾选同意用户协议.
-        \item 欢迎前往 GitHub 提交反馈意见，为推动学校认证与规范化 \hologo{hduthesis} 贡献力量.
-      \end{enumerate}
-    \end{abstract}
-  \thispagestyle{empty}
-\end{titlepage}
+\maketitle
+
+\begin{abstract}
+  \hologo{hduthesis} 是杭州电子科技大学毕业论文 \hologo{LaTeX}模板，支持学士和硕士学位论文排版.
+\end{abstract}
+\begin{center}
+  \small\bfseries User Agreement
+\end{center}
+\begin{enumerate}
+  \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件.
+  \item 本模板根据杭州电子科技大学教务处颁发的 \href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范} 编写而成. 作者不对使用本模板产生的格式审查问题负责. \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.} 使用本模板时，请按编译错误提示操作来勾选同意用户协议.
+  \item 欢迎前往 GitHub 提交反馈意见，为推动学校认证与规范化 \hologo{hduthesis} 贡献力量.
+\end{enumerate}
+\thispagestyle{empty}
+\endtitlepage
 \restoregeometry
 
-\section{Introduction: Why ``\hologo{hduthesis}''?}
+\section{Introduction \& Loading \hologo{hduthesis}}
 
-本模板被命名为\hologo{hduthesis}，奇怪的大小写方式诠释了HDU校门——亚洲第二大门！
+本模板为杭州电子科技大学学位论文 \underline{非官方} \hologo{LaTeX} 模板，
+支持学士和硕士学位论文排版. 加载 \hologo{hduthesis} 时遇到``编译受阻''报错，
+请认真阅读上页的用户协议. 键入全局选项 \cmd{agreed} 后，
+方可顺利进行编译，并默认您已同意用户协议.
+
+\begin{framed}
+  \begin{verbatim}
+    \documentclass [ agreed, ... ] { hduthesis }
+  \end{verbatim}
+\end{framed}
 
 \section{Generate the Cover}
 
@@ -87,23 +51,21 @@
     \cs{DocInfo}\marg{keyvals}
   \end{syntax}
 
-  此命令接收键值，用于设置文档信息. 键 \keys{\cmdmac~title} 用于设置论文标题，键 \keys{\cmdmac~department} 用于设置学院，键 \keys{\cmdmac~major} 用于设置专业，键 \keys{\cmdmac~class} 用于设置班级，键 \keys{\cmdmac~stdntid} 用于设置学号，键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师，键 \keys{\cmdmac~bibsource} 用于设置插入参考文献文件源. 命令会根据输入的学号自动判断使用者为本科生/研究生 \footnote{杭州电子科技大学本科生学号为8位，研究生学号为9位.}.
+  此命令接收键值，用于设置文档信息. 键 \keys{\cmdmac~title} 用于设置论文标题，键 \keys{\cmdmac~department} 用于设置学院，键 \keys{\cmdmac~major} 用于设置专业，键 \keys{\cmdmac~class} 用于设置班级，键 \keys{\cmdmac~stdntid} 用于设置学号，键 \keys{\cmdmac~author} 用于设置作者，键 \keys{\cmdmac~supervisor} 用于设置导师，键 \keys{\cmdmac~bibsource} 用于设置插入参考文献文件源. 命令会根据输入的学号自动判断使用者为本科生/研究生.
 
   命令 \cs{DocInfo} 需在导言区中执行. 完成文档信息输入后，在 \verb|\begin{document}| 后执行命令 \cs{maketitle} 会调用所设置的键值自动生成 \emph{论文封面} 和 \emph{诚信承诺书}.
 \end{function}
 
-本科生输入样例如下. 需要使用键 \keys{\cmdmac~title} 设置类型为毕业设计/毕业论文，使用斜线 (/) 分隔，如 \cmd{title = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文}. 如果未指定类型，则默认采用毕业设计版式.
+本科生输入样例如下. 需要使用键 \keys{\cmdmac~title} 设置类型为毕业设计/毕业论文，使用斜线 (/) 分隔，如 \cmd{title = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文}.
 
 \begin{framed}
   \begin{verbatim}
-    \documentclass { hduthesis }
     \DocInfo
       {
         title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
         department = 理学院, major      = 物理学, stdntid   = 21668668,
         author     = 申智能, supervisor = 李智能, bibsource = reference
       }
-    \begin{document}  \maketitle  ...  \end{document}
   \end{verbatim}
 \end{framed}
 
@@ -113,7 +75,7 @@
   [ angle = -90, nup = 1x2, frame, linktodoc, scale = 0.96, delta = 0 .25in ]
   { /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf, 1-2 }
 
-研究生输入样例如下. 依学校要求，硕士学位论文扉页需同时有英文版. 因此需要在键 \keys{\cmdmac~title} \keys{\cmdmac~author} \keys{\cmdmac~supervisor} 中分别输入中文和英文信息，使用斜线 (/) 分隔. 如作者中文姓名为 \cmd{申智能}，英文姓名为 \cmd{SAN Chi Nan}，则键值输入格式为 \cmd{author = 申智能/SAN Chi Nan}.
+研究生输入样例如下. 硕士学位论文扉页需同时有英文版，因此需要在键 \keys{\cmdmac~title} \keys{\cmdmac~author} \keys{\cmdmac~supervisor} 中分别输入中文和英文信息，使用斜线 (/) 分隔. 如作者中文姓名为 \cmd{申智能}，英文姓名为 \cmd{SAN Chi Nan}，则键值输入格式为 \cmd{author = 申智能/SAN Chi Nan}.
 
 \begin{framed}
   \begin{verbatim}
@@ -160,7 +122,7 @@
   \end{verbatim}
 \end{framed}
 
-通过命令 \cs{keywords} 以半角逗号 (,) 为分隔输入关键词列表，输出时会根据所处 \env{abstract} 环境选择的语言不同，自动以半 / 全角分号分隔. 下图为生成的中/英摘要样例，可在终端执行 \cmd{texdoc hduthesis-pg} 获取此样例文件.
+通过命令 \cs{keywords} 以半角逗号 (,) 为分隔输入关键词列表，输出时会根据所处 \env{abstract} 环境选择的语言不同，自动以半 / 全角分号分隔. 下图为生成的中/英摘要样例，可在终端执行 \cmd{texdoc hduthesis-bc} 获取此样例文件.
 
 \begin{figure}[htbp]
   \centering

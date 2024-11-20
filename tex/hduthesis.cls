@@ -14,19 +14,18 @@
 %%                                                                       *
 %%    This work consists of the files hduthesis.cls,                     *
 %%                                    hduthesis-font-module.code,        *
-%%                                    hduthesis-preamble-module.code,    *
 %%                                    hduthesis-unv.layout-module.code,  *
 %%                                    hduthesis-bc.layout-module.code,   *
 %%                                    hduthesis-pg.layout-module.code,   *
 %%                                and README.md.                         *
 %%    available at https://github.com/xiamyphys/hduthesis                *
 %% ***********************************************************************
-\def\hduthesis@date{2024/10/10}
-\def\hduthesis@version{0.2.1}
+\def\hduthesis@date{2024/11/20}
+\def\hduthesis@version{0.3.2}
 
 \RequirePackage{etoolbox}
 \ProvidesExplClass{hduthesis} {\hduthesis@date} {\hduthesis@version}
-{HDU Thesis Class}
+  {LaTeX Class for Thesis at Hangzhou Dianzi University}
 
 \cs_new_protected:Npn \hduthesis_msg_new:nn #1#2 
   { \msg_new:nnn { hduthesis } {#1} {#2} }
@@ -36,13 +35,12 @@
 \hduthesis_msg_new:nn { 用户协议 }
   { \exp_not:n
     {
-      ⚠️⚠️⚠️⚠️⚠️⚠️~「HduThesis」编译受阻~⚠️⚠️⚠️⚠️⚠️⚠️~
+      ⚠️⚠️⚠️⚠️⚠️~「hduThesiS」编译受阻🥵~⚠️⚠️⚠️⚠️⚠️~
       使用模板前请认真阅读模板说明文档封面上的「用户协议」~
       😡👊模板作者不对使用本模板产生的格式审查问题负责👊😡~
-      导言区添加全局选项 `I-agree'：
-      `\documentclass[I-agree]{hduthesis}`~
-      即可顺利编译✌️并代表您已同意本协议🥰~
-      可反馈Issues至📮xiamyphys@gmail.com.~ 祝君科研顺利！
+      添加选项 `agreed'[\documentclass[agreed]{hduthesis}]~
+      即可顺利编译并默认代表您已同意本协议.~ 祝君科研顺利！~
+      如遇问题，可邮件反馈至📮xiamyphys@gmail.com.~ 
     }
   }
 
@@ -68,13 +66,10 @@
 \clist_new:N \g__hdu_base_class_options_clist
 \keys_define:nn { hduthesis / classoption }
   {
-    I-agree .bool_set:N  = \g__hduthesis_agreement_bool,
-      I-agree .initial:n = false,
-      I-agree .default:n = true,
+    agreed .bool_set:N     = \g__hduthesis_agreement_bool,
+      agreed .initial:n    = false,
+      agreed .default:n    = true,
     math-font .tl_set:N     = \g__hduthesis_math_font,
-    main-font .tl_set:N     = \g__hduthesis_main_font,
-    sans-font .tl_set:N     = \g__hduthesis_sans_font,
-    mono-font .tl_set:N     = \g__hduthesis_mono_font,
     CJKmain-font .tl_set:N  = \g__hduthesis_main_CJK_font,
     CJKsans-font .tl_set:N  = \g__hduthesis_sans_CJK_font,
     CJKmono-font .tl_set:N  = \g__hduthesis_mono_CJK_font,
@@ -92,35 +87,40 @@
       }
   }
 
-\ProcessKeyOptions[ hduthesis / classoption ]
-\PassOptionsToClass{a4paper,zihao = -4}{ctexrep}
-\PassOptionsToPackage{quiet,no-math}{xeCJK}
-\exp_args:NNV \LoadClass[\g__hdu_base_class_options_clist]{ctexrep}
-\bool_if:NF \g__hduthesis_agreement_bool
-  { \hduthesis_msg_error:nn { 用户协议 } { 未确认 } }
+\ProcessKeyOptions [ hduthesis / classoption ]
+\PassOptionsToClass { a4paper, zihao = -4 } { ctexrep }
+\PassOptionsToPackage { quiet, no-math } { xeCJK }
+\exp_args:NNV \LoadClass [ \g__hdu_base_class_options_clist ] { ctexrep }
 
 \RequirePackage { siunitx, circuitikz, pgfplots, listings, hologo,
-                  lipsum, zhlipsum, booktabs, multicol, hyperref }
-\pgfplotsset{compat = newest}
-\pdfstringdefDisableCommands
+                  lipsum, zhlipsum, booktabs, multicol }
+\pgfplotsset { compat = newest }
+
+\bool_if:NTF \g__hduthesis_agreement_bool
   {
-    \def\cite#1{<#1>}
-    \def\hologoRobust#1{<#1>}
-  }
+    \RequirePackage{hyperref}
+    \pdfstringdefDisableCommands
+      {
+        \def\cite#1{<#1>}
+        \def\hologoRobust#1{<#1>}
+      }
+    \AtBeginDocument
+      { \hypersetup { hidelinks, pdfproducer = hduThesiS~by~Mingyu~Xia } }
+  } { \hduthesis_msg_error:nn { 用户协议 } { 未确认 } }
 
 \hduthesis_load_module:n { font }
 \hduthesis_load_module:n { unv.layout }
 
 \keys_define:nn { hduthesis / docinfo }
   {
-    title.clist_set:N      = \l__docinfo_title_clist,
-    department.tl_set:N    = \l__docinfo_department_tl,
-    major.tl_set:N         = \l__docinfo_major_tl,
-    class.tl_set:N         = \l__docinfo_class_tl,
-    stdntid.tl_set:N       = \l__docinfo_stdntid_tl,
-    author.clist_set:N     = \l__docinfo_author_clist,
-    supervisor.clist_set:N = \l__docinfo_supervisor_clist,
-    bibsource.tl_set:N     = \l__docinfo_bibsource_tl,
+    title .clist_set:N      = \l__docinfo_title_clist,
+    department .tl_set:N    = \l__docinfo_department_tl,
+    major .tl_set:N         = \l__docinfo_major_tl,
+    class .tl_set:N         = \l__docinfo_class_tl,
+    stdntid .tl_set:N       = \l__docinfo_stdntid_tl,
+    author .clist_set:N     = \l__docinfo_author_clist,
+    supervisor .clist_set:N = \l__docinfo_supervisor_clist,
+    bibsource .tl_set:N     = \l__docinfo_bibsource_tl,
   }
 \clist_set:Nn \g_system_month_clist
   {
@@ -160,30 +160,19 @@
         \bibliographystyle{gbt7714-numerical}
         \dim_set:Nn \bibsep {.35ex}
         \newcommand*\printbibliography
-          { \nocite{*}\bibliography{ \l__docinfo_bibsource_tl } }
-        \hook_gput_code:nnn { cmd/printbibliography/before } { . }
           {
-            \group_begin:
-            \hook_gput_code:nnn { cmd/@makeschapterhead/before } { . } { \null }
-          }
-        \hook_gput_code:nnn { cmd/printbibliography/after } { . }
-          {
-            \group_end:
+            \nocite{*} \bibliography { \l__docinfo_bibsource_tl }
             \addcontentsline{toc}{chapter}{参考文献}
           }
       }
-    \hypersetup
-      {
-        hidelinks, pdftitle = \l__docinfo_entitle_tl,
-        pdfauthor = \l__docinfo_enauthor_tl,
-        pdfproducer = hduTeX~bundle~by~Mingyu~Xia,
-      }
-    \ExplSyntaxOn
-      \int_compare:nNnTF { \tl_count:N \l__docinfo_stdntid_tl } = { 8 }
-        { \hduthesis_load_module:n { bc.layout } }
-        { \hduthesis_load_module:n { pg.layout } }
-    \ExplSyntaxOff
+    \int_compare:nNnTF { \tl_count:N \l__docinfo_stdntid_tl } = { 8 }
+      { \hduthesis_load_module:n { bc.layout } }
+      { \hduthesis_load_module:n { pg.layout } }
   }
+
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand*\headrulewidth {.6pt}
 
 \endinput
 

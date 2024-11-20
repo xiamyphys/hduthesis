@@ -1,14 +1,15 @@
-\documentclass[I-agree]{hduthesis}
-
-\setmathfont{STIX Two Math}
-\setCJKmainfont{Songti SC}[AutoFakeSlant]
-\setCJKsansfont{STHeiti}[AutoFakeBold = 2]
+\documentclass
+  [
+    math-font    = STIX Two Math, agreed,
+    CJKmain-font = { {Songti SC}[AutoFakeSlant] },
+    CJKsans-font = { {STHeiti}[AutoFakeBold = 2] }
+  ] {hduthesis}
 \tikzset{ > = stealth }
 \usetikzlibrary{positioning,shapes.geometric}
 
 \DocInfo
   {
-    title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
+    title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业设计,
     department = 理学院,
     major      = 物理学,
     class      = 英才班,

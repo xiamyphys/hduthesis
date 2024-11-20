@@ -1,5 +1,5 @@
+\ExplSyntaxOn \makeatletter
 \hduthesis_provide_module:n {pg.layout}
-\makeatletter
 
 \geometry { top = 2.75cm, bottom = 2cm, left = 3.2cm, right = 3.2cm,
             headheight = 15pt, headsep = .72cm }
@@ -158,8 +158,16 @@
       \tl_set:Nn \l__keywords_sep_tl {，}
     }
     \@beginparpenalty\@lowpenalty
-    \str_if_eq:nnT {#1} {cn} {\chapter*{摘要}}
-    \str_if_eq:nnT {#1} {en} {\chapter*{\normalfont\bfseries Abstract}}
+    \str_if_eq:nnT {#1} {cn}
+      {
+        \chapter*{摘要}
+        \addcontentsline{toc}{chapter}{摘要}
+      }
+    \str_if_eq:nnT {#1} {en}
+      {
+        \chapter*{\normalfont\bfseries Abstract}
+        \addcontentsline{toc}{chapter}{\bfseries Abstract}
+      }
   }
   {
     \par\null
@@ -181,7 +189,7 @@
   { \thispagestyle{fancy} }
 \RequirePackage{tocloft}
 \renewcommand{\contentsname}{\hfill 目录 \hfill}
-\renewcommand \cfttoctitlefont{\sffamily\large}
+\renewcommand \cfttoctitlefont{\sffamily\semiLarge}
 \dim_set:Nn \cftbeforetoctitleskip {12pt}
 \dim_set:Nn \cftaftertoctitleskip {24pt}
 \dim_set:Nn \cftbeforechapskip {1pt}
@@ -195,27 +203,27 @@
 
 \ctexset
   {
-    chapter =
+    chapter    =
       {
-        aftername  = { \hspace{.5\ccwd} },
-        format     = { \sffamily\centering\semiLarge },
-        beforeskip = { 10\p@ },
-        afterskip  = { 20\p@ },
-        pagestyle  = { fancy }
+        aftername  = \hspace{.5\ccwd}, fixskip   = true,
+        beforeskip = 35pt,             afterskip = 30pt,
+        format     = \sffamily\centering\semiLarge,
+        pagestyle  = fancy
+      },
+    section    =
+      {
+        aftername  = \hspace{.5\ccwd}, fixskip   = true,
+        beforeskip = 2ex,              afterskip = 2.5ex,
+        format = \sffamily\large
+         ,
+      },
+    subsection =
+      {
+        aftername  = \hspace{.5\ccwd}, fixskip   = true,
+        beforeskip = 2ex,           afterskip = 3ex,
+        format     = \sffamily\semilarge
       }
   }
-\renewcommand\section
-  {
-    \vspace*{1pt}
-    \@startsection {section}{1}{\z@}%
-      {0ex}{.8ex}{\sffamily\large}
-  }
-\renewcommand\subsection
-  {
-    \vspace*{2pt}
-    \@startsection {subsection}{2}{\z@}%
-      {0ex}{1.2ex}{\sffamily\semilarge}
-  }
 
-\makeatother
+\makeatother \ExplSyntaxOff
 \endinput

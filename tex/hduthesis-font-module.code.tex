@@ -7,13 +7,13 @@
 
 \setmainfont{texgyretermes}
   [
-    Extension = .otf, UprightFont = *-regular, BoldFont = *-bold,
-    ItalicFont = *-italic, BoldItalicFont = *-bolditalic
+    Extension  = .otf,     UprightFont = *-regular, BoldFont = *-bold, ItalicFont = *-italic, BoldItalicFont = *-bolditalic
   ]
 \setsansfont{texgyreheros}
   [
-    Extension = .otf, scale = .9, UprightFont = *-regular, BoldFont = *-bold,
-    ItalicFont = *-italic, BoldItalicFont = *-bolditalic,
+    Extension   = .otf,      BoldItalicFont = *-bolditalic,
+    UprightFont = *-regular, BoldFont       = *-bold,
+    ItalicFont  = *-italic,  scale          = .9,
   ]
 
 \RequirePackage { amsmath, amssymb, mathtools, extarrows,
@@ -26,5 +26,14 @@
   \dim_set:Nn \abovedisplayskip {3pt}
   \dim_set:Nn \belowdisplayskip {3pt}
 }
+
+\tl_if_empty:NF \g__hduthesis_math_font
+  { \setmathfont { \g__hduthesis_math_font } }
+\tl_if_empty:NF \g__hduthesis_main_CJK_font
+  { \exp_last_unbraced:No \setCJKmainfont \g__hduthesis_main_CJK_font }
+\tl_if_empty:NF \g__hduthesis_sans_CJK_font
+  { \exp_last_unbraced:No \setCJKsansfont \g__hduthesis_sans_CJK_font }
+\tl_if_empty:NF \g__hduthesis_mono_CJK_font
+  { \exp_last_unbraced:No \setCJKmonofont \g__hduthesis_mono_CJK_font }
 
 \endinput

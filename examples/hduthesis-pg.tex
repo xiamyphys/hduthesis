@@ -1,8 +1,10 @@
-\documentclass[I-agree]{hduthesis}
+\documentclass
+  [
+    math-font    = STIX Two Math, agreed,
+    CJKmain-font = { {Songti SC}[AutoFakeSlant] },
+    CJKsans-font = { {STHeiti}[AutoFakeBold = 2] }
+  ] {hduthesis}
 
-\setmathfont{STIX Two Math}
-\setCJKmainfont{Songti SC}[AutoFakeSlant]
-\setCJKsansfont{STHeiti}[AutoFakeBold = 2]
 \tikzset{ > = stealth }
 \usetikzlibrary{positioning,shapes.geometric}
 
@@ -35,7 +37,7 @@
 \end{abstract}
 
 \begin{abstract}[en]
-  \setstretch{1.3}
+  \setstretch{1.35}
   Design patterns are widely used to address the recurring design problems during the process of software design and development. The information about design patterns used in software source code-design pattern instances reveal much about the high-level abstract design ideas. Accurately identifying and detecting design pattern instances in a software system can help developers and maintainers to understand its original design and implementation, facilitating maintenance, update and re-development.
 
   In recent years, many approaches have been proposed to automatically or semi-automatically detecting design pattern instances from software source code. Among these approaches, some approaches transform software source code and design patterns into certain graphs, and then exploit subgraph isomorphism techniques to detect design pattern instances. However, as mining isomorphic subgraphs is an NP-complete problem, those approaches usually fail to achieve satisfactory efficiency.

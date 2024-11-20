@@ -8,19 +8,17 @@
 
 \section{程序流图}
 
-\begin{figure}[htbp]
+\begin{figure}[!ht]
   \centering
   \begin{tikzpicture}
-  [
-    every node/.style = { font = {\small}, minimum height = 3em}
-  ]
-    \node [draw, rectangle, minimum width = 12em, minimum height = 2em] (a) at (0,0) {初始参数设置};
-    \node [draw, rectangle, minimum width = 10em, rounded corners = 1.2em, below = of a] (b) {等待中断};
+  [ every node/.style = { font = \small, minimum height = 2.5em } ]
+    \node [draw, rectangle, minimum width = 11em, minimum height = 2em] (a) at (0,0) {初始参数设置};
+    \node [draw, rectangle, minimum width = 11em, rounded corners = 1.2em, below = of a] (b) {等待中断};
     \node [draw, rectangle, minimum width = 11em, diamond, aspect=3, below = of b] (c) {中断服务程};
     \node [draw, rectangle, minimum width = 11em, diamond, aspect=3, below = of c, yshift = 2ex] (d) {读取 P1 口值};
-    \node [draw, rectangle, minimum width = 8em, rectangle, below = of d, minimum height = 2em] (e) {发送数据帧};
+    \node [draw, rectangle, minimum width = 11em, rectangle, below = of d, minimum height = 2em] (e) {发送数据帧};
     \node [draw, rectangle, minimum width = 11em, diamond, aspect=3, below = of e] (f) {延时$\qty{200}\ms$};
-    \node [draw, rectangle, minimum width = 8em, rectangle, below = of f, minimum height = 2em, yshift = 2ex] (g) {清中断标志};
+    \node [draw, rectangle, minimum width = 11em, rectangle, below = of f, minimum height = 2em, yshift = 2ex] (g) {清中断标志};
     \node [draw, rectangle, minimum width = 10em, rounded corners = 1.2em, below = of g] (h) {中断返回};
     \draw [->] (a.south) -- (b.north);
     \draw [->] (b.south) -- (c.north);
@@ -35,7 +33,6 @@
   \label{5-1}
 \end{figure}
 
-\vspace*{-1.5em}
 \section{模块说明}
 
 \begin{enumerate}
