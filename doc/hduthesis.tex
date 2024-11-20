@@ -1,4 +1,4 @@
-\documentclass[11pt]{hduthesisdoc}
+\documentclass[l3doc]{hduthesis}
 
 \DocInfo
   {
@@ -6,7 +6,6 @@
               \hologo{LaTeX} Thesis Template for Hangzhou Dianzi University,
     author  = Mingyu Xia \mailto{xiamyphys@hdu.edu.cn}
               \footnote{Physics Department, Graduate in 06/2025 (expected)},
-    version = v0.3.2,
     CJKmain-font = {[AutoFakeSlant]{Songti SC}},
     CJKsans-font = {[BoldFont = Hei, AutoFakeSlant]{Heiti SC}},
     CJKmono-font = {[AutoFakeSlant]{LXGW WenKai Mono}}
@@ -17,17 +16,17 @@
 \maketitle
 
 \begin{abstract}
-  \hologo{hduthesis} 是杭州电子科技大学毕业论文 \hologo{LaTeX}模板，支持学士和硕士学位论文排版.
+  \hologo{hduthesis} 是杭州电子科技大学学位论文 \hologo{LaTeX} 模板，支持学士、硕士学位论文排版.
 \end{abstract}
+
 \begin{center}
   \small\bfseries User Agreement
 \end{center}
-\begin{enumerate}
+\begin{enumerate}\small
   \item 本模板通过 LPPL 1.3c 协议开放源代码，您可以随意使用编译出的 PDF 文件.
-  \item 本模板根据杭州电子科技大学教务处颁发的 \href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范} 编写而成. 作者不对使用本模板产生的格式审查问题负责. \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.} 使用本模板时，请按编译错误提示操作来勾选同意用户协议.
+  \item 本模板根据杭州电子科技大学教务处颁发的 \href{https://jwc.hdu.edu.cn/2022/0428/c4528a153813/page.htm}{杭电理工类毕业论文写作规范} 编写而成，作者不对使用本模板产生的格式审查问题负责. \emph{如果您所在的学院因论文查重、收录等原因要求提交 \file{.docx} 格式，不接收 \file{.pdf} 论文稿件，请勿执意使用本模板，避免因格式转换带来不必要的麻烦.} 使用本模板时，请按编译错误提示操作来勾选同意用户协议.
   \item 欢迎前往 GitHub 提交反馈意见，为推动学校认证与规范化 \hologo{hduthesis} 贡献力量.
 \end{enumerate}
-\thispagestyle{empty}
 \endtitlepage
 \restoregeometry
 
@@ -93,13 +92,12 @@
   \end{verbatim}
 \end{framed}
 
-\begin{function}{\l__hduthesis_grade_int}
-  \begin{syntax}
-    \cs{ExplSyntaxOn}  \cs{int_set:Nn} \cs{l__hduthesis_grade_int} \marg{Year}  \cs{ExplSyntaxOff}
-  \end{syntax}
+\DescribeMacro{\l__hduthesis_grade_int}
+论文完成日期和学生毕业年份会根据当前系统时间自动生成. 如果当前月份在8月及以前，毕业年份会显示今年；如果当前月份在9月及以后，毕业年份会显示次年. 在 \cs{DocInfo} 后对整型 \cs{l__hduthesis_grade_int} 重新赋值可手动更改毕业年份.
 
-  论文完成日期和学生毕业年份会根据当前系统时间自动生成. 如果当前月份在8月及以前，毕业年份会显示当前年；如果当前月份在9月及以后，毕业年份会显示次年. 在导言区 \cs{DocInfo} 命令后对整型 \cs{l__hduthesis_grade_int} 重新赋值可强制更改毕业年份.
-\end{function}
+\begin{verbatim}
+  \ExplSyntaxOn  \int_set:Nn \l__hduthesis_grade_int <Year>  \ExplSyntaxOff
+\end{verbatim}
 
 下页包含所生成的硕士学位论文封面、扉页和承诺书缩略图. 此文档样例可在终端执行 \cmd{texdoc hduthesis-pg} 获取.
 
@@ -112,8 +110,10 @@
 \section{Enter Abstract in EN / CN}
 
 \DescribeEnv{abstract}
+环境 \env{abstract} 用于生成摘要，其可选参数可设置语言格式.
+
 \DescribeMacro{\keywords}
-环境 \env{abstract} 用于生成摘要，其可选参数可设置语言格式. 命令 \cs{keywords} 需在 \env{abstract} 环境内执行，其会根据 \env{abstract} 环境所选择的语言，自动生成英文 / 中文格式的关键词.
+命令 \cs{keywords} 需在 \env{abstract} 环境内执行，其会根据 \env{abstract} 环境所选择的语言，自动生成英文 / 中文格式的关键词.
 
 \begin{framed}
   \begin{verbatim}
@@ -128,12 +128,12 @@
   \centering
   \fbox
   {
-    \includegraphics[page = 3, width = .46\linewidth]
+    \includegraphics[page = 3, width = .42\linewidth]
     {/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf} }
   \hfill
   \fbox
   {
-    \includegraphics[page = 4, width = .46\linewidth]
+    \includegraphics[page = 4, width = .42\linewidth]
     {/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf} }
   \caption{样例文件 \file{hduthesis-bc.pdf}, Page 3 -- 4}
 \end{figure}

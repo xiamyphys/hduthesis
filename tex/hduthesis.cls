@@ -17,11 +17,12 @@
 %%                                    hduthesis-unv.layout-module.code,  *
 %%                                    hduthesis-bc.layout-module.code,   *
 %%                                    hduthesis-pg.layout-module.code,   *
+%%                                    hduthesis-hdu.l3doc-module.code,   *
 %%                                and README.md.                         *
 %%    available at https://github.com/xiamyphys/hduthesis                *
 %% ***********************************************************************
-\def\hduthesis@date{2024/11/20}
-\def\hduthesis@version{0.3.2}
+\def\hduthesis@date{2024/11/21}
+\def\hduthesis@version{0.3.3}
 
 \RequirePackage{etoolbox}
 \ProvidesExplClass{hduthesis} {\hduthesis@date} {\hduthesis@version}
@@ -35,12 +36,12 @@
 \hduthesis_msg_new:nn { 用户协议 }
   { \exp_not:n
     {
-      ⚠️⚠️⚠️⚠️⚠️~「hduThesiS」编译受阻🥵~⚠️⚠️⚠️⚠️⚠️~
+      ⚠️⚠️⚠️⚠️⚠️~     「hduThesiS」编译受阻🥵     ~⚠️⚠️⚠️⚠️⚠️~
       使用模板前请认真阅读模板说明文档封面上的「用户协议」~
       😡👊模板作者不对使用本模板产生的格式审查问题负责👊😡~
       添加选项 `agreed'[\documentclass[agreed]{hduthesis}]~
       即可顺利编译并默认代表您已同意本协议.~ 祝君科研顺利！~
-      如遇问题，可邮件反馈至📮xiamyphys@gmail.com.~ 
+      如遇问题，可邮件反馈至📮xiamyphys@gmail.com.
     }
   }
 
@@ -59,16 +60,19 @@
   {
     \ProvidesExplFile{hduthesis-#1-module.code.tex}
       {\hduthesis@date}{\hduthesis@version}
-      {HDUThesis~ \text_titlecase:n {#1} ~Module}
+      {hduThesiS~ \text_titlecase:n {#1} ~Module}
   }
 
 % global options
 \clist_new:N \g__hdu_base_class_options_clist
 \keys_define:nn { hduthesis / classoption }
   {
-    agreed .bool_set:N     = \g__hduthesis_agreement_bool,
-      agreed .initial:n    = false,
-      agreed .default:n    = true,
+    agreed .bool_set:N      = \g__hduthesis_agreement_bool,
+      agreed .initial:n     = false,
+      agreed .default:n     = true,
+    l3doc .bool_set:N       = \g__hduthesis_doc_bool,
+      l3doc .initial:n      = false,
+      l3doc .default:n      = true,
     math-font .tl_set:N     = \g__hduthesis_math_font,
     CJKmain-font .tl_set:N  = \g__hduthesis_main_CJK_font,
     CJKsans-font .tl_set:N  = \g__hduthesis_sans_CJK_font,
@@ -86,16 +90,19 @@
           { \l_keys_key_str = \exp_not:n {#1} }
       }
   }
-
 \ProcessKeyOptions [ hduthesis / classoption ]
+
+\bool_if:NT \g__hduthesis_doc_bool
+  {
+    \PassOptionsToClass{ 11pt, letterpaper } { l3doc }
+    \exp_args:NNV \LoadClass [ \g__hdu_base_class_options_clist ] { l3doc }
+    \hduthesis_load_module:n { hdu.l3doc }
+    \endinput
+  }
+
 \PassOptionsToClass { a4paper, zihao = -4 } { ctexrep }
 \PassOptionsToPackage { quiet, no-math } { xeCJK }
 \exp_args:NNV \LoadClass [ \g__hdu_base_class_options_clist ] { ctexrep }
-
-\RequirePackage { siunitx, circuitikz, pgfplots, listings, hologo,
-                  lipsum, zhlipsum, booktabs, multicol }
-\pgfplotsset { compat = newest }
-
 \bool_if:NTF \g__hduthesis_agreement_bool
   {
     \RequirePackage{hyperref}
@@ -108,63 +115,13 @@
       { \hypersetup { hidelinks, pdfproducer = hduThesiS~by~Mingyu~Xia } }
   } { \hduthesis_msg_error:nn { 用户协议 } { 未确认 } }
 
+\RequirePackage { siunitx, circuitikz, pgfplots, listings, hologo,
+                  lipsum, zhlipsum, booktabs, multicol }
+\pgfplotsset { compat = newest }
 \hduthesis_load_module:n { font }
 \hduthesis_load_module:n { unv.layout }
-
-\keys_define:nn { hduthesis / docinfo }
+\cs_new_protected_nopar:Nn \__hduthesis_docinfo_degree_if_aux:
   {
-    title .clist_set:N      = \l__docinfo_title_clist,
-    department .tl_set:N    = \l__docinfo_department_tl,
-    major .tl_set:N         = \l__docinfo_major_tl,
-    class .tl_set:N         = \l__docinfo_class_tl,
-    stdntid .tl_set:N       = \l__docinfo_stdntid_tl,
-    author .clist_set:N     = \l__docinfo_author_clist,
-    supervisor .clist_set:N = \l__docinfo_supervisor_clist,
-    bibsource .tl_set:N     = \l__docinfo_bibsource_tl,
-  }
-\clist_set:Nn \g_system_month_clist
-  {
-    January, February, March, April, May, June, July,
-    August, September, October, November, December
-  }
-\NewDocumentCommand \DocInfo { m }
-  {
-    \keys_set:nn { hduthesis / docinfo } {#1}
-    \exp_args:NNne \seq_set_split:Nnn
-      \l__title_tmp_seq {/} {\l__docinfo_title_clist}
-    \exp_args:NNe \tl_set:Nn
-      \l__docinfo_cntitle_tl { \seq_item:Nn \l__title_tmp_seq {1} }
-    \exp_args:NNe \tl_set:Nn
-      \l__docinfo_entitle_tl { \seq_item:Nn \l__title_tmp_seq {2} }
-    \exp_args:NNne \seq_set_split:Nnn
-      \l__author_tmp_seq {/} {\l__docinfo_author_clist}
-    \exp_args:NNe \tl_set:Nn
-      \l__docinfo_cnauthor_tl { \seq_item:Nn \l__author_tmp_seq {1} }
-    \exp_args:NNe \tl_set:Nn
-      \l__docinfo_enauthor_tl { \seq_item:Nn \l__author_tmp_seq {2} }
-    \exp_args:NNne \seq_set_split:Nnn
-      \l__supervisor_tmp_seq {/} {\l__docinfo_supervisor_clist}
-    \exp_args:NNe \tl_set:Nn
-      \l__docinfo_cnsupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {1} }
-    \exp_args:NNe \tl_set:Nn
-      \l__docinfo_ensupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {2} }
-    \bool_if:NF \g__hduthesis_agreement_bool
-      { \tl_clear:N \l__docinfo_bibsource_tl }
-    \tl_if_empty:NTF \l__docinfo_bibsource_tl
-      {
-        \newcommand*\printbibliography{\chapter*{参考文献}}
-        \renewcommand*\cite[1]{\textsuperscript{[##1]}}
-      }
-      {
-        \RequirePackage[sort&compress]{gbt7714}
-        \bibliographystyle{gbt7714-numerical}
-        \dim_set:Nn \bibsep {.35ex}
-        \newcommand*\printbibliography
-          {
-            \nocite{*} \bibliography { \l__docinfo_bibsource_tl }
-            \addcontentsline{toc}{chapter}{参考文献}
-          }
-      }
     \int_compare:nNnTF { \tl_count:N \l__docinfo_stdntid_tl } = { 8 }
       { \hduthesis_load_module:n { bc.layout } }
       { \hduthesis_load_module:n { pg.layout } }

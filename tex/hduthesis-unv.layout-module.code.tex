@@ -72,4 +72,67 @@
     {./graphics/}{./graphic/}{./pictures/}{./picture/}
   }
 
+\clist_set:Nn \g_system_month_clist
+  {
+    January, February, March, April, May, June, July,
+    August, September, October, November, December
+  }
+\keys_define:nn { hduthesis / docinfo }
+  {
+    title .clist_set:N      = \l__docinfo_title_clist,
+    department .tl_set:N    = \l__docinfo_department_tl,
+    major .tl_set:N         = \l__docinfo_major_tl,
+    class .tl_set:N         = \l__docinfo_class_tl,
+    stdntid .tl_set:N       = \l__docinfo_stdntid_tl,
+    author .clist_set:N     = \l__docinfo_author_clist,
+    supervisor .clist_set:N = \l__docinfo_supervisor_clist,
+    bibsource .tl_set:N     = \l__docinfo_bibsource_tl,
+  }
+
+\NewDocumentCommand \DocInfo { m }
+  {
+    \keys_set:nn { hduthesis / docinfo } {#1}
+    \__hduthesis_docinfo_process_aux:  
+    \__hduthesis_docinfo_degree_if_aux:  
+  }
+
+\cs_set_protected_nopar:Nn \__hduthesis_docinfo_process_aux:
+  {
+    \exp_args:NNne \seq_set_split:Nnn
+      \l__title_tmp_seq {/} {\l__docinfo_title_clist}
+    \exp_args:NNe \tl_set:Nn
+      \l__docinfo_cntitle_tl { \seq_item:Nn \l__title_tmp_seq {1} }
+    \exp_args:NNe \tl_set:Nn
+      \l__docinfo_entitle_tl { \seq_item:Nn \l__title_tmp_seq {2} }
+    \exp_args:NNne \seq_set_split:Nnn
+      \l__author_tmp_seq {/} {\l__docinfo_author_clist}
+    \exp_args:NNe \tl_set:Nn
+      \l__docinfo_cnauthor_tl { \seq_item:Nn \l__author_tmp_seq {1} }
+    \exp_args:NNe \tl_set:Nn
+      \l__docinfo_enauthor_tl { \seq_item:Nn \l__author_tmp_seq {2} }
+    \exp_args:NNne \seq_set_split:Nnn
+      \l__supervisor_tmp_seq {/} {\l__docinfo_supervisor_clist}
+    \exp_args:NNe \tl_set:Nn
+      \l__docinfo_cnsupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {1} }
+    \exp_args:NNe \tl_set:Nn
+      \l__docinfo_ensupervisor_tl { \seq_item:Nn \l__supervisor_tmp_seq {2} }
+    \bool_if:NF \g__hduthesis_agreement_bool
+      { \tl_clear:N \l__docinfo_bibsource_tl }
+    \tl_if_empty:NTF \l__docinfo_bibsource_tl
+      {
+        \newcommand*\printbibliography{\chapter*{参考文献}}
+        \renewcommand*\cite[1]{\textsuperscript{[##1]}}
+      }
+      {
+        \RequirePackage[sort&compress]{gbt7714}
+        \bibliographystyle{gbt7714-numerical}
+        \dim_set:Nn \bibsep {.35ex}
+        \newcommand*\printbibliography
+          {
+            \nocite{*} \bibliography { \l__docinfo_bibsource_tl }
+            \addcontentsline{toc}{chapter}{参考文献}
+          }
+      }
+  }
+
 \endinput
