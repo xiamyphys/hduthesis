@@ -1,6 +1,6 @@
 ## 杭州电子科技大学学位论文 LaTeX 模板
 
-杭州电子科技大学学位论文 LaTeX 模板正以 `LaTeX-expl3` 重构.
+杭州电子科技大学学位论文 LaTeX 模板以 `LaTeX-expl3` 构建.
 模板提供杭州电子科技大学学士和硕士学位论文模板.
 
 `hduThesiS` 的模块提供以下支持：
@@ -20,7 +20,7 @@
 ## The `hduThesiS` class: LaTeX class for Hangzhou Dianzi University.
 
 LaTeX class for bachelor and postgraduate theses in Hangzhou Dianzi University
-is restricting by `LaTeX-expl3` now. This class provides the bachelors' and
+is constructed by `LaTeX-expl3` now. This class provides the bachelors' and
 postgraduates' thesis template for Hangzhou Dianzi University.
 
 Modules of `hduThesiS` provide the following supports:
