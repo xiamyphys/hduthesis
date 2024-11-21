@@ -13,16 +13,16 @@
 %%    The Current Maintainers of this work is M.Y. XIA                   *
 %%                                                                       *
 %%    This work consists of the files hduthesis.cls,                     *
-%%                                    hduthesis-font-module.code,        *
-%%                                    hduthesis-unv.layout-module.code,  *
-%%                                    hduthesis-bc.layout-module.code,   *
-%%                                    hduthesis-pg.layout-module.code,   *
+%%                                    hduthesis-typeset-module.code,     *
+%%                                    hduthesis-layout-module.code,      *
+%%                                    hduthesis-bc.config-module.code,   *
+%%                                    hduthesis-pg.config-module.code,   *
 %%                                    hduthesis-hdu.l3doc-module.code,   *
 %%                                and README.md.                         *
 %%    available at https://github.com/xiamyphys/hduthesis                *
 %% ***********************************************************************
-\def\hduthesis@date{2024/11/21}
-\def\hduthesis@version{0.3.3}
+\def\hduthesis@date{2024/11/22}
+\def\hduthesis@version{0.3.4}
 
 \RequirePackage{etoolbox}
 \ProvidesExplClass{hduthesis} {\hduthesis@date} {\hduthesis@version}
@@ -115,21 +115,17 @@
       { \hypersetup { hidelinks, pdfproducer = hduThesiS~by~Mingyu~Xia } }
   } { \hduthesis_msg_error:nn { 用户协议 } { 未确认 } }
 
-\RequirePackage { siunitx, circuitikz, pgfplots, listings, hologo,
-                  lipsum, zhlipsum, booktabs, multicol }
+\RequirePackage { siunitx, circuitikz, pgfplots, listings,
+                  hologo, lipsum, zhlipsum, booktabs, multicol }
 \pgfplotsset { compat = newest }
-\hduthesis_load_module:n { font }
-\hduthesis_load_module:n { unv.layout }
-\cs_new_protected_nopar:Nn \__hduthesis_docinfo_degree_if_aux:
+\hduthesis_load_module:n { typeset }
+\hduthesis_load_module:n { layout }
+\cs_new_protected:Nn \__hduthesis_docinfo_degree_if_aux:
   {
     \int_compare:nNnTF { \tl_count:N \l__docinfo_stdntid_tl } = { 8 }
-      { \hduthesis_load_module:n { bc.layout } }
-      { \hduthesis_load_module:n { pg.layout } }
+      { \hduthesis_load_module:n { bc.config } }
+      { \hduthesis_load_module:n { pg.config } }
   }
-
-\RequirePackage{fancyhdr}
-\pagestyle{fancy}
-\renewcommand*\headrulewidth {.6pt}
 
 \endinput
 

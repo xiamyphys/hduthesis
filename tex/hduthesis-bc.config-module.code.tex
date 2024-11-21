@@ -1,0 +1,179 @@
+\ExplSyntaxOn \makeatletter
+\hduthesis_provide_module:n {bc.config}
+
+\geometry { top = 3.25cm, bottom = 2.4cm, left = 4cm, right = 2cm,
+            headheight = 15pt, headsep = .72cm }
+\fancyhead[C]
+  { \raisebox { .12ex } { \small 杭州电子科技大学本科 \l__docinfo_entitle_tl } }
+\hook_gput_code:nnn {cmd/tableofcontents/before} { . }
+  {
+    \clearpage 
+    \pagenumbering{Roman} \cfoot{\small \thepage}
+  }
+\hook_gput_code:nnn { cmd/tableofcontents/after } { . }
+  {
+    \thispagestyle{fancy} \clearpage
+    \pagenumbering{arabic} \cfoot{}
+  }
+
+\int_new:N \l__hduthesis_grade_int
+\int_set:Nn \l__hduthesis_grade_int
+  {
+    \int_compare:nNnTF {\c_sys_month_int} < 9
+    {\c_sys_year_int} {\int_eval:n {\c_sys_year_int+1}}
+  }
+\cs_new_protected_nopar:Nn \__hduthesis_cover_bc_aux:
+  {
+    \begin{center}
+      \vspace*{36\p@}
+      \includegraphics{hdubadge}
+      \par \vspace*{37\p@}
+      \scalebox{2.75}
+      {
+        \textbf
+          {
+            \exp_args:Nne \l_spread_box:nn
+              { .2\paperwidth } { 本科 \l__docinfo_entitle_tl }
+          }
+      }
+      \par \vspace*{\baselineskip}
+      { \LARGE（\int_use:N \l__hduthesis_grade_int\bfseries 届） }
+      \par \vspace*{4\baselineskip}
+      \begin{tabular}
+        {
+          >{\large\bfseries}p{5.5\ccwd}@{}
+          >{\large\centering\arraybackslash\kaishu}p{.65\linewidth}
+        }
+        \l_spread_box:nn { 4\ccwd } { 题目 } &
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_cntitle_tl }\\[5.2ex]
+        \l_spread_box:nn { 4\ccwd } { 学院 } &
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_department_tl }\\[5.2ex]
+        \l_spread_box:nn { 4\ccwd } { 专业 } &
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_major_tl }\\[5.2ex]
+        \l_spread_box:nn { 4\ccwd } { 班级 } &
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_class_tl }\\[5.2ex]
+        \l_spread_box:nn { 4\ccwd } { 学号 } &
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_stdntid_tl }\\[5.2ex]
+        \l_spread_box:nn { 4\ccwd } { 学生姓名 } &
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_cnauthor_tl }\\[5.2ex]
+        \l_spread_box:nn { 4\ccwd } { 指导教师 } &
+        \l_center_box:nn { .95\linewidth }
+                         { \l__docinfo_cnsupervisor_tl }\\[5.2ex]
+        \l_spread_box:nn { 4\ccwd } { 完成日期 } &
+        \l_center_box:nn { .95\linewidth }
+                         {
+                           \textsf{\int_use:N \c_sys_year_int} 年
+                           \textsf{\int_use:N \c_sys_month_int} 月
+                         }
+      \end{tabular}
+    \end{center}
+  }
+
+\cs_new_protected_nopar:Nn \__hduthesis_promise_bc_aux:
+  {
+    \vspace*{72\p@}
+    \begin{center}
+      \@beginparpenalty \@lowpenalty
+      \Large \textsf{\bfseries \l_spread_box:nn {6\ccwd}{诚信承诺}}
+      \@endparpenalty \@M
+    \end{center}
+    \vspace*{.4\baselineskip} \par
+    \linespread{2.1}
+      {\semilarge
+        我谨在此承诺：本人所写的毕业论文《\l__docinfo_cntitle_tl》均系本人独立完成，
+        没有抄袭行为，凡涉及其他作者的观点和材料，均作了注释，若有不实，后果由本人承担。
+        \par\vspace*{\baselineskip} \bfseries\sffamily
+        \hskip.48\linewidth 承诺人（签名）：
+        \vspace*{.5\baselineskip}\par
+        \hskip \dim_eval:n{ .48\linewidth + 2em } 年\qquad 月\qquad 日
+      }
+  }
+
+\RenewDocumentCommand \maketitle {}
+  {
+    \newgeometry{ left = 4cm, right = 2cm, top = 3cm, bottom = 1cm }
+    \begin{titlepage}
+      \__hduthesis_cover_bc_aux:
+    \end{titlepage}
+    \titlepage
+      \__hduthesis_promise_bc_aux:
+    \endtitlepage
+    \restoregeometry
+  }
+
+\RenewDocumentEnvironment {abstract} { O{en} }
+  {
+    \str_if_eq:nnT {#1} {en}
+      {
+        \tl_set:Nn \l__keywords_name_tl {Keywords:~}
+        \tl_set:Nn \l__keywords_sep_tl {;~}
+      }
+    \str_if_eq:nnT {#1} {cn}
+      {
+        \tl_set:Nn \l__keywords_name_tl {\textsf{关键词：}}
+        \tl_set:Nn \l__keywords_sep_tl {；}
+      }
+    \@beginparpenalty\@lowpenalty
+    \str_if_eq:nnT {#1} {en} {\chapter*{\normalfont\bfseries ABSTRACT}}
+    \str_if_eq:nnT {#1} {cn} {\chapter*{摘\qquad 要}}
+  }
+  {
+    \tl_clear:N \l__abstract_name_tl
+    \cfoot{} \clearpage
+  }
+\clist_new:N \l__abstract_keywords_clist
+\NewDocumentCommand \keywords { m }
+  {
+    \par \vspace*{\baselineskip}
+    \noindent\textbf{\l__keywords_name_tl}
+    \clist_set:Nn \l__abstract_keywords_clist {#1}
+    \clist_use:Nn \l__abstract_keywords_clist {\l__keywords_sep_tl}
+  }
+
+\RequirePackage{tocloft}
+\renewcommand \contentsname {\hfill 目 \qquad 录 \hfill}
+\renewcommand* \cfttoctitlefont {\sffamily\semiLarge}
+\dim_set:Nn \cftbeforetoctitleskip {3pt}
+\dim_set:Nn \cftaftertoctitleskip {24pt}
+\dim_set:Nn \cftbeforechapskip {1pt}
+\dim_set:Nn \cftbeforesecskip {-.2pt}
+\patchcmd { \@dottedtocline }
+  { \leaders \hbox { $\m@th\mkern \@dotsep mu\hbox{.}\mkern \@dotsep mu$ } }
+  { \kern 4pt \leaders \hbox { $\m@th\mkern .4 mu\hbox{-}\mkern .4 mu$ } } {}{}
+\renewcommand* \l@chapter {\@dottedtocline{1}{0em}{1.6em}}
+\renewcommand* \l@section {\@dottedtocline{1}{2.3em}{2.1em}}
+\renewcommand* \@dotsep {1.7}
+\renewcommand* \@pnumwidth {2.5ex}
+\renewcommand* \cftchapfont {\normalfont}
+\setcounter{tocdepth}{1}
+
+\ctexset
+  {
+    chapter    =
+      {
+        name       = {},   fixskip    = true,
+        beforeskip = 21pt, afterskip  = 34pt,
+        number     = \arabic{chapter},
+        format     = \sffamily\centering\large,
+        pagestyle  = fancy
+      },
+    section    =
+      {
+        beforeskip = 1.25ex, afterskip = 1.5ex,
+        fixskip    = true,   format    = \sffamily\semilarge
+      },
+    subsection =
+      {
+        beforeskip = 1.25ex, afterskip = 1.5ex,
+        fixskip    = true,   format    = \sffamily
+      }
+  }
+
+\makeatother \ExplSyntaxOff
+\endinput

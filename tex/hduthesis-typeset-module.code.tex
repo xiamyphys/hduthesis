@@ -1,0 +1,39 @@
+\hduthesis_provide_module:n {typeset}
+
+\linespread{1.39}
+\dim_set:Nn \parindent { 2\ccwd }
+\newcommand \semilarge { \@setfontsize \semilarge{14}{16.5} }
+\newcommand \semiLarge { \@setfontsize \semiLarge{17}{17.5} }
+
+\setmainfont{texgyretermes}
+  [
+    Extension  = .otf,     UprightFont    = *-regular,   BoldFont = *-bold, ItalicFont = *-italic, BoldItalicFont = *-bolditalic
+  ]
+\setsansfont{texgyreheros}
+  [
+    Extension   = .otf,      BoldItalicFont = *-bolditalic,
+    UprightFont = *-regular, BoldFont       = *-bold,
+    ItalicFont  = *-italic,  scale          = .9,
+  ]
+
+\RequirePackage { amssymb, extarrows, mathtools,
+                  cancel, physics2, fixdif, derivative }
+\RequirePackage
+  [ warnings-off = { mathtools-colon, mathtools-overbracket } ] {unicode-math}
+\usephysicsmodule{ ab, braket, ab.legacy, op.legacy, bm-um.legacy }
+\AtBeginDocument
+  {
+    \dim_set:Nn \abovedisplayskip {3pt}
+    \dim_set:Nn \belowdisplayskip {3pt}
+  }
+
+\tl_if_empty:NF \g__hduthesis_math_font
+  { \setmathfont { \g__hduthesis_math_font } }
+\tl_if_empty:NF \g__hduthesis_main_CJK_font
+  { \exp_last_unbraced:No \setCJKmainfont \g__hduthesis_main_CJK_font }
+\tl_if_empty:NF \g__hduthesis_sans_CJK_font
+  { \exp_last_unbraced:No \setCJKsansfont \g__hduthesis_sans_CJK_font }
+\tl_if_empty:NF \g__hduthesis_mono_CJK_font
+  { \exp_last_unbraced:No \setCJKmonofont \g__hduthesis_mono_CJK_font }
+
+\endinput

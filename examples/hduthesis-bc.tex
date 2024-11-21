@@ -1,7 +1,7 @@
 \documentclass
   [
     math-font    = STIX Two Math, agreed,
-    CJKmain-font = { {Songti SC}[AutoFakeSlant] },
+    CJKmain-font = { {Songti SC}[AutoFakeSlant, AutoFakeBold = 2.5] },
     CJKsans-font = { {STHeiti}[AutoFakeBold = 2] }
   ] {hduthesis}
 \tikzset{ > = stealth }
@@ -9,7 +9,7 @@
 
 \DocInfo
   {
-    title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业设计,
+    title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/毕业论文,
     department = 理学院,
     major      = 物理学,
     class      = 英才班,
@@ -25,10 +25,7 @@
 
 \input{cha/abstract.tex}
 
-\pagestyle{fancy}
-\frontmatter
 \tableofcontents
-\mainmatter
 
 \input{cha/cha1.tex}
 \input{cha/cha2.tex}
