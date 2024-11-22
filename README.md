@@ -49,15 +49,15 @@ The Current Maintainer of this work is [Mingyu Xia](https://www.ctan.org/author/
 
 #### References
 
-> [1]. The `LaTeX3` Interfaces
+> [1]. The LaTeX3 Interfaces
 
-> [2]. `CTeX` 宏集
+> [2]. CTeX 宏集
 
-> [3]. `clsguide`
+> [3]. LaTeX for package and class authors current version
 
-> [4]. The `LaTeX2e` Sources
+> [4]. The LaTeX2e Sources
 
-> [4]. The `LaTeX3` kernel: style guide for code authors
+> [4]. The LaTeX3 kernel: style guide for code authors
 
 > [5]. Package `etoolbox`, `geometry`, `tocloft`, `fancyhdr`, etc.
 
