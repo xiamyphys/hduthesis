@@ -1,28 +1,29 @@
-%% ***********************************************************************
-%%            Copyright 2024 by M.Y. XIA <xiamyphys@gmail.com>           *
-%%                                                                       *
-%%    This work may be distributed and/or modified under the conditions  *
-%%    of the LaTeX Project Public License                                *
-%%                                                                       *
-%%               http://www.latex-project.org/lppl.txt                   *
-%%                                                                       *
-%%    either version 1.3c of this license or any later version.          *
-%%                                                                       *
-%%    This work has the LPPL maintenance status `maintained'.            *
-%%                                                                       *
-%%    The Current Maintainers of this work is M.Y. XIA                   *
-%%                                                                       *
-%%    This work consists of the files hduthesis.cls,                     *
-%%                                    hduthesis-typeset-module.code,     *
-%%                                    hduthesis-layout-module.code,      *
-%%                                    hduthesis-bc.config-module.code,   *
-%%                                    hduthesis-pg.config-module.code,   *
-%%                                    hduthesis-hdu.l3doc-module.code,   *
-%%                                and README.md.                         *
-%%    available at https://github.com/xiamyphys/hduthesis                *
-%% ***********************************************************************
-\def\hduthesis@date{2024/11/23}
-\def\hduthesis@version{0.3.4}
+%% *****************************************************************************
+%%            Copyright 2024 by M.Y. XIA <xiamyphys@gmail.com>                 *
+%%                                                                             *
+%%   This work may be distributed and/or modified under the conditions of the  *
+%%   LaTeX Project Public License                                              *
+%%                                                                             *
+%%               http://www.latex-project.org/lppl.txt                         *
+%%                                                                             *
+%%   either version 1.3c of this license or any later version.                 *
+%%                                                                             *
+%%   This work has the LPPL maintenance status `maintained'.                   *
+%%                                                                             *
+%%   The Current Maintainers of this work is M.Y. XIA                          *
+%%                                                                             *
+%%   This work consists of the files hduthesis.cls,                            *
+%%                                   hduthesis-typeset-module.code,            *
+%%                                   hduthesis-layout-module.code,             *
+%%                                   hduthesis-bc.config-module.code,          *
+%%                                   hduthesis-pg.config-module.code,          *
+%%                                   hduthesis-hdu.l3doc-module.code,          *
+%%                                   hduthesis-hdu.stationery-module.code,     *
+%%                               and README.md.                                *
+%%   available at https://github.com/xiamyphys/hduthesis                       *
+%% *****************************************************************************
+\def\hduthesis@date{2024/11/25}
+\def\hduthesis@version{0.4.0}
 
 \RequirePackage{etoolbox}
 \ProvidesExplClass{hduthesis} {\hduthesis@date} {\hduthesis@version}
@@ -73,6 +74,9 @@
     l3doc .bool_set:N       = \g__hduthesis_doc_bool,
       l3doc .initial:n      = false,
       l3doc .default:n      = true,
+    stationery .bool_set:N  = \g__hduthesis_stationery_bool,
+      stationery .initial:n = false,
+      stationery .default:n = true,
     math-font .tl_set:N     = \g__hduthesis_math_font,
     CJKmain-font .tl_set:N  = \g__hduthesis_main_CJK_font,
     CJKsans-font .tl_set:N  = \g__hduthesis_sans_CJK_font,
@@ -97,6 +101,14 @@
     \PassOptionsToClass{ 11pt, letterpaper } { l3doc }
     \exp_args:NNV \LoadClass [ \g__hdu_base_class_options_clist ] { l3doc }
     \hduthesis_load_module:n { hdu.l3doc }
+    \endinput
+  }
+
+\bool_if:NT \g__hduthesis_stationery_bool
+  {
+    \PassOptionsToClass{ 12pt } { letter }
+    \exp_args:NNV \LoadClass [ \g__hdu_base_class_options_clist ] { letter }
+    \hduthesis_load_module:n { hdu.stationery }
     \endinput
   }
 

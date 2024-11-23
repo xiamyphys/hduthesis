@@ -13,6 +13,8 @@
 
 - `pg.config`: 硕士论文格式配置
 
+- `stationery.config`: 学校信纸生成
+
 - `hdu.l3doc`: 模板 `l3doc` 用户手册配置
 
 ---
@@ -32,6 +34,8 @@ Modules of `hduThesiS` provide the following supports:
 - `bc.config`: Configuration for bachelor thesis' format
 
 - `pg.config`: Configuration for postgraduate thesis' format
+
+- `stationery.config`: Creation of HDU's stationery
 
 - `hdu.l3doc`: Configuration for class's `l3doc` manual
 

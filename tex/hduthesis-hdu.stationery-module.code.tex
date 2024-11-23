@@ -1,0 +1,89 @@
+\hduthesis_provide_module:n {hdu.stationery}
+
+\keys_define:nn { hdu.stationery / docinfo }
+  {
+    title .tl_set:N      = \l__docinfo_title_tl,
+    author .tl_set:N     = \l__docinfo_author_tl,
+    affliction .tl_set:N = \l__docinfo_affliction_tl,
+    date .tl_set:N       = \l__docinfo_date_tl,
+    tel .tl_set:N        = \l__docinfo_tel_tl,
+    mail .tl_set:N       = \l__docinfo_mail_tl,
+  }
+
+\RequirePackage{ hyperref, geometry, tikz, twemojis, fancyhdr }
+\NewDocumentCommand \DocInfo { m }
+  {
+    \keys_set:nn { hdu.stationery / docinfo } {#1}
+    \hypersetup { hidelinks, pdfauthor = \l__docinfo_author_tl }
+  }
+\geometry
+  { hmargin = .8in, bottom = 1.05in, top = 2.1in,
+    headheight = 1.2in, headsep = .3in, footskip = .3in }
+\linespread{1.25}
+\RequirePackage [ skip = \baselineskip ] { parskip }
+\renewcommand* \familydefault { \sfdefault }
+\tikzset{ every~node/.append~style = { opacity = .8 } }
+\definecolor{hdu}{HTML}{214395}
+
+\renewcommand* \headrulewidth {1pt}
+\renewcommand* \footrulewidth {1pt}
+\hook_gput_code:nnn { cmd/headrule/before } { . } { \color{hdu!80} }
+\hook_gput_code:nnn { cmd/footrule/before } { . } { \color{hdu!80} }
+\lhead
+  {
+    {}~
+    \minipage{.64\linewidth}
+    \tikz [ baseline = -.6in ]
+      { \node { \includegraphics [ height = .75in ] { hdubadge } } }
+    \endminipage \hfill
+    \minipage{.32\linewidth}
+    \vbox
+      {
+        \raggedright \small
+        Date:~
+        \tl_if_empty:NTF \l__docinfo_date_tl
+          { \today \par }
+          { \l__docinfo_date_tl \par }
+        \tl_if_empty:NF \l__docinfo_author_tl
+          { Name:~ \l__docinfo_author_tl \par }
+        \tl_if_empty:NF \l__docinfo_tel_tl
+          { Phone:~ \l__docinfo_tel_tl \par }
+        \tl_if_empty:NF \l__docinfo_mail_tl
+          {
+            Email:~ \href { mailto:\l__docinfo_mail_tl }
+                          { \ttfamily \l__docinfo_mail_tl }
+          }
+      }\medskip
+    \endminipage
+  }
+\cfoot
+  { \small \texttwemoji{1f4cd}~
+    1158~No.2~Street,~ Qiantang~District,~
+    Hangzhou,~ Zhejiang~Province,~ 310018,~ China \qquad
+    \texttwemoji{1f310}~ www.hdu.edu.cn
+  }
+\pagestyle{fancy}
+
+\renewcommand* \maketitle
+  {
+    \l__docinfo_author_tl\\
+    \l__docinfo_affliction_tl\\
+    \textbf{\l__docinfo_title_tl} \par \vspace{.5\baselineskip}
+  }
+
+\AtBeginDocument { \color_select:n {black!80} }
+
+\newcommand \meta[1]
+  {
+    \ensuremath \langle
+      \ifmmode \expandafter \nfss@text \fi
+      {
+        \itshape\ttfamily \edef \meta@hyphen@restore
+          { \hyphenchar \the \font \the \hyphenchar \font }
+        \hyphenchar \font \m@ne \language
+        \l@nohyphenation #1\/\meta@hyphen@restore
+      }
+    \ensuremath \rangle 
+  }
+
+\endinput

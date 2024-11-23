@@ -2,10 +2,11 @@
 
 \DocInfo
   {
-    title   = The \hologo{hduthesis} Class\\
-              \hologo{LaTeX} Thesis Template for Hangzhou Dianzi University,
-    author  = Mingyu Xia \mailto{xiamyphys@hdu.edu.cn}
-              \footnote{Physics Department, Graduate in 06/2025 (expected)},
+    title        = The \hologo{hduthesis} Class\\
+                   \hologo{LaTeX} Thesis Template for
+                   Hangzhou Dianzi University,
+    author       = Mingyu Xia \mailto{xiamyphys@hdu.edu.cn}
+                   \footnote{Physics Department, Graduate in 06/2025},
     CJKmain-font = {[AutoFakeSlant]{Songti SC}},
     CJKsans-font = {[BoldFont = Hei, AutoFakeSlant]{Heiti SC}},
     CJKmono-font = {[AutoFakeSlant]{LXGW WenKai Mono}}
@@ -192,17 +193,59 @@
 
 \begin{center}
   \fbox
-    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-bc.config-module}} }
-  \quad\fbox
-    {
-      \parbox[c][1.5em]{16em}{\centering\file{hduthesis-pg.config-module}}
-    }\\[2ex]
-  \quad\fbox
-    { \parbox[c][1.5em]{14em}{\centering\file{hduthesis-typeset-module}} }
-  \qquad\fbox
-    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-layout-module}} }
+    { \parbox[c][1.5em]{34ex}{\centering\file{hduthesis-pg.config-module}} }
+  \fbox { \parbox[c][1.5em]{32ex}{\centering\file{hduthesis-typeset-module}} }
+  \fbox { \parbox[c][1.5em]{15ex}{\centering\file{hdulogo.pdf}} }\\[2ex]
+  \fbox { \parbox[c][1.5em]{33ex}{\centering\file{hduthesis-bc.config-module}} }
+  \qquad \fbox { \parbox[c][1.5em]{16ex}{\centering\file{hdubadge.pdf}} } \qquad
+  \fbox { \parbox[c][1.5em]{16ex}{\centering\file{hdumotto.pdf}} }\\[2ex]
+  \fbox { \parbox[c][1.5em]{30ex}{\centering\file{hduthesis-layout-module}} }~
+  \fbox { \parbox[c][1.5em]{16ex}{\centering\file{hdutitle.pdf}} }
+  \fbox
+    { \parbox[c][1.5em]{34ex}{\centering\file{hduthesis-stationery-module}} }~
 \end{center}
 
 \hrule
+
+\section{杭州电子科技大学信纸}
+
+加载全局选项 \pkg{stationery}，并进行文档信息设置，即可生成信纸. 可用于推荐信撰写.
+此模块无需 \pkg{agreed} 选项.
+
+\begin{framed}
+  \begin{verbatim}
+    \documentclass [ stationery ] { hduthesis }
+  \end{verbatim}
+\end{framed}
+
+与学士 / 硕士学位论文文档信息设置类型，使用 \cs{DocInfo} 命令，对信件标题、发件人、机构、日期、电话和邮件信息进行设置. 此时 \cs{DocInfo} 命令接受键
+\keys{\cmdmac~title} \keys{\cmdmac~author} \keys{\cmdmac~affliction}
+\keys{\cmdmac~date} \keys{\cmdmac~tel} \keys{\cmdmac~mail}. 下页为生成信纸的样例.
+
+\begin{framed}
+  \begin{verbatim}
+    \DocInfo
+      {
+        title      = Recommendation Letter for SAN Chi Nan,
+        author     =  YIP Tsz Ching,
+        affliction = {Physics Department, Hangzhou Dianzi University},
+        date       = {25\textsuperscript{th} November, 2024},
+        tel        = (852) 3141-5926,
+        mail       = xiamyphys@gmail.com
+      }
+  \end{verbatim}
+\end{framed}
+
+\section{For Developers}
+
+本手册为 \cls{hduthesis} 加载选项 \pkg{l3doc} 后生成，基于 \cls{l3doc} 文档类.
+
+\begin{framed}
+  \begin{verbatim}
+    \documentclass [ l3doc ] { hduthesis }
+  \end{verbatim}
+\end{framed}
+
+\includepdf{/Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-stationery}
 
 \end{document}
