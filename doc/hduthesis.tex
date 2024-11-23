@@ -33,9 +33,9 @@
 \section{Introduction \& Loading \hologo{hduthesis}}
 
 本模板为杭州电子科技大学学位论文 \underline{非官方} \hologo{LaTeX} 模板，
-支持学士和硕士学位论文排版. 加载 \hologo{hduthesis} 时遇到``编译受阻''报错，
-请认真阅读上页的用户协议. 键入全局选项 \cmd{agreed} 后，
-方可顺利进行编译，并默认您已同意用户协议.
+以 \hologo{LaTeX3} 构建，支持学士和硕士学位论文排版.
+加载 \hologo{hduthesis} 时遇到``编译受阻''报错，请认真阅读上页的用户协议.
+键入全局选项 \cmd{agreed} 后，方可顺利进行编译，并默认您已同意用户协议.
 
 \begin{framed}
   \begin{verbatim}
@@ -74,7 +74,7 @@
   [ angle = -90, nup = 1x2, frame, linktodoc, scale = 0.96, delta = 0 .25in ]
   { /Users/xiamyphys/Desktop/LaTeXer/hduthesis/examples/hduthesis-bc.pdf, 1-2 }
 
-研究生输入样例如下. 硕士学位论文扉页需同时有英文版，因此需要在键 \keys{\cmdmac~title} \keys{\cmdmac~author} \keys{\cmdmac~supervisor} 中分别输入中文和英文信息，使用斜线 (/) 分隔. 如作者中文姓名为 \cmd{申智能}，英文姓名为 \cmd{SAN Chi Nan}，则键值输入格式为 \cmd{author = 申智能/SAN Chi Nan}.
+研究生输入样例如下. 硕士学位论文扉页需同时有英文版，因此需要在键 \keys{\cmdmac~title} \keys{\cmdmac~author} \keys{\cmdmac~supervisor} 中分别输入中文和英文信息，中英信息使用斜线 (\cmd/) 分隔. 如作者中文姓名为 \cmd{申智能}，英文姓名为 \cmd{SAN Chi Nan}，则键值输入格式为 \cmd{author = 申智能/SAN Chi Nan}. 指导教师职称和姓名之间用半角冒号 (\cmd:) 分隔.
 
 \begin{framed}
   \begin{verbatim}
@@ -84,9 +84,9 @@
         title      = 杭州电子科技大学学位论文 \hologo{LaTeX} 模板/
                      \hologo{LaTeX} Template for Thesis at
                      Hangzhou Dianzi University,
-        major     = 物理学,             stdntid    = 216686680,
-        author    = 申智能/SAN Chi Nan, supervisor = 李智能/LEE Chi Nan,
-        bibsource = reference
+        major      = 物理学,             stdntid    = 216686680,
+        author     = 申智能/SAN Chi Nan, bibsource  = reference
+        supervisor = 教授:葉芷晴/Prof.:YIP Tsz Ching,
       }
     \begin{document}  \maketitle  ...  \end{document}
   \end{verbatim}
@@ -101,7 +101,7 @@
 
 下页包含所生成的硕士学位论文封面、扉页和承诺书缩略图. 此文档样例可在终端执行 \cmd{texdoc hduthesis-pg} 获取.
 
-文档类同时提供了校徽 (\file{hdulogo.pdf})、校牌 (\file{hdubadge.pd}) 与校训 (\file{hdumotto.pdf}) 的矢量素材，可直接使用. 以上文件均由 \href{https://www.hdu.edu.cn/666/list.htm}{校情纵览/校标规范} 所提供素材裁切制成，均支持在 \hologo{XeLaTeX} 和 \hologo{pdfLaTeX} 编译器下使用 \pkg{tikz} 等方式设置透明度.
+文档类同时提供了校徽 (\file{hdulogo.pdf})、校名 (\file{hdutitle.pdf}) 、校训 (\file{hdumotto.pdf})和校牌 (\file{hdubadge.pdf}) 的矢量素材，可直接使用. 以上文件均由 \href{https://www.hdu.edu.cn/666/list.htm}{校情纵览/校标规范} 所提供素材裁切制成，均支持在 \hologo{XeLaTeX} 和 \hologo{pdfLaTeX} 编译器下使用 \pkg{Ti\textit k\/Z} 等方式设置透明度.
 
 \includepdfmerge
   [ nup = 2x2, frame, linktodoc, scale = 0.96, delta = .25in .25in ]
@@ -192,15 +192,15 @@
 
 \begin{center}
   \fbox
-    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-bc.layout-module}} }
+    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-bc.config-module}} }
   \quad\fbox
     {
-      \parbox[c][1.5em]{16em}{\centering\file{hduthesis-pg.layout-module}}
+      \parbox[c][1.5em]{16em}{\centering\file{hduthesis-pg.config-module}}
     }\\[2ex]
   \quad\fbox
-    { \parbox[c][1.5em]{14em}{\centering\file{hduthesis-font-module}} }
+    { \parbox[c][1.5em]{14em}{\centering\file{hduthesis-typeset-module}} }
   \qquad\fbox
-    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-unv.layout-module}} }
+    { \parbox[c][1.5em]{16em}{\centering\file{hduthesis-layout-module}} }
 \end{center}
 
 \hrule

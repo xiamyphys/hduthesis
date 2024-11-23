@@ -21,7 +21,7 @@
 %%                                and README.md.                         *
 %%    available at https://github.com/xiamyphys/hduthesis                *
 %% ***********************************************************************
-\def\hduthesis@date{2024/11/22}
+\def\hduthesis@date{2024/11/23}
 \def\hduthesis@version{0.3.4}
 
 \RequirePackage{etoolbox}
@@ -118,6 +118,12 @@
 \RequirePackage { siunitx, circuitikz, pgfplots, listings,
                   hologo, lipsum, zhlipsum, booktabs, multicol }
 \pgfplotsset { compat = newest }
+\hologoFontSetup{general = \sffamily}
+\graphicspath
+  {
+    {./figure/}{./figures/}{./image/}{./images/}
+    {./graphics/}{./graphic/}{./pictures/}{./picture/}
+  }
 \hduthesis_load_module:n { typeset }
 \hduthesis_load_module:n { layout }
 \cs_new_protected:Nn \__hduthesis_docinfo_degree_if_aux:

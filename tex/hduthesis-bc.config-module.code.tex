@@ -4,7 +4,7 @@
 \geometry { top = 3.25cm, bottom = 2.4cm, left = 4cm, right = 2cm,
             headheight = 15pt, headsep = .72cm }
 \fancyhead[C]
-  { \raisebox { .12ex } { \small 杭州电子科技大学本科 \l__docinfo_entitle_tl } }
+  { \raisebox { .12ex } { \small 杭州电子科技大学 \l__docinfo_entitle_tl } }
 \hook_gput_code:nnn {cmd/tableofcontents/before} { . }
   {
     \clearpage 
@@ -16,6 +16,18 @@
     \pagenumbering{arabic} \cfoot{}
   }
 
+\RenewDocumentCommand \maketitle {}
+  {
+    \newgeometry{ margin = 3cm }
+    \begin{titlepage}
+      \__hduthesis_cover_bc_aux:
+    \end{titlepage}
+    \titlepage
+      \__hduthesis_promise_bc_aux:
+    \endtitlepage
+    \restoregeometry
+  }
+
 \int_new:N \l__hduthesis_grade_int
 \int_set:Nn \l__hduthesis_grade_int
   {
@@ -25,62 +37,62 @@
 \cs_new_protected_nopar:Nn \__hduthesis_cover_bc_aux:
   {
     \begin{center}
-      \vspace*{36\p@}
-      \includegraphics{hdubadge}
-      \par \vspace*{37\p@}
+      \vspace*{14\p@}
+      \includegraphics[ width = .64\linewidth ]{hdutitle}
+      \par \vspace*{36\p@}
       \scalebox{2.75}
       {
         \textbf
           {
-            \exp_args:Nne \l_spread_box:nn
-              { .2\paperwidth } { 本科 \l__docinfo_entitle_tl }
+            \exp_args:Nne \__hduthesis_cover_spread_box:nn
+              { .205\paperwidth } { \l__docinfo_entitle_tl }
           }
       }
-      \par \vspace*{\baselineskip}
-      { \LARGE（\int_use:N \l__hduthesis_grade_int\bfseries 届） }
-      \par \vspace*{4\baselineskip}
+      \par \vspace*{1.5\baselineskip}
+      { \LARGE （\int_use:N \l__hduthesis_grade_int \bfseries 届） }
+      \par \vspace*{3.0\baselineskip}
       \begin{tabular}
         {
           >{\large\bfseries}p{5.5\ccwd}@{}
-          >{\large\centering\arraybackslash\kaishu}p{.65\linewidth}
+          >{\large\centering\arraybackslash\kaishu}p{.65\linewidth}@{}
         }
-        \l_spread_box:nn { 4\ccwd } { 题目 } &
-        \l_center_box:nn { .95\linewidth }
-                         { \l__docinfo_cntitle_tl }\\[5.2ex]
-        \l_spread_box:nn { 4\ccwd } { 学院 } &
-        \l_center_box:nn { .95\linewidth }
-                         { \l__docinfo_department_tl }\\[5.2ex]
-        \l_spread_box:nn { 4\ccwd } { 专业 } &
-        \l_center_box:nn { .95\linewidth }
-                         { \l__docinfo_major_tl }\\[5.2ex]
-        \l_spread_box:nn { 4\ccwd } { 班级 } &
-        \l_center_box:nn { .95\linewidth }
-                         { \l__docinfo_class_tl }\\[5.2ex]
-        \l_spread_box:nn { 4\ccwd } { 学号 } &
-        \l_center_box:nn { .95\linewidth }
-                         { \l__docinfo_stdntid_tl }\\[5.2ex]
-        \l_spread_box:nn { 4\ccwd } { 学生姓名 } &
-        \l_center_box:nn { .95\linewidth }
-                         { \l__docinfo_cnauthor_tl }\\[5.2ex]
-        \l_spread_box:nn { 4\ccwd } { 指导教师 } &
-        \l_center_box:nn { .95\linewidth }
-                         { \l__docinfo_cnsupervisor_tl }\\[5.2ex]
-        \l_spread_box:nn { 4\ccwd } { 完成日期 } &
-        \l_center_box:nn { .95\linewidth }
-                         {
-                           \textsf{\int_use:N \c_sys_year_int} 年
-                           \textsf{\int_use:N \c_sys_month_int} 月
-                         }
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 题目 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          { \l__docinfo_cntitle_tl }\\[5.2ex]
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 学院 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          { \l__docinfo_department_tl }\\[5.2ex]
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 专业 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          { \l__docinfo_major_tl }\\[5.2ex]
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 班级 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          { \l__docinfo_class_tl }\\[5.2ex]
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 学号 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          { \l__docinfo_stdntid_tl }\\[5.2ex]
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 学生姓名 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          { \l__docinfo_cnauthor_tl }\\[5.2ex]
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 指导教师 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          { \l__docinfo_cnsupervisor_tl \quad \l__docinfo_cnrole_tl }\\[5.2ex]
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 完成日期 } &
+        \__hduthesis_cover_center_box:nn { .95\linewidth }
+          {
+            \textsf{\int_use:N \c_sys_year_int} 年
+            \textsf{\int_use:N \c_sys_month_int} 月
+          }
       \end{tabular}
     \end{center}
   }
 
 \cs_new_protected_nopar:Nn \__hduthesis_promise_bc_aux:
   {
-    \vspace*{72\p@}
+    \vspace*{65\p@}
     \begin{center}
       \@beginparpenalty \@lowpenalty
-      \Large \textsf{\bfseries \l_spread_box:nn {6\ccwd}{诚信承诺}}
+      \Large \textsf{\bfseries \__hduthesis_cover_spread_box:nn {6\ccwd}{诚信承诺}}
       \@endparpenalty \@M
     \end{center}
     \vspace*{.4\baselineskip} \par
@@ -93,18 +105,6 @@
         \vspace*{.5\baselineskip}\par
         \hskip \dim_eval:n{ .48\linewidth + 2em } 年\qquad 月\qquad 日
       }
-  }
-
-\RenewDocumentCommand \maketitle {}
-  {
-    \newgeometry{ left = 4cm, right = 2cm, top = 3cm, bottom = 1cm }
-    \begin{titlepage}
-      \__hduthesis_cover_bc_aux:
-    \end{titlepage}
-    \titlepage
-      \__hduthesis_promise_bc_aux:
-    \endtitlepage
-    \restoregeometry
   }
 
 \RenewDocumentEnvironment {abstract} { O{en} }
@@ -160,7 +160,7 @@
         name       = {},   fixskip    = true,
         beforeskip = 21pt, afterskip  = 34pt,
         number     = \arabic{chapter},
-        format     = \sffamily\centering\large,
+        format+    = \sffamily\large,
         pagestyle  = fancy
       },
     section    =

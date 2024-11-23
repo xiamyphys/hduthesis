@@ -12,34 +12,57 @@
     \cfoot{\small \thepage}
   }
 
+\RenewDocumentCommand \maketitle {}
+  {
+    \newgeometry{margin = 2.75cm}
+    \begin{titlepage}
+      \__hduthesis_cover_pg_aux:
+    \end{titlepage}
+    \titlepage
+    \__hduthesis_cnoverleaf_pg_aux:
+    \endtitlepage
+    \titlepage
+      \__hduthesis_enoverleaf_pg_aux:
+    \endtitlepage
+    \titlepage
+      \__hduthesis_promise_pg_aux:
+    \endtitlepage
+    \restoregeometry
+    \pagenumbering{Roman}
+    \cfoot {\small \thepage}
+  }
 \cs_new_protected_nopar:Nn \__hduthesis_cover_pg_aux:
   {
     \begin{center}
       \null
-      \includegraphics[height = 2.35cm]{hdubadge}
+      \includegraphics[height = 2.35cm]{hdutitle}
       \par \vspace*{40\p@}
-        { \LARGE\l_spread_box:nn {.575\linewidth} {硕士学位论文} }
+        { \LARGE\__hduthesis_cover_spread_box:nn {.575\linewidth} {硕士学位论文} }
       \par\vspace*{100\p@}
       \semiLarge 题 \qquad 目：
-      \l_center_box:nn { .75\linewidth } { \kaishu \l__docinfo_cntitle_tl }
+      \__hduthesis_cover_center_box:nn { .75\linewidth }
+        { \kaishu \l__docinfo_cntitle_tl }
       \vspace*{24\p@}\par
       \begin{tabular}
         { >{\semiLarge\centering\arraybackslash}p{4\ccwd}@{}
-          >{\semiLarge\centering\arraybackslash\kaishu}p{.65\linewidth} }
-        \l_spread_box:nn { 4\ccwd } { 研究生 } &
-        \l_center_box:nn { .96\linewidth }
-                         { \seq_item:Nn \l__author_tmp_seq {1} }\\
-        \l_spread_box:nn { 4\ccwd } { 专业 } &
-        \l_center_box:nn { .96\linewidth } { \l__docinfo_major_tl }\\
-        \l_spread_box:nn { 4\ccwd } { 指导教师 } &
-        \l_center_box:nn { .96\linewidth }
-                         { \l__docinfo_cnsupervisor_tl\qquad 教授 }\\[13.5ex]
+          >{\semiLarge\centering\arraybackslash\kaishu}p{.65\linewidth}@{} }
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 研究生 } &
+        \__hduthesis_cover_center_box:nn { .96\linewidth }
+          { \l__docinfo_cnauthor_tl }\\
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 专业 } &
+        \__hduthesis_cover_center_box:nn { .96\linewidth }
+          { \l__docinfo_major_tl }\\
+        \__hduthesis_cover_spread_box:nn { 4\ccwd } { 指导教师 } &
+        \__hduthesis_cover_center_box:nn { .96\linewidth }
+          {
+            \l__docinfo_cnsupervisor_tl \qquad \l__docinfo_cnrole_tl 
+          }\\[13.5ex]
         \semilarge 完成日期 &
-        \l_center_box:nn { .96\linewidth }
-                         { \semilarge
-                           \textsf{\int_use:N \c_sys_year_int} 年
-                           \textsf{\int_use:N \c_sys_month_int} 月
-                         }
+        \__hduthesis_cover_center_box:nn { .96\linewidth }
+          { \semilarge
+            \textsf{\int_use:N \c_sys_year_int} 年
+            \textsf{\int_use:N \c_sys_month_int} 月
+          }
       \end{tabular}
     \end{center}
   }
@@ -54,12 +77,15 @@
           \huge\textsf{\l__docinfo_cntitle_tl}
         \end{spacing}
         \vspace*{128\p@} \par
-        \begin{tabular}{>{\large}p{7\ccwd}@{}>{\large\kaishu}p{.43\linewidth}}
-          \l_spread_box:nn { 4em } {研究生}：& 
-          \l_spread_box:nn { 5\ccwd } { \l__docinfo_cnauthor_tl }\\[2ex]
-          \l_spread_box:nn { 4em } {指导教师}：&
-          \l_spread_box:nn { 5\ccwd }
-                           { \l__docinfo_cnsupervisor_tl } \qquad 教授
+        \begin{tabular}{>{\semiLarge}p{6.25\ccwd}>{\semiLarge\kaishu}l}
+          \__hduthesis_cover_spread_box:nn { 4\ccwd } {研究生}：& 
+          \__hduthesis_cover_spread_box:nn { 4\ccwd }
+            { \l__docinfo_cnauthor_tl }\\[2ex]
+          \__hduthesis_cover_spread_box:nn { 4\ccwd } {指导教师}：&
+          % \exp_args:Nne
+          \__hduthesis_cover_spread_box:nn { 4\ccwd }
+            { \l__docinfo_cnsupervisor_tl } \hskip1.5em
+              \l__docinfo_cnrole_tl
         \end{tabular}
         \par \vspace{60\p@} \semilarge
         \textsf{\int_use:N \c_sys_year_int} \kaishu 年
@@ -82,10 +108,11 @@
         { >{\bfseries\large}l
           >{\bfseries\large}l
         }
-        \l_spread_box:nn { 5em } {Candidate:~} &
+        \__hduthesis_cover_spread_box:nn { 5em } {Candidate:~} &
         \l__docinfo_enauthor_tl\\[3ex]
-        \l_spread_box:nn { 5em } {Supervisor:~} &
-        Prof.~\l__docinfo_ensupervisor_tl\\[11ex]
+        \__hduthesis_cover_spread_box:nn { 5em } {Supervisor:~} &
+        \l__docinfo_enrole_tl{}~ \l__docinfo_ensupervisor_tl
+        \\[11ex]
       \end{tabular}
       \vspace*{8\p@}\par
       \bfseries \large
@@ -134,26 +161,6 @@
         日期：\qquad 年\qquad 月\qquad 日
       \end{spacing}
     \end{spacing}
-  }
-
-\RenewDocumentCommand \maketitle {}
-  {
-    \newgeometry{margin = 2.75cm}
-    \begin{titlepage}
-      \__hduthesis_cover_pg_aux:
-    \end{titlepage}
-    \titlepage
-    \__hduthesis_cnoverleaf_pg_aux:
-    \endtitlepage
-    \titlepage
-      \__hduthesis_enoverleaf_pg_aux:
-    \endtitlepage
-    \titlepage
-      \__hduthesis_promise_pg_aux:
-    \endtitlepage
-    \restoregeometry
-    \pagenumbering{Roman}
-    \cfoot {\small \thepage}
   }
 
 \RenewDocumentEnvironment {abstract} { O{en} }
@@ -217,20 +224,19 @@
       {
         aftername  = \hspace{.5\ccwd}, fixskip   = true,
         beforeskip = 32pt,             afterskip = 32pt,
-        format     = \sffamily\centering\semiLarge,
+        format+    = \sffamily\semiLarge,
         pagestyle  = fancy
       },
     section    =
       {
         aftername  = \hspace{.5\ccwd}, fixskip   = true,
         beforeskip = 2ex,              afterskip = 2.75ex,
-        format = \sffamily\large
-         ,
+        format     = \sffamily\large
       },
     subsection =
       {
         aftername  = \hspace{.5\ccwd}, fixskip   = true,
-        beforeskip = 2ex,           afterskip = 2.75ex,
+        beforeskip = 2ex,              afterskip = 2.75ex,
         format     = \sffamily\semilarge
       }
   }
