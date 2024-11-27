@@ -1,7 +1,6 @@
 ## 杭州电子科技大学学位论文 LaTeX 模板
 
-杭州电子科技大学学位论文 LaTeX 模板以 `LaTeX-expl3` 构建.
-模板提供杭州电子科技大学学士和硕士学位论文模板.
+杭州电子科技大学学位论文 LaTeX 模板以 `LaTeX-expl3` 构建，提供杭州电子科技大学学士和硕士学位论文格式.
 
 `hduThesiS` 的模块提供以下支持：
 
@@ -53,18 +52,18 @@ The Current Maintainer of this work is [Mingyu Xia](https://www.ctan.org/author/
 
 #### References
 
-> [1]. The LaTeX3 Interfaces
+> \[1\]. The LaTeX3 Interfaces
 
-> [2]. CTeX 宏集
+> \[2\]. CTeX 宏集
 
-> [3]. LaTeX for package and class authors current version
+> \[3\]. LaTeX for package and class authors current version
 
-> [4]. The LaTeX2e Sources
+> \[4\]. The LaTeX2e Sources
 
-> [4]. The LaTeX3 kernel: style guide for code authors
+> \[5\]. The LaTeX3 kernel: style guide for code authors
 
-> [5]. Package `etoolbox`, `geometry`, `tocloft`, `fancyhdr`, etc.
+> \[6\]. Package `etoolbox`, `geometry`, `tocloft`, `fancyhdr`, etc.
 
-> [6]. [毕业设计（论文）的写作规范及格式要求(含写作模板)](https://jwc.hdu.edu.cn/2022/0428/c4555a153813/page.htm)
+> \[7\]. [毕业设计（论文）的写作规范及格式要求(含写作模板)](https://jwc.hdu.edu.cn/2022/0428/c4555a153813/page.htm)
 
-> [7]. [杭州电子科技大学研究生学位论文格式统一要求（杭电研〔2012〕311号）](https://grs.hdu.edu.cn/2013/0507/c1730a51754/page.htm)
+> \[8\]. [杭州电子科技大学研究生学位论文格式统一要求（杭电研〔2012〕311号）](https://grs.hdu.edu.cn/2013/0507/c1730a51754/page.htm)
